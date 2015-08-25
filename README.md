@@ -1,0 +1,174 @@
+![Zenscroll](https://zengabor.github.io/zenscroll/zenscroll.png)
+
+# One JavaScript to Smooth-Scroll Them All
+
+Instead of an abrupt jump scroll smoothly to internal links. Center an item, scroll to any Y position, move elements into view, and&nbsp;more.
+
+Pure JavaScript, no dependencies. Just&nbsp;777&nbsp;bytes.
+
+### [Demo Page](https://zengabor.github.io/zenscroll/)
+
+### [Download](https://github.com/zengabor/zenscroll/archive/latest.zip)
+
+## About
+
+Zenscroll is a JavaScript module that enables animated scrolling to any element or any position within your document or within a scrollable container.
+
+Features:
+
+- Animated scrolling to anchors on the same page. (Progressive enhancment.)
+- Scroll to a specific element.
+- Scrolling an element into view, making sure both top & bottom are visible, if possible.
+- Scroll to an element while centering it on the screen.
+- Customize the duration and other parameters.
+- No dependencies.
+- Tiny size: 777 bytes (minimized & gzipped).
+- Tested and works under the latest default browsers on Android, iOS, OS X, Windows. It was also tested on Android 2.2+, Firefox 3.6+, IE6+, iOS Safari 5+, OS X Safari 5+.
+
+
+## Getting Started
+
+Add Zenscroll to your page. A good place is at the very bottom, just before the closing `</body>` tag.
+
+````html
+    ...
+    <script src="zenscroll-min.js"></script>
+</body>
+````
+
+
+
+You can also use npm to install Zenscroll:
+
+````
+npm install zengabor/zenscroll
+````
+
+## How to use
+
+### 1. Smooth scroll to an anchor on the same page
+
+If Zenscroll is already added to your page it will automatically animate the scrolling within the page.
+
+Since this is implemented a progressive enhancement, all internal links still work in very old browsers, like IE6, although the jump is not animated. Also note that internal links are intentionally not added to the history to save the users from having to hit the Back button too many times afterwards.
+
+### 2. Scroll to the top of an element
+
+````js
+var about = document.getElementById("about")
+zenscroll.to(about)
+````
+
+Note that Zenscroll intentionally leaves a few pixels (by default 9px) from the edges of the screen or scolling container. You can globally override this with the `edgeOffset` parameter of the constructor.
+
+### 3. Scroll to a specific vertical position
+
+````js
+zenscroll.toY(123)
+````
+
+### 4. Scroll an element into view 
+
+If the element is already fully visible then no scroll is performed. Otherwise Zenscroll will try to make both top & bottom of element visible, if possible. If the element is higher than the visible viewport then it will simply scroll to the top of the element. 
+
+````js
+zenscroll.intoView(image1)
+````
+
+Tip: If you resize an element with a transition of 500ms, you can postpone calling zenscroll with that amount of time:
+
+````js
+image.classList.remove("is-small")
+setTimeout(function () { 
+    zenscroll.intoView(image2) 
+}, 500)
+````
+
+
+### 5. Scrolls the element to the center of the screen
+
+````js
+zenscroll.center(image2)
+````
+
+If you want you can also define an offset. The top of the element will be upwards from the center of the screen by this amount of pixels. (By default offset is the half of the element’s height.)
+
+````js
+var duration = 500 // miliseconds
+var offset = 200 // pixels
+zenscroll.center(image2, duration, offset)
+````
+
+Note that a zero value for offset is ignored. You can work around this by using `zenscroll.toY()`.
+
+### 6. Set the duration of the scroll
+
+The default duration is 999 which is ~1 second. The duration is automatically reduced for elements that are very close. You can specifically set the duration via an optional second parameter. (Note that a value of zero for duration is ignored.)
+
+Examples:
+
+````js
+zenscroll.toY(70, 100) // 100ms == 0.1 second
+````
+
+````js
+zenscroll.to(about, 500) // 500ms == half a second
+````
+
+````js
+zenscroll.center(image2, 2000) // 2 seconds
+````
+
+### 7. Controlling the smooth scroll operation
+
+To check whether a scoll is being performed right now:
+
+````js
+var isScrolling = zenscroll.isScrolling()
+````
+
+To stop the current smooth scroll operation:
+
+````js
+zenscroll.stop()
+````
+
+### 8. Scroll inside a scrollable container element
+
+Anything you can do within the document you can also do inside a scrollable element. You just need to instantiate a new scoller for that element.
+
+Example:
+
+````html
+<div id="container">
+  <div id="item1">ITEM 1</div>
+  <div id="item2">ITEM 2</div>
+  <div id="item3">ITEM 3</div>
+  <div id="item4">ITEM 4</div>
+  <div id="item5">ITEM 5</div>
+  <div id="item6">ITEM 6</div>
+  <div id="item7">ITEM 7</div>
+</div>
+<script>
+  var c = document.getElementById("container")
+  var defaultDuration = 500
+  var edgeOffset = 4
+  var cScroll = new Zenscroll(c, defaultDuration, edgeOffset)
+  var target = document.getElementById("item4")
+  cScroll.center(target)
+</script>
+````
+
+Obviously you can use all other scroll methods and parameters with the scrollable container. Two examples:
+
+````js
+cScroll.toY(35)
+````
+
+````js
+cScroll.intoView(target, 750)
+````
+
+## License
+
+[Public Domain](http://unlicense.org). You can do with it whatever you want and I am not responsible for anything.
