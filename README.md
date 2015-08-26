@@ -2,11 +2,7 @@
 	<img src="https://zengabor.github.io/zenscroll/zenscroll.png" alt="Zenscroll"> 
 </p>
 
-#### [**Demo**](https://zengabor.github.io/zenscroll/) &nbsp;&middot;&nbsp; [**Download**](https://github.com/zengabor/zenscroll/archive/latest.zip) &nbsp;&middot;&nbsp;
-[**About**](#about) &nbsp;&middot;&nbsp;
-[**Install**](#install) &nbsp;&middot;&nbsp;
-[**How to use**](#how-to-use) &nbsp;&middot;&nbsp;
-[**License**](#license)
+#### [**Demo**](https://zengabor.github.io/zenscroll/) &nbsp;&middot;&nbsp; [**Download**](https://github.com/zengabor/zenscroll/archive/latest.zip) &nbsp;&middot;&nbsp; [**About**](#about) &nbsp;&middot;&nbsp; [**Install**](#install) &nbsp;&middot;&nbsp; [**How to use**](#how-to-use) &nbsp;&middot;&nbsp; [**License**](#license)
 
 
 # One JavaScript to Smooth-Scroll Them All
