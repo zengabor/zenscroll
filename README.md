@@ -1,42 +1,45 @@
-![Zenscroll](https://zengabor.github.io/zenscroll/zenscroll.png)
+<p align="center">
+	![Zenscroll](https://zengabor.github.io/zenscroll/zenscroll.png)
+</p>
+
+[**Demo**](https://zengabor.github.io/zenscroll/) &middot; [**Download**](https://github.com/zengabor/zenscroll/archive/latest.zip) &middot;
+[**About**](#about) &middot;
+[**Install**](#install) &middot;
+[**How to use**](#how-to-use) &middot;
+[**License**](#license)
+
 
 # One JavaScript to Smooth-Scroll Them All
 
-Instead of an abrupt jump scroll smoothly to internal links. Center an item, scroll to any Y position, move elements into view, and&nbsp;more.
+Elegant smooth scrolling on your page. No more abrupt jumps. Move elements into view, center them, or scroll to any Y position.
 
-Pure JavaScript, no dependencies. Just&nbsp;777&nbsp;bytes.
-
-### [Demo Page](https://zengabor.github.io/zenscroll/)
-
-### [Download](https://github.com/zengabor/zenscroll/archive/latest.zip)
+900 bytes of pure JavaScript. No dependencies.
 
 ## About
 
-Zenscroll is a JavaScript module that enables animated scrolling to any element or any position within your document or within a scrollable container.
+Zenscroll is a vanilla JavaScript module that enables animated scrolling to any element or any position within your document or within a scrollable container.
 
 Features:
 
-- Animated scrolling to anchors on the same page. (Progressive enhancment.)
+- Animated scrolling to anchors on the same page.
 - Scroll to a specific element.
 - Scrolling an element into view, making sure both top & bottom are visible, if possible.
 - Scroll to an element while centering it on the screen.
 - Customize the duration and other parameters.
-- No dependencies.
-- Tiny size: 777 bytes (minimized & gzipped).
+- No dependencies. Works great with others.
+- Tiny size: 900 bytes (minimized & gzipped).
 - Tested and works under the latest default browsers on Android, iOS, OS X, Windows. It was also tested on Android 2.2+, Firefox 3.6+, IE6+, iOS Safari 5+, OS X Safari 5+.
 
 
-## Getting Started
+## Install
 
-Add Zenscroll to your page. A good place is at the very bottom, just before the closing `</body>` tag.
+Include [Zenscroll](https://github.com/zengabor/zenscroll/archive/latest.zip) into your page. A good place is at the very bottom, just before the closing `</body>` tag. For&nbsp;example:
 
 ````html
     ...
     <script src="zenscroll-min.js"></script>
 </body>
 ````
-
-
 
 You can also use npm to install Zenscroll:
 
@@ -46,11 +49,18 @@ npm install zengabor/zenscroll
 
 ## How to use
 
-### 1. Smooth scroll to an anchor on the same page
+### 1. Smooth scroll within your page
 
-If Zenscroll is already added to your page it will automatically animate the scrolling within the page.
+If Zenscroll is included in your page it will automatically animate the scrolling to anchors on the same page.
 
 Since this is implemented a progressive enhancement, all internal links still work in very old browsers, like IE6, although the jump is not animated. Also note that internal links are intentionally not added to the history to save the users from having to hit the Back button too many times afterwards.
+
+If you want, you can opt out of this automatic smoothing:
+
+````js
+zenscroll.setup(null, null, true)
+````
+
 
 ### 2. Scroll to the top of an element
 
@@ -124,10 +134,10 @@ zenscroll.center(image2, 2000) // 2 seconds
 To check whether a scoll is being performed right now:
 
 ````js
-var isScrolling = zenscroll.isScrolling()
+var isScrolling = zenscroll.moving()
 ````
 
-To stop the current smooth scroll operation:
+To stop the current scrolling:
 
 ````js
 zenscroll.stop()
@@ -149,11 +159,12 @@ Example:
   <div id="item6">ITEM 6</div>
   <div id="item7">ITEM 7</div>
 </div>
+
 <script>
   var c = document.getElementById("container")
   var defaultDuration = 500
   var edgeOffset = 4
-  var cScroll = new Zenscroll(c, defaultDuration, edgeOffset)
+  var cScroll = zenscroll.new(c, defaultDuration, edgeOffset)
   var target = document.getElementById("item4")
   cScroll.center(target)
 </script>
@@ -172,3 +183,9 @@ cScroll.intoView(target, 750)
 ## License
 
 [Public Domain](http://unlicense.org). You can do with it whatever you want and I am not responsible for anything.
+
+
+## Other projects by me:
+
+- [Zenfonts](https://github.com/zengabor/zenfonts), a tiny JavaScript helper for @font-face loading
+- [Zenvite.com](http://zenvite.com/)>: Create beautiful invitation pages & get everyboy on the same page
