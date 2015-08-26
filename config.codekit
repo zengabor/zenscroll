@@ -161,11 +161,11 @@
 		"randomFootnoteNumbers": 0,
 		"useCompatibilityMode": 0
 		},
-	"\/src\/zenscroll.js": {
+	"\/zenscroll.js": {
 		"fileType": 64,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/zenscroll.js",
+		"inputAbbreviatedPath": "\/zenscroll.js",
 		"outputAbbreviatedPath": "\/Users\/gabor\/Repositories\/Zen-Tools\/zenscroll\/dist\/zenscroll.js",
 		"outputPathIsOutsideProject": 1,
 		"outputPathIsSetByUser": 1,
