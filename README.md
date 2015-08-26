@@ -1,11 +1,11 @@
 <p align="center">
-	![Zenscroll](https://zengabor.github.io/zenscroll/zenscroll.png)
+	<img src="https://zengabor.github.io/zenscroll/zenscroll.png" alt="Zenscroll"> 
 </p>
 
-[**Demo**](https://zengabor.github.io/zenscroll/) &middot; [**Download**](https://github.com/zengabor/zenscroll/archive/latest.zip) &middot;
-[**About**](#about) &middot;
-[**Install**](#install) &middot;
-[**How to use**](#how-to-use) &middot;
+#### [**Demo**](https://zengabor.github.io/zenscroll/) &nbsp;&middot;&nbsp; [**Download**](https://github.com/zengabor/zenscroll/archive/latest.zip) &nbsp;&middot;&nbsp;
+[**About**](#about) &nbsp;&middot;&nbsp;
+[**Install**](#install) &nbsp;&middot;&nbsp;
+[**How to use**](#how-to-use) &nbsp;&middot;&nbsp;
 [**License**](#license)
 
 
@@ -188,4 +188,4 @@ cScroll.intoView(target, 750)
 ## Other projects by me:
 
 - [Zenfonts](https://github.com/zengabor/zenfonts), a tiny JavaScript helper for @font-face loading
-- [Zenvite.com](http://zenvite.com/)>: Create beautiful invitation pages & get everyboy on the same page
+- [Zenvite.com](http://zenvite.com/): Create beautiful invitation pages & get everyboy on the same page
