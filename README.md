@@ -40,7 +40,7 @@ Include [Zenscroll](https://github.com/zengabor/zenscroll/archive/latest.zip) in
 You can also use npm to install Zenscroll:
 
 ````
-npm install zengabor/zenscroll
+npm install zenscroll
 ````
 
 ## How to use
