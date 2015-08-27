@@ -1,5 +1,7 @@
 <p align="center">
-	<img src="https://zengabor.github.io/zenscroll/zenscroll.png" alt="Zenscroll"> 
+	<a href="https://zengabor.github.io/zenscroll/">
+		<img src="https://zengabor.github.io/zenscroll/zenscroll.png" alt="Zenscroll">
+	</a>
 </p>
 
 #### [**Demo**](https://zengabor.github.io/zenscroll/) &nbsp;&middot;&nbsp; [**Download**](https://github.com/zengabor/zenscroll/archive/latest.zip) &nbsp;&middot;&nbsp; [**About**](#about) &nbsp;&middot;&nbsp; [**Install**](#install) &nbsp;&middot;&nbsp; [**How to use**](#how-to-use) &nbsp;&middot;&nbsp; [**License**](#license)
