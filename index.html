@@ -66,6 +66,13 @@
 	<script>this.Zenfonts=function(e){"use strict";var t="serif",n=e.documentElement,i=function o(e){var t=e.parentNode;t&&t.removeChild(e)},a=function s(e){e&&(n.className=n.className.replace(new RegExp("(^|\\s)*"+e+"(\\s|$)*","g")," "))};return function f(o,s){if(o instanceof Array||(o=[o]),s=s||{},!e.body)return setTimeout(function(){f(o,s)},1);for(var l=s.onLoad,r=s.loadingClass,c=s.fallbackClass,u=s.timeout||2222,d=(new Date).getTime()+Math.max(u,s.swap||9999),m=[],p=o.length;p--;){var h=o[p];"string"==typeof h&&(h={family:h});var v=h.family,y=e.createElement("div");y.style.cssText="position:absolute;top:-999px;left:-999px;visibility:hidden;white-space:nowrap;font-size:20em;font-family:"+t+";"+h.style||"",y.appendChild(e.createTextNode("// Zenfonts([{}]);")),e.body.appendChild(y),y._width=y.offsetWidth,y.style.fontFamily="'"+v+"',"+t,y._width!==y.offsetWidth?i(y):m.push(y)}var w=function N(){a(c),l&&l()};if(0===m.length)return w();r&&(n.className+=" "+r);var g=function b(){a(r)};if(c){var T=setTimeout(function C(){g(),n.className+=" "+c},u),x=w;w=function(){clearTimeout(T),x()}}!function E(e){setTimeout(function(){var t=(new Date).getTime()>=d;t&&s.onSwap&&s.onSwap();for(var n=m.length;n--;){var a=m[n];(t||a.offsetWidth!==a._width)&&(m.splice(n,1),i(a))}0===m.length?(t||w(),g()):E(1.5*e)},e)}(9)}}(document);</script>
 	<script>
 Zenfonts("Merienda One",{fallbackClass:"fallback-logotype"}),Zenfonts(["Alegreya Sans",{family:"Alegreya Sans",style:"font-weight: 400; font-style: italic"},{family:"Alegreya Sans",style:"font-weight: 700"},{family:"Alegreya Sans",style:"font-weight: 700; font-style: italic"}],{loadingClass:"loading",fallbackClass:"fallback",timeout:1e3,swap:1e3}),Zenfonts("PT Mono",{fallbackClass:"fallback-mono",timeout:1e3});	</script>
+	<script async src="https://www.google-analytics.com/analytics.js"></script>
+	<script>
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)}
+	ga.l=+new Date
+	ga('create', 'UA-66867856-1', 'auto')
+	ga('send', 'pageview')
+	</script>
 </head>
 
 
