@@ -9,7 +9,7 @@
 
 Elegant smooth scrolling on your page. No more abrupt jumps. Move elements into view, center them, or scroll to any Y position.
 
-900 bytes of pure JavaScript. No dependencies.
+865 bytes of pure JavaScript. No dependencies.
 
 ## About
 
@@ -23,7 +23,7 @@ Features:
 - Scroll to an element while centering it on the screen.
 - Customize the duration and other parameters.
 - No dependencies. Works great with others.
-- Tiny size: 900 bytes (minimized & gzipped).
+- Tiny size: 865 bytes (minimized & gzipped).
 - Tested and works under the latest default browsers on Android, iOS, OS X, Windows. It was also tested on Android 2.2+, Firefox 3.6+, IE6+, iOS Safari 5+, OS X Safari 5+.
 
 
@@ -184,4 +184,4 @@ cScroll.intoView(target, 750)
 ## Other projects by me:
 
 - [Zenfonts](https://github.com/zengabor/zenfonts), a tiny JavaScript helper for @font-face loading
-- [Zenvite.com](http://zenvite.com/): Create beautiful invitation pages & get everyboy on the same page
+- [Zenvite.com](http://zenvite.com/): Create beautiful invitation pages & get everybody on the same page
