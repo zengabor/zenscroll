@@ -1,5 +1,5 @@
 /*!
- * Zenscroll 0.9.0
+ * Zenscroll 0.9.1
  * https://github.com/zengabor/zenscroll/
  *
  * Copyright 2015 Gabor Lenard
@@ -41,29 +41,40 @@
 		"use strict"
 	
 		defaultDuration = defaultDuration || 999 //ms
-		if (typeof edgeOffset === "undefined") {
+		if (!edgeOffset || edgeOffset !== 0) {
 			// When scrolling this amount of distance is kept from the edges of the scrollContainer
 			edgeOffset = 9 //px
 		}
 
-		var docElem = doc.documentElement
 		var scrollTimeoutId
+		var docElem = doc.documentElement
 
-		var goTo	
-		var getScrollTop
-		var getViewHeight
-	
-		if (scrollContainer) {
-			goTo = function (y) { scrollContainer.scrollTop = y }
-			getScrollTop = function () { return scrollContainer.scrollTop }
-			getViewHeight = function () { return Math.min(scrollContainer.scrollHeight, win.innerHeight) }
-		} else {
-			goTo = function (y) { win.scrollTo(0, y) }
-			var de = document.documentElement
-			getScrollTop = function () { return win.scrollY || de.scrollTop }
-			getViewHeight = function () { return win.innerHeight || de.clientHeight }
+		var getScrollTop = function () { 
+			return scrollContainer ? scrollContainer.scrollTop : win.scrollY || docElem.scrollTop 
+		}
+
+		var getViewHeight = function () { 
+			return scrollContainer ? 
+				Math.min(scrollContainer.offsetHeight, win.innerHeight) : 
+				win.innerHeight || docElem.clientHeight
+		}
+
+		var getRelativeTopOf = function (elem) { 
+			return elem.offsetTop - (scrollContainer || docElem).offsetTop 
 		}
 	
+		// if (scrollContainer) {
+		// 	// docHeight = function () { return scrollContainer.scrollHeight }
+		// } else {
+		// 	getScrollTop = function () { return win.scrollY || docElem.scrollTop }
+		// 	getViewHeight = function () { return win.innerHeight || docElem.clientHeight }
+		// 	// docHeight = function () {
+		// 		// var body = doc.body
+		// 		// return doc.body.scrollHeight
+		// 		// console.log(body.scrollHeight, de.scrollHeight, body.offsetHeight, de.offsetHeight, body.clientHeight, de.clientHeight)
+		// 		// return Math.max(body.scrollHeight, de.scrollHeight, body.offsetHeight, de.offsetHeight, body.clientHeight, de.clientHeight)
+		// 	// }
+		// }
 
 		/**
 		 * Immediately stops the current smooth scroll operation
@@ -73,7 +84,8 @@
 			scrollTimeoutId = 0
 		}
 
-		var getRelativeTopOf = function (elem) { return elem.offsetTop - (scrollContainer || docElem).offsetTop }
+		// var getScrollTop = function () { return scrollContainer.scrollTop }
+		// var getViewHeight = function () { return Math.min(scrollContainer.offsetHeight, window.innerHeight) }
 
 		/**
 		 * Scrolls to a specific vertical position in the document.
@@ -93,7 +105,11 @@
 				scrollTimeoutId = setTimeout(function () {
 					var p = Math.min((new Date().getTime() - startTime) / duration, 1) // percentage
 					var y = Math.max(Math.floor(startY + distance*(p < 0.5 ? 2*p*p : p*(4 - p*2)-1)), 0)
-					goTo(y)
+					if (scrollContainer) {
+						scrollContainer.scrollTop = y
+					} else {
+						win.scrollTo(0, y)
+					}
 					if (p < 1 && (getViewHeight() + y) < (scrollContainer || docElem).scrollHeight) {
 						loopScroll()
 					} else {
@@ -146,7 +162,10 @@
 		 */
 		var scrollToCenterOf = function scrollToCenterOf(elem, duration, offset) {
 			scrollToY(
-				getRelativeTopOf(elem) - getViewHeight()/2 + (offset || elem.getBoundingClientRect().height/2), 
+				Math.max(
+					getRelativeTopOf(elem) - getViewHeight()/2 + (offset || elem.getBoundingClientRect().height/2), 
+					0
+				), 
 				duration
 			)
 		}
@@ -216,4 +235,3 @@
 
 
 })(this, document);
-
