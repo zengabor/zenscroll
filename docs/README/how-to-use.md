@@ -1,10 +1,17 @@
 ## How to use
 
-### 1. Smooth scroll to an anchor on the same page
+### 1. Smooth scroll within your page
 
-If Zenscroll is already added to your page it will automatically animate the scrolling within the page.
+If Zenscroll is included in your page it will automatically animate the scrolling to anchors on the same page.
 
 Since this is implemented a progressive enhancement, all internal links still work in very old browsers, like IE6, although the jump is not animated. Also note that internal links are intentionally not added to the history to save the users from having to hit the Back button too many times afterwards.
+
+If you want, you can opt out of this automatic smoothing:
+
+````js
+zenscroll.setup(null, null, true)
+````
+
 
 ### 2. Scroll to the top of an element
 
@@ -78,10 +85,10 @@ zenscroll.center(image2, 2000) // 2 seconds
 To check whether a scoll is being performed right now:
 
 ````js
-var isScrolling = zenscroll.isScrolling()
+var isScrolling = zenscroll.moving()
 ````
 
-To stop the current smooth scroll operation:
+To stop the current scrolling:
 
 ````js
 zenscroll.stop()
@@ -103,11 +110,12 @@ Example:
   <div id="item6">ITEM 6</div>
   <div id="item7">ITEM 7</div>
 </div>
+
 <script>
   var c = document.getElementById("container")
   var defaultDuration = 500
   var edgeOffset = 4
-  var cScroll = new Zenscroll(c, defaultDuration, edgeOffset)
+  var cScroll = zenscroll.new(c, defaultDuration, edgeOffset)
   var target = document.getElementById("item4")
   cScroll.center(target)
 </script>

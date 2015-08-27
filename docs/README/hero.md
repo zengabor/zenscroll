@@ -1,5 +1,5 @@
 # One JavaScript to Smooth-Scroll Them All
 
-Instead of an abrupt jump scroll smoothly to internal links. Center an item, scroll to any Y position, move elements into view, and&nbsp;more.
+Elegant smooth scrolling on your page. No more abrupt jumps. Move elements into view, center them, or scroll to any Y position.
 
-Pure JavaScript, no dependencies. Just&nbsp;777&nbsp;bytes.
+865 bytes of pure JavaScript. No dependencies.

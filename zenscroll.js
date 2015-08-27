@@ -1,5 +1,5 @@
 /*!
- * Zenscroll 1.0.0
+ * Zenscroll 0.9.1
  * https://github.com/zengabor/zenscroll/
  *
  * Copyright 2015 Gabor Lenard
@@ -32,177 +32,206 @@
  */
 
 /*jshint devel:true, asi:true */
-/*global zenscroll */
 
-function Zenscroll(scrollContainer, defaultDuration, edgeOffset) {
-	"use strict"
 
-	var goTo	
-	var getScrollTop
-	var getViewHeight
-	// var docHeight
+(function (win, doc) {
+
+
+	var makeScroller = function makeScroller(scrollContainer, defaultDuration, edgeOffset) {
+		"use strict"
 	
-	if (scrollContainer) {
-		goTo = function (y) { scrollContainer.scrollTop = y }
-	} else {
-		goTo = function (y) { window.scrollTo(0, y) }
-	}
-	if (scrollContainer) {
-		getScrollTop = function () { return scrollContainer.scrollTop }
-		getViewHeight = function () { return Math.min(scrollContainer.scrollHeight, window.innerHeight) }
-		// docHeight = function () { return scrollContainer.scrollHeight }
-	} else {
-		var de = document.documentElement
-		getScrollTop = function () { return window.scrollY || de.scrollTop }
-		getViewHeight = function () { return window.innerHeight || de.clientHeight }
-		// docHeight = function () {
-			// var body = doc.body
-			// return doc.body.scrollHeight
-			// console.log(body.scrollHeight, de.scrollHeight, body.offsetHeight, de.offsetHeight, body.clientHeight, de.clientHeight)
-			// return Math.max(body.scrollHeight, de.scrollHeight, body.offsetHeight, de.offsetHeight, body.clientHeight, de.clientHeight)
-		// }
-	}
-	
-
-	scrollContainer = scrollContainer || document.documentElement
-	defaultDuration = defaultDuration || 999 //ms
-	if (typeof edgeOffset === "undefined") {
-		// When scrolling this amount of distance is kept from the edges of the scrollContainer
-		edgeOffset = 9 //px
-	}
-
-	var scrollTimeoutId
-
-	/**
-	 * Immediately stops the current smooth scroll operation
-	 */
-	var stopScroll = function stopScroll() {
-		clearTimeout(scrollTimeoutId)
-		scrollTimeoutId = 0
-	}
-
-	// var getScrollTop = function () { return scrollContainer.scrollTop }
-	// var getViewHeight = function () { return Math.min(scrollContainer.offsetHeight, window.innerHeight) }
-	var getRelativeTopOf = function (elem) { return elem.offsetTop - scrollContainer.offsetTop }
-
-	/**
-	 * Scrolls to a specific vertical position in the document.
-	 *
-	 * @param {endY} The vertical position within the document.
-	 * @param {duration} Optionally the duration of the scroll operation.
-	 *        If 0 or not provided it is automatically calculated based on the 
-	 *        distance and the default duration.
-	 */
-	var scrollToY = function (endY, duration) {
-		stopScroll()
-		var startY = getScrollTop()
-		var distance = Math.max(endY,0) - startY
-		duration = duration || Math.min(Math.abs(distance), defaultDuration)
-		var startTime = new Date().getTime();
-		(function loopScroll() {
-			scrollTimeoutId = setTimeout(function () {
-				var p = Math.min((new Date().getTime() - startTime) / duration, 1) // percentage
-				var y = Math.max(Math.floor(startY + distance*(p < 0.5 ? 2*p*p : p*(4 - p*2)-1)), 0)
-				goTo(y)
-				if (p < 1 && (getViewHeight() + y) < scrollContainer.scrollHeight) {
-					loopScroll()
-				} else {
-					setTimeout(stopScroll, 99) // with cooldown time
-				}
-			}, 9)
-		})()
-	}
-
-	/**
-	 * Scrolls to the top of a specific element.
-	 *
-	 * @param {elem} The element.
-	 * @param {duration} Optionally the duration of the scroll operation.
-	 *        A value of 0 is ignored.
-	 */
-	var scrollToElem = function scrollToElem(elem, duration) {
-		scrollToY(getRelativeTopOf(elem) - edgeOffset, duration)
-	}
-
-	/**
-	 * Scrolls an element into view if necessary.
-	 *
-	 * @param {elem} The element.
-	 * @param {duration} Optionally the duration of the scroll operation.
-	 *        A value of 0 is ignored.
-	 */
-	var scrollIntoView = function scrollIntoView(elem, duration) {
-		var elemScrollHeight = elem.getBoundingClientRect().height + 2*edgeOffset
-		var vHeight = getViewHeight()
-		var elemTop = getRelativeTopOf(elem)
-		var elemBottom = elemTop + elemScrollHeight
-		var scrollTop = getScrollTop()
-		if ((elemTop - scrollTop) < edgeOffset || elemScrollHeight > vHeight) {
-			// Element is clipped at top or is higher than screen.
-			scrollToElem(elem, duration)
-		} else if ((scrollTop + vHeight - elemBottom) < edgeOffset) {
-			// Element is clipped at the bottom.
-			scrollToY(elemBottom - vHeight, duration)
+		defaultDuration = defaultDuration || 999 //ms
+		if (!edgeOffset || edgeOffset !== 0) {
+			// When scrolling this amount of distance is kept from the edges of the scrollContainer
+			edgeOffset = 9 //px
 		}
-	}
 
-	/**
-	 * Scrolls to the center of an element.
-	 *
-	 * @param {elem} The element.
-	 * @param {duration} Optionally the duration of the scroll operation.
-	 * @param {offset} Optionally the offset of the top of the element from the center of the screen.
-	 *        A value of 0 is ignored.
-	 */
-	var scrollToCenterOf = function scrollToCenterOf(elem, duration, offset) {
-		scrollToY(
-			getRelativeTopOf(elem) - getViewHeight()/2 + (offset || elem.getBoundingClientRect().height/2), 
-			duration
-		)
-	}
+		var scrollTimeoutId
+		var docElem = doc.documentElement
 
-	return {
-		to: scrollToElem,
-		toY: scrollToY,
-		intoView: scrollIntoView,
-		center: scrollToCenterOf,
-		stop: stopScroll,
-		isScrolling: function () { return !!scrollTimeoutId }
-	}
+		var getScrollTop = function () { 
+			return scrollContainer ? scrollContainer.scrollTop : win.scrollY || docElem.scrollTop 
+		}
 
-}
+		var getViewHeight = function () { 
+			return scrollContainer ? 
+				Math.min(scrollContainer.offsetHeight, win.innerHeight) : 
+				win.innerHeight || docElem.clientHeight
+		}
 
+		var getRelativeTopOf = function (elem) { 
+			return elem.offsetTop - (scrollContainer || docElem).offsetTop 
+		}
+	
+		// if (scrollContainer) {
+		// 	// docHeight = function () { return scrollContainer.scrollHeight }
+		// } else {
+		// 	getScrollTop = function () { return win.scrollY || docElem.scrollTop }
+		// 	getViewHeight = function () { return win.innerHeight || docElem.clientHeight }
+		// 	// docHeight = function () {
+		// 		// var body = doc.body
+		// 		// return doc.body.scrollHeight
+		// 		// console.log(body.scrollHeight, de.scrollHeight, body.offsetHeight, de.offsetHeight, body.clientHeight, de.clientHeight)
+		// 		// return Math.max(body.scrollHeight, de.scrollHeight, body.offsetHeight, de.offsetHeight, body.clientHeight, de.clientHeight)
+		// 	// }
+		// }
 
-window.zenscroll = new Zenscroll();
+		/**
+		 * Immediately stops the current smooth scroll operation
+		 */
+		var stopScroll = function stopScroll() {
+			clearTimeout(scrollTimeoutId)
+			scrollTimeoutId = 0
+		}
 
+		// var getScrollTop = function () { return scrollContainer.scrollTop }
+		// var getViewHeight = function () { return Math.min(scrollContainer.offsetHeight, window.innerHeight) }
 
-// Defining a click handler that automatically handles links that start with a "#"
-(function (win) {
-	"use strict"
-	if ("addEventListener" in win) {
+		/**
+		 * Scrolls to a specific vertical position in the document.
+		 *
+		 * @param {endY} The vertical position within the document.
+		 * @param {duration} Optionally the duration of the scroll operation.
+		 *        If 0 or not provided it is automatically calculated based on the 
+		 *        distance and the default duration.
+		 */
+		var scrollToY = function (endY, duration) {
+			stopScroll()
+			var startY = getScrollTop()
+			var distance = Math.max(endY,0) - startY
+			duration = duration || Math.min(Math.abs(distance), defaultDuration)
+			var startTime = new Date().getTime();
+			(function loopScroll() {
+				scrollTimeoutId = setTimeout(function () {
+					var p = Math.min((new Date().getTime() - startTime) / duration, 1) // percentage
+					var y = Math.max(Math.floor(startY + distance*(p < 0.5 ? 2*p*p : p*(4 - p*2)-1)), 0)
+					if (scrollContainer) {
+						scrollContainer.scrollTop = y
+					} else {
+						win.scrollTo(0, y)
+					}
+					if (p < 1 && (getViewHeight() + y) < (scrollContainer || docElem).scrollHeight) {
+						loopScroll()
+					} else {
+						setTimeout(stopScroll, 99) // with cooldown time
+					}
+				}, 9)
+			})()
+		}
+
+		/**
+		 * Scrolls to the top of a specific element.
+		 *
+		 * @param {elem} The element.
+		 * @param {duration} Optionally the duration of the scroll operation.
+		 *        A value of 0 is ignored.
+		 */
+		var scrollToElem = function scrollToElem(elem, duration) {
+			scrollToY(getRelativeTopOf(elem) - edgeOffset, duration)
+		}
+
+		/**
+		 * Scrolls an element into view if necessary.
+		 *
+		 * @param {elem} The element.
+		 * @param {duration} Optionally the duration of the scroll operation.
+		 *        A value of 0 is ignored.
+		 */
+		var scrollIntoView = function scrollIntoView(elem, duration) {
+			var elemScrollHeight = elem.getBoundingClientRect().height + 2*edgeOffset
+			var vHeight = getViewHeight()
+			var elemTop = getRelativeTopOf(elem)
+			var elemBottom = elemTop + elemScrollHeight
+			var scrollTop = getScrollTop()
+			if ((elemTop - scrollTop) < edgeOffset || elemScrollHeight > vHeight) {
+				// Element is clipped at top or is higher than screen.
+				scrollToElem(elem, duration)
+			} else if ((scrollTop + vHeight - elemBottom) < edgeOffset) {
+				// Element is clipped at the bottom.
+				scrollToY(elemBottom - vHeight, duration)
+			}
+		}
+
+		/**
+		 * Scrolls to the center of an element.
+		 *
+		 * @param {elem} The element.
+		 * @param {duration} Optionally the duration of the scroll operation.
+		 * @param {offset} Optionally the offset of the top of the element from the center of the screen.
+		 *        A value of 0 is ignored.
+		 */
+		var scrollToCenterOf = function scrollToCenterOf(elem, duration, offset) {
+			scrollToY(
+				Math.max(
+					getRelativeTopOf(elem) - getViewHeight()/2 + (offset || elem.getBoundingClientRect().height/2), 
+					0
+				), 
+				duration
+			)
+		}
+	
 		var replaceUrl = function replaceUrl(hash) {
 			if (win.history.replaceState) {
 				history.replaceState({}, "", win.location.href.split("#")[0] + "#" + hash)
 			}
 		} 
-		win.addEventListener("click", function (event) {
+		var internalLinkHandler = function internalLinkHandler(event) {
 			var anchor = event.target
 			var href = anchor.getAttribute("href") || ""
 			if (anchor.tagName === "A" && href.indexOf("#") === 0) {
 				if (href === "#") {
 					event.preventDefault()
-					zenscroll.toY(0)
+					win.zenscroll.toY(0)
 					replaceUrl("")
 				} else {
 					var targetId = anchor.hash.substring(1)
 					var targetElem = document.getElementById(targetId)
 					if (targetElem) {
 						event.preventDefault()
-						zenscroll.to(targetElem)
+						win.zenscroll.to(targetElem)
 						replaceUrl(targetId)
 					}
 				}
 			}
-		}, false)
+		}
+	
+		var removeEventListener
+		if ("addEventListener" in win) {
+			win.addEventListener("click", internalLinkHandler, false)
+			removeEventListener = function () { win.removeEventListener("click", internalLinkHandler, false) }
+		} else if (win.attachEvent) {
+			win.attachEvent("onclick", internalLinkHandler)
+			removeEventListener = function () { win.detachEvent("onclick", internalLinkHandler) }
+		}
+
+		var setup = function setup(newDuration, newEdgeOffset, disableInternalLinks) {
+			if (newDuration) {
+				defaultDuration = newDuration
+			}
+			if (newEdgeOffset !== null) {
+				edgeOffset = newEdgeOffset
+			}
+			if (disableInternalLinks && removeEventListener) {
+				removeEventListener()
+				removeEventListener = null
+			}
+		}
+
+		return {
+			new: makeScroller,
+			setup: setup,
+			to: scrollToElem,
+			toY: scrollToY,
+			intoView: scrollIntoView,
+			center: scrollToCenterOf,
+			stop: stopScroll,
+			moving: function () { return !!scrollTimeoutId }
+		}
+
 	}
-})(window);
+
+
+	win.zenscroll = makeScroller()
+
+
+})(this, document);
