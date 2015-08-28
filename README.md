@@ -5,7 +5,7 @@
 </p>
 
 
-#### [**Download**](https://github.com/zengabor/zenscroll/archive/latest.zip) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [**Demo**](https://zengabor.github.io/zenscroll/) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [**About**](#about) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [**Install**](#install) &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; [**How to use**](#how-to-use) &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; [**License**](#license)
+#### [**Download**](https://github.com/zengabor/zenscroll/archive/latest.zip) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [**Demo**](https://zengabor.github.io/zenscroll/) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [**About**](#about) &nbsp; &nbsp; &nbsp; &nbsp; [**Install**](#install) &nbsp; &nbsp; &nbsp; &nbsp; [**How to use**](#how-to-use) &nbsp; &nbsp; &nbsp; &nbsp; [**License**](#license)
 
 
 # One JavaScript to Smooth-Scroll Them All
