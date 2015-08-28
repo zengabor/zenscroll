@@ -4,7 +4,8 @@
 	</a>
 </p>
 
-#### [**Demo**](https://zengabor.github.io/zenscroll/) &nbsp;&middot;&nbsp; [**Download**](https://github.com/zengabor/zenscroll/archive/latest.zip) &nbsp;&middot;&nbsp; [**About**](#about) &nbsp;&middot;&nbsp; [**Install**](#install) &nbsp;&middot;&nbsp; [**How to use**](#how-to-use) &nbsp;&middot;&nbsp; [**License**](#license)
+
+#### [**Download**](https://github.com/zengabor/zenscroll/archive/latest.zip) &nbsp; &nbsp; &middot; &nbsp; &nbsp; [**Demo**](https://zengabor.github.io/zenscroll/) &nbsp;&nbsp; &middot; &nbsp; &nbsp; [**About**](#about) &nbsp; &nbsp; &middot; &nbsp; &nbsp; [**Install**](#install) &nbsp; &nbsp; &middot; &nbsp; &nbsp; [**How to use**](#how-to-use) &nbsp; &nbsp; &middot; &nbsp; &nbsp; [**License**](#license)
 
 
 # One JavaScript to Smooth-Scroll Them All
