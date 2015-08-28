@@ -5,7 +5,7 @@
 </p>
 
 
-#### [**Download**](https://github.com/zengabor/zenscroll/archive/latest.zip) &nbsp; &nbsp;&middot;&nbsp; &nbsp; [**Demo**](https://zengabor.github.io/zenscroll/) &nbsp; &nbsp;&middot;&nbsp; &nbsp; [**About**](#about) &nbsp; &nbsp;&middot;&nbsp; &nbsp; [**Install**](#install) &nbsp; &nbsp;&middot;&nbsp; &nbsp; [**How to use**](#how-to-use) &nbsp; &nbsp;&middot;&nbsp; &nbsp; [**License**](#license)
+#### [**Download**](https://github.com/zengabor/zenscroll/archive/latest.zip) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [**Demo**](https://zengabor.github.io/zenscroll/) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [**About**](#about) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [**Install**](#install) &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; [**How to use**](#how-to-use) &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; [**License**](#license)
 
 
 # One JavaScript to Smooth-Scroll Them All
@@ -24,9 +24,9 @@ Features:
 - Scroll to a specific element.
 - Scrolling an element into view, making sure both top & bottom are visible, if possible.
 - Scroll to an element while centering it on the screen.
-- Customize the duration and other parameters.
+- Customize the duration and the spacing between the element and the edge of the screen.
 - No dependencies. Works great with others.
-- Tiny size: 865 bytes (minimized & gzipped).
+- Small size: 865 bytes (minimized & gzipped).
 - Tested and works under the latest default browsers on Android, iOS, OS X, Windows. It was also tested on Android 2.2+, Firefox 3.6+, IE6+, iOS Safari 5+, OS X Safari 5+.
 
 
@@ -169,7 +169,7 @@ Example:
 </script>
 ````
 
-Obviously you can use all other scroll methods and parameters with the scrollable container. Two examples:
+Obviously you can use all other scroll methods and parameters with the scrollable container. Two more examples:
 
 ````js
 cScroll.toY(35)
