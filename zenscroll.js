@@ -1,5 +1,5 @@
-/*!
- * Zenscroll 0.9.1
+/**
+ * Zenscroll 0.9.2
  * https://github.com/zengabor/zenscroll/
  *
  * Copyright 2015 Gabor Lenard
@@ -196,12 +196,14 @@
 		}
 	
 		var removeEventListener
-		if ("addEventListener" in win) {
-			win.addEventListener("click", internalLinkHandler, false)
-			removeEventListener = function () { win.removeEventListener("click", internalLinkHandler, false) }
-		} else if (win.attachEvent) {
-			win.attachEvent("onclick", internalLinkHandler)
-			removeEventListener = function () { win.detachEvent("onclick", internalLinkHandler) }
+		if (!scrollContainer) {
+			if ("addEventListener" in win) {
+				win.addEventListener("click", internalLinkHandler, false)
+				removeEventListener = function () { win.removeEventListener("click", internalLinkHandler, false) }
+			} else if (win.attachEvent) {
+				win.attachEvent("onclick", internalLinkHandler)
+				removeEventListener = function () { win.detachEvent("onclick", internalLinkHandler) }
+			}
 		}
 
 		var setup = function setup(newDuration, newEdgeOffset, disableInternalLinks) {
@@ -218,7 +220,7 @@
 		}
 
 		return {
-			new: makeScroller,
+			newFor: makeScroller,
 			setup: setup,
 			to: scrollToElem,
 			toY: scrollToY,

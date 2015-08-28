@@ -11,15 +11,23 @@
 	<meta name="twitter:site" content="@zengabor">
 	<meta name="twitter:creator" content="@zengabor">
 	<meta name="twitter:card" content="summary">
-	<meta property="og:url" content="http://zengabor.github.io/zenscroll/" />
+	<meta property="og:url" content="http://zengabor.github.io/zenscroll/">
 	<meta property="og:type" content="website">
 	<meta property="og:site_name" content="Zenscroll">
 	<meta property="og:title" content="Zenscroll">
-	<link rel="author" href="http://www.gaborlenard.com/" />
+	<link rel="author" href="http://www.gaborlenard.com/">
 	<link href="https://fonts.googleapis.com/css?family=Merienda+One&subset=latin" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:400,400italic,700,700italic&subset=latin" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/css?family=PT+Mono&subset=latin" rel="stylesheet" type="text/css">
+	<meta name="theme-color" content="#eee9e3">
+	<link rel="icon" sizes="16x16" href="zen-16.png" type="image/png" />
+	<link rel="icon" sizes="192x192" href="zen-192.png" type="image/png" />
+	<link rel="icon" sizes="32x32" href="zen-32.png" type="image/png" />
 	<link rel="stylesheet" type="text/css" href="styles.css">
+	<!--[if IE]>
+		<link rel="stylesheet" type="text/css" href="ie.css">
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<![endif]-->
 	<style>
 		/* Hides content during load to fix FOUT: */
 		.loading body {
@@ -84,11 +92,10 @@ Zenfonts("Merienda One",{fallbackClass:"fallback-logotype"}),Zenfonts(["Alegreya
 			github.com/zengabor/zenscroll
 		</a>
 		<nav>
-			<a 
-				href="#about">About</a><a 
-				href="#install">Install</a><a 
-				href="#howtouse">How to Use</a><a 
-				href="#license">License</a>
+			<a href="#about">About</a>
+			<a href="#install">Install</a>
+			<a href="#howtouse">How to Use</a>
+			<a href="#license">License</a>
 		</nav>
 	</header>
 	
@@ -98,7 +105,8 @@ Zenfonts("Merienda One",{fallbackClass:"fallback-logotype"}),Zenfonts(["Alegreya
 
 			<h1 id="onejavascripttosmooth-scrollthemall">One JavaScript to Smooth-Scroll Them All</h1>
 
-<p>Elegant smooth scrolling on your page. No more abrupt jumps. Move elements into view, center them, or scroll to any Y position.</p>
+<p>Smooth animated scrolling. No more abrupt jumps on your page.
+Move&nbsp;elements into view, center them, or scroll to any Y position.</p>
 
 <p>865 bytes of pure JavaScript. No dependencies.</p>
 
@@ -110,7 +118,7 @@ Zenfonts("Merienda One",{fallbackClass:"fallback-logotype"}),Zenfonts(["Alegreya
 
 <h2 id="about">About</h2>
 
-<p>Zenscroll is a vanilla JavaScript module that enables animated scrolling to any element or any position within your document or within a scrollable container.</p>
+<p>Zenscroll is a vanilla JavaScript module that enables animated vertical scrolling to any element or any position within your document or within a DIV or other scrollable container.</p>
 
 <p>Features:</p>
 
@@ -119,15 +127,15 @@ Zenfonts("Merienda One",{fallbackClass:"fallback-logotype"}),Zenfonts(["Alegreya
 <li>Scroll to a specific element.</li>
 <li>Scrolling an element into view, making sure both top &amp; bottom are visible, if possible.</li>
 <li>Scroll to an element while centering it on the screen.</li>
-<li>Customize the duration and other parameters.</li>
+<li>Customize the duration and the spacing between the element and the edge of the screen.</li>
 <li>No dependencies. Works great with others.</li>
-<li>Tiny size: 865 bytes (minimized &amp; gzipped).</li>
+<li>Small size: 865 bytes (minimized &amp; gzipped).</li>
 <li>Tested and works under the latest default browsers on Android, iOS, OS X, Windows. It was also tested on Android 2.2+, Firefox 3.6+, IE6+, iOS Safari 5+, OS X Safari 5+.</li>
 </ul>
 
 <h2 id="install">Install</h2>
 
-<p>Include <a href="https://github.com/zengabor/zenscroll/archive/latest.zip">Zenscroll</a> into your page. A good place is at the very bottom, just before the closing <code>&lt;/body&gt;</code> tag. For&nbsp;example:</p>
+<p><a href="https://github.com/zengabor/zenscroll/archive/latest.zip">Download Zenscroll</a> and include it into your page. A good place is at the very bottom, just before the closing <code>&lt;/body&gt;</code> tag. For&nbsp;example:</p>
 
 <pre><code class="html">    ...
     &lt;script src=&quot;zenscroll-min.js&quot;&gt;&lt;/script&gt;
@@ -143,11 +151,13 @@ Zenfonts("Merienda One",{fallbackClass:"fallback-logotype"}),Zenfonts(["Alegreya
 
 <h3 id="1.smoothscrollwithinyourpage">1. Smooth scroll within your page</h3>
 
-<p>If Zenscroll is included in your page it will automatically animate the scrolling to anchors on the same page.</p>
+<p>If Zenscroll is included in your page it will automatically animate the scrolling to anchors on the same page. This works even with content you dynamically load via ajax, as Zenscroll uses a generic click handler.</p>
 
-<p>Since this is implemented a progressive enhancement, all internal links still work in very old browsers, like IE6, although the jump is not animated. Also note that internal links are intentionally not added to the history to save the users from having to hit the Back button too many times afterwards.</p>
+<p>Since this is implemented a progressive enhancement, all internal links still work even in very old browsers. Note that internal links are intentionally not added to the history to save the users from having to hit the Back button too many times afterwards.</p>
 
-<p>If you want, you can opt out of this automatic smoothing:</p>
+<p>If you want some links to be excluded from this, then start with the path of the page. E.g., instead of writing <code>&lt;a href=&quot;#about&quot;&gt;</code> write <code>&lt;a href=&quot;/#about&quot;&gt;</code>. </p>
+
+<p>You can also disable this automatic smoothing for all internal links by executing:</p>
 
 <pre><code class="js">zenscroll.setup(null, null, true)
 </code></pre>
@@ -158,7 +168,7 @@ Zenfonts("Merienda One",{fallbackClass:"fallback-logotype"}),Zenfonts(["Alegreya
 zenscroll.to(about)
 </code></pre>
 
-<p>Note that Zenscroll intentionally leaves a few pixels (by default 9px) from the edges of the screen or scolling container. You can globally override this with the <code>edgeOffset</code> parameter of the constructor.</p>
+<p>Note that Zenscroll intentionally leaves a few pixels (by default 9px) from the edges of the screen or scolling container. You can globally override the default value of <code>9px</code> by calling <code>zenscroll.setup()</code> (see below) or with the <code>edgeOffset</code> parameter of the constructor, if you are creating a scroller for a container element.</p>
 
 <h3 id="3.scrolltoaspecificverticalposition">3. Scroll to a specific vertical position</h3>
 
@@ -209,7 +219,32 @@ zenscroll.center(image2, duration, offset)
 <pre><code class="js">zenscroll.center(image2, 2000) // 2 seconds
 </code></pre>
 
-<h3 id="7.controllingthesmoothscrolloperation">7. Controlling the smooth scroll operation</h3>
+<h3 id="7.changesettings">7. Change settings</h3>
+
+<p>It’s easy to change the basic parameters of scrolling. You can set the default value for duration (it will be valid for internal scrolls and all your direct scroll calls where you don’t specify a duration), edge spacing, and you can also turn on or off the automatic smoothing for internal links.</p>
+
+<pre><code class="js">var defaultDuration = 777
+var edgeOffset = 3
+var disableInternalLinkSmoothing = false
+zenscroll.setup(defaultDuration, edgeOffset, disableInternalLinkSmoothing)
+</code></pre>
+
+<p>If you don’t want to change a value just pass <code>null</code>. For example, the line below sets the default duration, while leaving other settings unchanged:</p>
+
+<pre><code class="js">zenscroll.setup(500)
+</code></pre>
+
+<p>Sets the the spacing between the edge of the screen (or a DIV) and the target element you are scrolling to, while leaving other settings unchanged:</p>
+
+<pre><code class="js">zenscroll.setup(null, 5)
+</code></pre>
+
+<p>Disable the automatic smoothing for internal links, while leaving other settings unchanged:</p>
+
+<pre><code class="js">zenscroll.setup(null, null, true)
+</code></pre>
+
+<h3 id="8.controllingthesmoothscrolloperation">8. Controlling the smooth scroll operation</h3>
 
 <p>To check whether a scoll is being performed right now:</p>
 
@@ -221,7 +256,7 @@ zenscroll.center(image2, duration, offset)
 <pre><code class="js">zenscroll.stop()
 </code></pre>
 
-<h3 id="8.scrollinsideascrollablecontainerelement">8. Scroll inside a scrollable container element</h3>
+<h3 id="9.scrollinsideascrollablediv">9. Scroll inside a scrollable DIV</h3>
 
 <p>Anything you can do within the document you can also do inside a scrollable element. You just need to instantiate a new scoller for that element.</p>
 
@@ -241,13 +276,13 @@ zenscroll.center(image2, duration, offset)
   var c = document.getElementById(&quot;container&quot;)
   var defaultDuration = 500
   var edgeOffset = 4
-  var cScroll = zenscroll.new(c, defaultDuration, edgeOffset)
+  var cScroll = zenscroll.newFor(c, defaultDuration, edgeOffset)
   var target = document.getElementById(&quot;item4&quot;)
   cScroll.center(target)
 &lt;/script&gt;
 </code></pre>
 
-<p>Obviously you can use all other scroll methods and parameters with the scrollable container. Two examples:</p>
+<p>Obviously you can use all other scroll methods and parameters with the scrollable container. Two more examples:</p>
 
 <pre><code class="js">cScroll.toY(35)
 </code></pre>
@@ -268,7 +303,7 @@ zenscroll.center(image2, duration, offset)
 		<p>
 			<a href="http://www.gaborlenard.com/"><img class="avatar" src="zengabor.jpg" alt="Gabor Lenard">My name is Gabor Lenard.</a> 
 			You can find me on Twitter as <a href="https://twitter.com/zengabor">@zengabor</a>.
-			I am a product designer &amp; developer, currently building <a href="http://zenvite.com/">zenvite.com</a>. It never ceases to amaze me how people share their knowledge and the software they make. Their work empowers us all. This here, however humble, is my way of contributing to this communitiy &amp; the wonderful continuum we call the world&nbsp;wide&nbsp;web.
+			I am a product designer &amp; developer, currently building <a href="http://zenvite.com/">zenvite.com</a>. It never ceases to amaze me how people share their knowledge and what they make. Their work empowers us all. This here, however humble, is my way of contributing to this community &amp; the wonderful <a href="https://adactio.com/journal/6692">continuum</a> we call the world&nbsp;wide&nbsp;web.
 		</p>
 
 	</div>
@@ -276,9 +311,9 @@ zenscroll.center(image2, duration, offset)
 		<p>Other projects by me:</p>
 
 		<ul>
-			<li><a href="https://github.com/zengabor/zenfonts">Zenfonts</a>, a tiny JavaScript helper for @font-face loading</li>
-			<li><a href="http://zenvite.com/">Zenvite.com</a>: Create beautiful invitation pages &amp; get everyboy on the same page</li>
-		</ul>
+<li><a href="https://github.com/zengabor/zenfonts">Zenfonts</a>, a tiny JavaScript helper for @font-face loading</li>
+<li><a href="http://zenvite.com/">Zenvite.com</a>: Create beautiful invitation pages &amp; get everybody on the same page</li>
+</ul>
 		
 	</main>
 	
@@ -291,6 +326,7 @@ zenscroll.center(image2, duration, offset)
 	
 	<script src="zenscroll.js"></script>
 	
+	<script src="polyfills.js"></script>
 	<script src="demo.js"></script>
 
 </body>

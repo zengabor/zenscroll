@@ -1,14 +1,18 @@
 /*jshint devel:true, asi:true */
 /*global zenscroll */
 
-(function (doc) {
+(function (win, doc) {
 	"use strict"
 
 	var insertButtonBefore = function insertButtonBefore(parent, beforeElem, func) {
 		var button = doc.createElement("BUTTON")
 		button.className = "play-button"
 		button.innerHTML = "▶ Play"
-		button.addEventListener("click", func, false)
+		if ("addEventListener" in win) {
+			button.addEventListener("click", func, false)
+		} else if (win.attachEvent) {
+			button.attachEvent("onclick", func)
+		}
 		parent.insertBefore(button, beforeElem)
 		var spacer = doc.createElement("DIV")
 		spacer.className = "try-spacer"
@@ -49,7 +53,7 @@
 	image1.id = "image1"
 	image1.alt = "image1"
 	image1.className = "example-img"
-	image1.src = "image1.jpg"
+	image1.src = "image1.jpg" // or https://unsplash.it/1072/712?image=734
 	main.insertBefore(image1, examples[3])
 	var image2 = doc.createElement("IMG")
 	image2.id = "image2"
@@ -93,7 +97,7 @@
 	})
 
 	// Example 9:
-	var code9 = examples[7].nextElementSibling.nextElementSibling.nextElementSibling
+	var code9 = examples[8].nextElementSibling.nextElementSibling.nextElementSibling
 	var c = doc.createElement("DIV")
 	c.id = "container"
 	c.className = "example-content example-container"
@@ -106,7 +110,7 @@
 	main.insertBefore(c, code9.nextElementSibling)
 	var defaultDuration = 500
 	var edgeOffset = 6
-	var cScroll = zenscroll.new(c, defaultDuration, edgeOffset)
+	var cScroll = zenscroll.newFor(c, defaultDuration, edgeOffset)
 	var target = document.getElementById("item4")
 	insertButtonBefore(code9, null, function () {
 		zenscroll.intoView(c, 100)
@@ -124,4 +128,4 @@
 		"Tip: Scroll <em>ITEM 4</em> manually upwards/downwards out of view, then hit ‘Play’."
 	)
 
-})(document);
+})(this, document);
