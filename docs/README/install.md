@@ -1,6 +1,6 @@
 ## Install
 
-Include [Zenscroll](https://github.com/zengabor/zenscroll/archive/latest.zip) into your page. A good place is at the very bottom, just before the closing `</body>` tag. For&nbsp;example:
+[Download Zenscroll](https://github.com/zengabor/zenscroll/archive/latest.zip) and include it into your page. A good place is at the very bottom, just before the closing `</body>` tag. For&nbsp;example:
 
 ````html
     ...

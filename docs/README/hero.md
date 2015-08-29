@@ -1,5 +1,6 @@
 # One JavaScript to Smooth-Scroll Them All
 
-Elegant smooth scrolling on your page. No more abrupt jumps. Move elements into view, center them, or scroll to any Y position.
+Smooth animated scrolling. No&nbsp;more abrupt jumps on your page.
+Move&nbsp;elements into view, center them, or scroll to any Y&nbsp;position.
 
-865 bytes of pure JavaScript. No dependencies.
+870 bytes of pure JavaScript. No&nbsp;dependencies.

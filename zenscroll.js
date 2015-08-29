@@ -1,5 +1,5 @@
-/*!
- * Zenscroll 0.9.1
+/**
+ * Zenscroll 1.0.0
  * https://github.com/zengabor/zenscroll/
  *
  * Copyright 2015 Gabor Lenard
@@ -63,19 +63,6 @@
 			return elem.offsetTop - (scrollContainer || docElem).offsetTop 
 		}
 	
-		// if (scrollContainer) {
-		// 	// docHeight = function () { return scrollContainer.scrollHeight }
-		// } else {
-		// 	getScrollTop = function () { return win.scrollY || docElem.scrollTop }
-		// 	getViewHeight = function () { return win.innerHeight || docElem.clientHeight }
-		// 	// docHeight = function () {
-		// 		// var body = doc.body
-		// 		// return doc.body.scrollHeight
-		// 		// console.log(body.scrollHeight, de.scrollHeight, body.offsetHeight, de.offsetHeight, body.clientHeight, de.clientHeight)
-		// 		// return Math.max(body.scrollHeight, de.scrollHeight, body.offsetHeight, de.offsetHeight, body.clientHeight, de.clientHeight)
-		// 	// }
-		// }
-
 		/**
 		 * Immediately stops the current smooth scroll operation
 		 */
@@ -83,9 +70,6 @@
 			clearTimeout(scrollTimeoutId)
 			scrollTimeoutId = 0
 		}
-
-		// var getScrollTop = function () { return scrollContainer.scrollTop }
-		// var getViewHeight = function () { return Math.min(scrollContainer.offsetHeight, window.innerHeight) }
 
 		/**
 		 * Scrolls to a specific vertical position in the document.
@@ -196,12 +180,14 @@
 		}
 	
 		var removeEventListener
-		if ("addEventListener" in win) {
-			win.addEventListener("click", internalLinkHandler, false)
-			removeEventListener = function () { win.removeEventListener("click", internalLinkHandler, false) }
-		} else if (win.attachEvent) {
-			win.attachEvent("onclick", internalLinkHandler)
-			removeEventListener = function () { win.detachEvent("onclick", internalLinkHandler) }
+		if (!scrollContainer) {
+			if ("addEventListener" in win) {
+				win.addEventListener("click", internalLinkHandler, false)
+				removeEventListener = function () { win.removeEventListener("click", internalLinkHandler, false) }
+			} else if (win.attachEvent) {
+				win.attachEvent("onclick", internalLinkHandler)
+				removeEventListener = function () { win.detachEvent("onclick", internalLinkHandler) }
+			}
 		}
 
 		var setup = function setup(newDuration, newEdgeOffset, disableInternalLinks) {
@@ -218,7 +204,7 @@
 		}
 
 		return {
-			new: makeScroller,
+			newFor: makeScroller,
 			setup: setup,
 			to: scrollToElem,
 			toY: scrollToY,

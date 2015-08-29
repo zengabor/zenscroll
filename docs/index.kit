@@ -11,13 +11,25 @@
 	<meta name="twitter:site" content="@zengabor">
 	<meta name="twitter:creator" content="@zengabor">
 	<meta name="twitter:card" content="summary">
-	<meta property="og:url" content="http://zengabor.github.io/zenscroll/" />
+	<meta property="og:url" content="http://zengabor.github.io/zenscroll/">
 	<meta property="og:type" content="website">
 	<meta property="og:site_name" content="Zenscroll">
 	<meta property="og:title" content="Zenscroll">
-	<link rel="author" href="http://www.gaborlenard.com/" />
+	<link rel="author" href="http://www.gaborlenard.com/">
 <!-- @import ../../../zentheme/_googlefonts -->
+	<meta name="theme-color" content="#eee9e3">
+	<link rel="icon" sizes="16x16" href="zen-16.png" type="image/png" />
+	<link rel="icon" sizes="192x192" href="zen-192.png" type="image/png" />
+	<link rel="icon" sizes="32x32" href="zen-32.png" type="image/png" />
+	<!--[if lt IE 9]>
+		<script>"header main footer nav section figure figcaption time".replace(/\w+/g,function(n){document.createElement(n)})</script>
+		<link rel="stylesheet" type="text/css" href="/css/v1/ie8-.css" />
+	<![endif]-->
 	<link rel="stylesheet" type="text/css" href="styles.css">
+	<!--[if lt IE 9]>
+		<link rel="stylesheet" type="text/css" href="ie.css">
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<![endif]-->
 	<style>
 <!-- @import ../../../zentheme/googlefonts.css -->
 	z{}
@@ -44,11 +56,10 @@
 			github.com/zengabor/zenscroll
 		</a>
 		<nav>
-			<a 
-				href="#about">About</a><a 
-				href="#install">Install</a><a 
-				href="#howtouse">How to Use</a><a 
-				href="#license">License</a>
+			<a href="#about">About</a>
+			<a href="#install">Install</a>
+			<a href="#howtouse">How to Use</a>
+			<a href="#license">License</a>
 		</nav>
 	</header>
 	
@@ -77,10 +88,7 @@
 		
 		<p>Other projects by me:</p>
 
-		<ul>
-			<li><a href="https://github.com/zengabor/zenfonts">Zenfonts</a>, a tiny JavaScript helper for @font-face loading</li>
-			<li><a href="http://zenvite.com/">Zenvite.com</a>: Create beautiful invitation pages &amp; get everyboy on the same page</li>
-		</ul>
+		<!-- @include README/projects.html -->
 		
 	</main>
 	

@@ -1,15 +1,34 @@
 ## About
 
-Zenscroll is a vanilla JavaScript module that enables animated scrolling to any element or any position within your document or within a scrollable container.
+Zenscroll is a vanilla JavaScript module that enables animated vertical scrolling to any element or any position within your document or within a DIV or other scrollable container.
 
 Features:
 
 - Animated scrolling to anchors on the same page.
-- Scroll to a specific element.
+- Scroll to the top of a specific element.
 - Scrolling an element into view, making sure both top & bottom are visible, if possible.
 - Scroll to an element while centering it on the screen.
-- Customize the duration and other parameters.
-- No dependencies. Works great with others.
-- Tiny size: 865 bytes (minimized & gzipped).
-- Tested and works under the latest default browsers on Android, iOS, OS X, Windows. It was also tested on Android 2.2+, Firefox 3.6+, IE6+, iOS Safari 5+, OS X Safari 5+.
+- Customize the duration.
+- Specify the spacing between the element and the edge of the screen (required for fixed navigation bars and footers).
+- No dependencies.
+- Small size: 870 bytes (minimized & gzipped).
 
+Full support tested and works under:
+
+- Android Browser 2.2+
+- Chrome for Android
+- Chrome 14+ (probably earlier too)
+- Edge
+- Firefox 9+
+- Internet Explorer 9+
+- iOS Safari 4+
+- Opera 10.6+ (probably earlier too)
+- Safari 4+ (including Safari 9 on OS X 10.11 beta)
+- Windows Phone 8.1
+- Yandex 14.12
+
+Basic support (animated scroll in document) tested and works under:
+
+- Firefox 3+
+- Internet Explorer 6+
+- iOS Safari 3+
