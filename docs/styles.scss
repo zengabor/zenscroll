@@ -45,7 +45,7 @@ figure,
 		color: $c-red;
 		border-bottom: 0.125em dashed;
 		border-color: $c-red;
-		& + div {
+		& + .example-item {
 			border: none;
 		}
 	}
