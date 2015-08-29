@@ -1,5 +1,5 @@
 /**
- * Zenscroll 0.9.2
+ * Zenscroll 1.0.0
  * https://github.com/zengabor/zenscroll/
  *
  * Copyright 2015 Gabor Lenard
@@ -63,19 +63,6 @@
 			return elem.offsetTop - (scrollContainer || docElem).offsetTop 
 		}
 	
-		// if (scrollContainer) {
-		// 	// docHeight = function () { return scrollContainer.scrollHeight }
-		// } else {
-		// 	getScrollTop = function () { return win.scrollY || docElem.scrollTop }
-		// 	getViewHeight = function () { return win.innerHeight || docElem.clientHeight }
-		// 	// docHeight = function () {
-		// 		// var body = doc.body
-		// 		// return doc.body.scrollHeight
-		// 		// console.log(body.scrollHeight, de.scrollHeight, body.offsetHeight, de.offsetHeight, body.clientHeight, de.clientHeight)
-		// 		// return Math.max(body.scrollHeight, de.scrollHeight, body.offsetHeight, de.offsetHeight, body.clientHeight, de.clientHeight)
-		// 	// }
-		// }
-
 		/**
 		 * Immediately stops the current smooth scroll operation
 		 */
@@ -83,9 +70,6 @@
 			clearTimeout(scrollTimeoutId)
 			scrollTimeoutId = 0
 		}
-
-		// var getScrollTop = function () { return scrollContainer.scrollTop }
-		// var getViewHeight = function () { return Math.min(scrollContainer.offsetHeight, window.innerHeight) }
 
 		/**
 		 * Scrolls to a specific vertical position in the document.
