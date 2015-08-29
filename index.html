@@ -23,8 +23,12 @@
 	<link rel="icon" sizes="16x16" href="zen-16.png" type="image/png" />
 	<link rel="icon" sizes="192x192" href="zen-192.png" type="image/png" />
 	<link rel="icon" sizes="32x32" href="zen-32.png" type="image/png" />
+	<!--[if lt IE 9]>
+		<script>"header main footer nav section figure figcaption time".replace(/\w+/g,function(n){document.createElement(n)})</script>
+		<link rel="stylesheet" type="text/css" href="/css/v1/ie8-.css" />
+	<![endif]-->
 	<link rel="stylesheet" type="text/css" href="styles.css">
-	<!--[if IE]>
+	<!--[if lt IE 9]>
 		<link rel="stylesheet" type="text/css" href="ie.css">
 		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 	<![endif]-->
@@ -124,11 +128,12 @@ Move&nbsp;elements into view, center them, or scroll to any Y&nbsp;position.</p>
 
 <ul>
 <li>Animated scrolling to anchors on the same page.</li>
-<li>Scroll to a specific element.</li>
+<li>Scroll to the top of a specific element.</li>
 <li>Scrolling an element into view, making sure both top &amp; bottom are visible, if possible.</li>
 <li>Scroll to an element while centering it on the screen.</li>
-<li>Customize the duration and the spacing between the element and the edge of the screen.</li>
-<li>No dependencies. Works great with others.</li>
+<li>Customize the duration.</li>
+<li>Specify the spacing between the element and the edge of the screen (required for fixed navigation bars and footers).</li>
+<li>No dependencies.</li>
 <li>Small size: 870 bytes (minimized &amp; gzipped).</li>
 </ul>
 
@@ -138,6 +143,7 @@ Move&nbsp;elements into view, center them, or scroll to any Y&nbsp;position.</p>
 <li>Android Browser 2.2+</li>
 <li>Chrome for Android</li>
 <li>Chrome 14+ (probably earlier too)</li>
+<li>Edge</li>
 <li>Firefox 9+</li>
 <li>Internet Explorer 9+</li>
 <li>iOS Safari 4+</li>
@@ -151,13 +157,8 @@ Move&nbsp;elements into view, center them, or scroll to any Y&nbsp;position.</p>
 
 <ul>
 <li>Firefox 3+</li>
+<li>Internet Explorer 6+</li>
 <li>iOS Safari 3+</li>
-</ul>
-
-<p>Still under test:</p>
-
-<ul>
-<li>IE6, IE7, IE8</li>
 </ul>
 
 <h2 id="install">Install</h2>
@@ -195,7 +196,7 @@ Move&nbsp;elements into view, center them, or scroll to any Y&nbsp;position.</p>
 zenscroll.to(about)
 </code></pre>
 
-<p>Note that Zenscroll intentionally leaves a few pixels (by default 9px) from the edges of the screen or scolling container. You can globally override the default value of <code>9px</code> by calling <code>zenscroll.setup()</code> (see below) or with the <code>edgeOffset</code> parameter of the constructor, if you are creating a scroller for a container element.</p>
+<p>Note that Zenscroll intentionally leaves a few pixels (by default 9px) from the edges of the screen or scolling container. If you have a fixed navigation bar or footer bar then you probably need more than that. Or you may want to set it to zero. You can globally override the default value by calling <code>zenscroll.setup()</code> (see below) or with the <code>edgeOffset</code> parameter of the constructor when you create a scroller for a DIV.</p>
 
 <h3 id="3.scrolltoaspecificverticalposition">3. Scroll to a specific vertical position</h3>
 
@@ -246,44 +247,7 @@ zenscroll.center(image2, duration, offset)
 <pre><code class="js">zenscroll.center(image2, 2000) // 2 seconds
 </code></pre>
 
-<h3 id="7.changesettings">7. Change settings</h3>
-
-<p>It’s easy to change the basic parameters of scrolling. You can set the default value for duration (it will be valid for internal scrolls and all your direct scroll calls where you don’t specify a duration), edge spacing, and you can also turn on or off the automatic smoothing for internal links.</p>
-
-<pre><code class="js">var defaultDuration = 777
-var edgeOffset = 3
-var disableInternalLinkSmoothing = false
-zenscroll.setup(defaultDuration, edgeOffset, disableInternalLinkSmoothing)
-</code></pre>
-
-<p>If you don’t want to change a value just pass <code>null</code>. For example, the line below sets the default duration, while leaving other settings unchanged:</p>
-
-<pre><code class="js">zenscroll.setup(500)
-</code></pre>
-
-<p>Sets the the spacing between the edge of the screen (or a DIV) and the target element you are scrolling to, while leaving other settings unchanged:</p>
-
-<pre><code class="js">zenscroll.setup(null, 5)
-</code></pre>
-
-<p>Disable the automatic smoothing for internal links, while leaving other settings unchanged:</p>
-
-<pre><code class="js">zenscroll.setup(null, null, true)
-</code></pre>
-
-<h3 id="8.controllingthesmoothscrolloperation">8. Controlling the smooth scroll operation</h3>
-
-<p>To check whether a scoll is being performed right now:</p>
-
-<pre><code class="js">var isScrolling = zenscroll.moving()
-</code></pre>
-
-<p>To stop the current scrolling:</p>
-
-<pre><code class="js">zenscroll.stop()
-</code></pre>
-
-<h3 id="9.scrollinsideascrollablediv">9. Scroll inside a scrollable DIV</h3>
+<h3 id="7.scrollinsideascrollablediv">7. Scroll inside a scrollable DIV</h3>
 
 <p>Anything you can do within the document you can also do inside a scrollable element. You just need to instantiate a new scoller for that element.</p>
 
@@ -315,6 +279,49 @@ zenscroll.setup(defaultDuration, edgeOffset, disableInternalLinkSmoothing)
 </code></pre>
 
 <pre><code class="js">cScroll.intoView(target, 750)
+</code></pre>
+
+<h3 id="8.changesettings">8. Change settings</h3>
+
+<p>It’s easy to change the basic parameters of scrolling:</p>
+
+<ul>
+<li>You can set the default value for duration. This will be valid for internal scrolls and all your direct scroll calls where you don’t specify a duration.</li>
+<li>Change the edge offset (the spacing between the element and the screen edge). This is very useful if you have a fixed navigation bar or footer bar: set it to at least the height of your fixed bar.</li>
+<li>You can also turn on or off the automatic smoothing for internal links.</li>
+</ul>
+
+<pre><code class="js">var defaultDuration = 777
+var edgeOffset = 42
+var disableInternalLinkSmoothing = false
+zenscroll.setup(defaultDuration, edgeOffset, disableInternalLinkSmoothing)
+</code></pre>
+
+<p>If you don’t want to change a value just omit the parameter or pass <code>null</code>. For example, the line below sets the default duration, while leaving other settings unchanged:</p>
+
+<pre><code class="js">zenscroll.setup(500)
+</code></pre>
+
+<p>Sets the the spacing between the edge of the screen (or a DIV) and the target element you are scrolling to, while leaving the default duration unchanged:</p>
+
+<pre><code class="js">zenscroll.setup(null, 5)
+</code></pre>
+
+<p>Disable the automatic smoothing for internal links, while leaving both other settings unchanged:</p>
+
+<pre><code class="js">zenscroll.setup(null, null, true)
+</code></pre>
+
+<h3 id="9.controllingthesmoothoperation">9. Controlling the smooth operation</h3>
+
+<p>To check whether a scoll is being performed right now:</p>
+
+<pre><code class="js">var isScrolling = zenscroll.moving()
+</code></pre>
+
+<p>To stop the current scrolling:</p>
+
+<pre><code class="js">zenscroll.stop()
 </code></pre>
 
 <h2 id="license">License</h2>
@@ -353,7 +360,6 @@ zenscroll.setup(defaultDuration, edgeOffset, disableInternalLinkSmoothing)
 	
 	<script src="zenscroll.js"></script>
 	
-	<script src="polyfills.js"></script>
 	<script src="demo.js"></script>
 
 </body>

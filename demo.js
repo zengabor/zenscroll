@@ -3,6 +3,16 @@
 
 (function (win, doc) {
 	"use strict"
+	
+	var next = function next(el) {
+		do {
+			el = el.nextSibling
+			if (el.nodeType === 1) {
+				return el
+			}
+		} while (el)
+		return null
+	}
 
 	var insertButtonBefore = function insertButtonBefore(parent, beforeElem, func) {
 		var button = doc.createElement("BUTTON")
@@ -36,15 +46,15 @@
 	// Example 1:
 	var div = doc.createElement("DIV")
 	div.innerHTML = 'For example, try the navigation links <a href="#">at the top of this page &uarr;</a>.'
-	main.insertBefore(div, examples[0].nextElementSibling.nextElementSibling)
+	main.insertBefore(div, next(next(examples[0])))
 
 	// Example 2:
-	insertButtonBefore(examples[1].nextElementSibling, null, function () {
+	insertButtonBefore(next(examples[1]), null, function () {
 		zenscroll.to(about)
 	})
 
 	// Example 3:
-	insertButtonBefore(examples[2].nextElementSibling, null, function () {
+	insertButtonBefore(next(examples[2]), null, function () {
 		zenscroll.toY(123)
 	})
 
@@ -61,20 +71,20 @@
 	image2.className = "example-img is-small"
 	image2.src = "image2.jpg"
 	main.insertBefore(image2, examples[4])
-	insertButtonBefore(examples[3].nextElementSibling.nextElementSibling, null, function () {
+	insertButtonBefore(next(next(examples[3])), null, function () {
 		zenscroll.intoView(image1)
 	})
-	insertButtonBefore(examples[3].nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling, null, function () {
+	insertButtonBefore(next(next(next(next(examples[3])))), null, function () {
 		image2.className = "example-img"
 		setTimeout(function () { zenscroll.intoView(image2) }, 500)
 		setTimeout(function () { image2.className = "example-img is-small" }, 2500)
 	})
 
 	// Example 5:
-	insertButtonBefore(examples[4].nextElementSibling, null, function () {
+	insertButtonBefore(next(examples[4]), null, function () {
 		zenscroll.center(image2)
 	})
-	var code5b = examples[4].nextElementSibling.nextElementSibling.nextElementSibling
+	var code5b = next(next(next(examples[4])))
 	insertButtonBefore(code5b, null, function () {
 		var duration = 500 // miliseconds
 		var offset = 200 // pixels
@@ -85,29 +95,30 @@
 	)
 
 	// Example 6:
-	var code6 = examples[5].nextElementSibling.nextElementSibling.nextElementSibling
+	var code6 = next(next(next(examples[5])))
 	insertButtonBefore(code6, null, function () {
 		zenscroll.toY(70, 100)
 	})
-	insertButtonBefore(code6.nextElementSibling, null, function () {
+	insertButtonBefore(next(code6), null, function () {
 		zenscroll.to(about, 250)
 	})
-	insertButtonBefore(code6.nextElementSibling.nextElementSibling, null, function () {
+	insertButtonBefore(next(next(code6)), null, function () {
 		zenscroll.center(image2, 2000)
 	})
 
-	// Example 9:
-	var code9 = examples[8].nextElementSibling.nextElementSibling.nextElementSibling
+	// Example 7:
+	var code9 = next(next(next(examples[6])))
 	var c = doc.createElement("DIV")
 	c.id = "container"
 	c.className = "example-content example-container"
 	for (var it = 1; it < 8; it++) {
 		var item = doc.createElement("DIV")
+		item.className = "example-item"
 		item.id = "item" + it
 		item.innerHTML = "ITEM " + it
 		c.insertBefore(item, null)
 	}
-	main.insertBefore(c, code9.nextElementSibling)
+	main.insertBefore(c, next(code9))
 	var defaultDuration = 500
 	var edgeOffset = 6
 	var cScroll = zenscroll.newFor(c, defaultDuration, edgeOffset)
@@ -116,15 +127,15 @@
 		zenscroll.intoView(c, 100)
 		cScroll.center(target)
 	})
-	insertButtonBefore(code9.nextElementSibling.nextElementSibling.nextElementSibling, null, function () {
+	insertButtonBefore(next(next(next(code9))), null, function () {
 		zenscroll.intoView(c, 100)
 		cScroll.toY(35)
 	})
-	insertButtonBefore(code9.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling, null, function () {
+	insertButtonBefore(next(next(next(next(code9)))), null, function () {
 		zenscroll.intoView(c, 100)
 		cScroll.intoView(target, 750)
 	})
-	insertHelpText(main, code9.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling, 
+	insertHelpText(main, next(next(next(next(next(code9))))), 
 		"Tip: Scroll <em>ITEM 4</em> manually upwards/downwards out of view, then hit ‘Play’."
 	)
 
