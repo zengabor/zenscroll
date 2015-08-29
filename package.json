@@ -1,6 +1,6 @@
 {
 	"name": "zenscroll",
-	"version": "0.9.1",
+	"version": "1.0.0",
 	"description": "A module to smooth-scroll web pages and container elements",
 	"main": "zenscroll.js",
 	"files": ["zenscroll.js", "zenscroll-min.js"],
