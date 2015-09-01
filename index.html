@@ -31,49 +31,10 @@
 		<link rel="stylesheet" type="text/css" href="ie.css">
 		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	<![endif]-->
-	<style>		/* Hides content during load to fix FOUT on IE: */
-		.loading body {
-			visibility: hidden;
-		}
-
-		/* Font and fallback for body text: */
-		body, .play-button {
-			font-family: "Alegreya Sans", sans-serif;
-		}
-		nav a, h2, h3, strong, .play-button {
-			font-weight: 700;
-		}
-		h3 {
-			font-style: italic;
-		}
-		.fallback body {
-			font-family: "Avenir Next", Avenir, "Segoe UI", Calibri, "Helvetica Neue", Helvetica, sans-serif;
-		}
-		.fallback h2, .fallback strong {
-			font-weight: bold;
-		}
-
-		/* Font and fallback for the logotype: */
-		.logotype h1 {
-			font-family: "Merienda One", serif;
-/*			font-style: italic;*/
-			font-weight: normal;
-		}
-		.fallback-logotype .logotype h1 {
-			font-family: "Iowan Old Style", "Hoefler Text", Literata, "Droid Serif", serif;
-			font-style: italic;
-		}
-
-		/* Font and fallback for the code snippets: */
-		code {
-			font-family: "PT Mono", monospace;
-		}
-		.fallback-mono code {
-			font-family: monospace;
-		}
-z{}</style>
-	<script>this.zenfonts=function(e){"use strict";var t="serif",n=e.documentElement,i=function o(e){var t=e.parentNode;t&&t.removeChild(e)},a=function s(e){e&&(n.className=n.className.replace(new RegExp("(^|\\s)*"+e+"(\\s|$)*","g")," "))};return function f(o,s){if(o instanceof Array||(o=[o]),s=s||{},!e.body)return setTimeout(function(){f(o,s)},1);for(var r=[],c=o.length;c--;){var l=o[c];"string"==typeof l&&(l={family:l});var u=l.family,m=e.createElement("div");m.style.cssText="position:absolute;top:-999px;left:-999px;visibility:hidden;white-space:nowrap;font-size:20em;font-family:"+t+";"+l.style||"",m.appendChild(e.createTextNode("// Zenfonts([{}]);")),e.body.appendChild(m),m._width=m.offsetWidth,m.style.fontFamily="'"+u+"',"+t,m._width!==m.offsetWidth?i(m):r.push(m)}var d=s.fallbackClass,p=function x(){a(d),s.onSuccess&&s.onSuccess()};if(0===r.length)return p();var h=s.loadingClass;h&&(n.className+=" "+h);var v=function N(){a(h)},y=s.timeout||2222;if(d){var w=setTimeout(function b(){v(),n.className+=" "+d},y),g=p;p=function(){clearTimeout(w),g()}}var T=(new Date).getTime()+Math.max(y,s.swap||9999);!function C(e){setTimeout(function(){var t=(new Date).getTime()>=T;t&&s.onSwap&&s.onSwap();for(var n=r.length;n--;){var a=r[n];(t||a.offsetWidth!==a._width)&&(r.splice(n,1),i(a))}0===r.length?(t||p(),v()):C(1.5*e)},e)}(9)}}(document);</script>
-	<script>zenfonts("Merienda One",{fallbackClass:"fallback-logotype",onSwap:function(){zenfonts("Merienda One",{timeout:3e4})}}),zenfonts(["Alegreya Sans",{family:"Alegreya Sans",style:"font-weight: 400; font-style: italic"},{family:"Alegreya Sans",style:"font-weight: 700"},{family:"Alegreya Sans",style:"font-weight: 700; font-style: italic"}],{loadingClass:"loading",fallbackClass:"fallback",timeout:1e3,swap:1e3}),zenfonts("PT Mono",{fallbackClass:"fallback-mono",timeout:1e3});</script>
+	<style>.loading body{visibility:hidden}body,.play-button{font-family:"Alegreya Sans", sans-serif}nav a,h2,h3,strong,.play-button{font-weight:700}h3{font-style:italic}.fallback body{font-family:"Avenir Next", Avenir, "Segoe UI", Calibri, "Helvetica Neue", Helvetica, sans-serif}.fallback h2,.fallback strong{font-weight:bold}.logotype h1{font-family:"Merienda One", serif;font-weight:normal}.fallback-logotype .logotype h1{font-family:"Iowan Old Style", "Hoefler Text", Literata, "Droid Serif", serif;font-style:italic}code{font-family:"PT Mono", monospace}.fallback-mono code{font-family:monospace}
+ z{}</style>
+	<script>this.zenfonts=function(e){"use strict";var t="serif",n=e.documentElement,a=function s(e,t){return function(n){if(n||e.offsetWidth!==t){var a=e.parentNode;return a&&a.removeChild(e),!0}}},i=function o(e){e&&(n.className=n.className.replace(new RegExp("(^|\\s)*"+e+"(\\s|$)*","g")," "))};return function r(s,o){if(s instanceof Array||(s=[s]),o=o||{},!e.body)return setTimeout(function(){r(s,o)},1);for(var f=[],l=s.length;l--;){var c=s[l];"string"==typeof c&&(c={family:c});var u=c.family,m=e.createElement("div");m.style.cssText="position:absolute;top:-999px;left:-9999px;visibility:hidden;white-space:nowrap;font-size:20em;font-family:"+t+";"+c.style||"",m.appendChild(e.createTextNode("// Zenfonts([{}]);")),e.body.appendChild(m);var p=a(m,m.offsetWidth);m.style.fontFamily="'"+u+"',"+t,p()||f.push(p)}var d=o.fallbackClass,v=function b(){i(d),o.onSuccess&&o.onSuccess()};if(0===f.length)return v();var h=o.loadingClass;h&&(n.className+=" "+h);var y=o.fallback||2e3;if(d){var g=setTimeout(function x(){i(h),n.className+=" "+d},y),w=v;v=function(){clearTimeout(g),w()}}var T=(new Date).getTime()+Math.max(y,o.swap||9999);!function N(e){setTimeout(function(){var t=(new Date).getTime()>=T;t&&o.onSwap&&o.onSwap();for(var n=f.length;n--;)f[n](t)&&f.splice(n,1);0===f.length?(t||v(),i(h)):N(1.5*e)},e)}(9)}}(document);</script>
+	<script>zenfonts(["Alegreya Sans",{family:"Alegreya Sans",style:"font-style: italic"},{family:"Alegreya Sans",style:"font-weight: bold"},{family:"Alegreya Sans",style:"font-weight: bold; font-style: italic"}],{loadingClass:"loading",fallbackClass:"fallback",fallback:1e3,swap:1e3}),zenfonts("Merienda One",{fallbackClass:"fallback-logotype",onSwap:function(){zenfonts("Merienda One",{fallback:3e4})}}),zenfonts("PT Mono",{fallbackClass:"fallback-mono",fallback:1e3});</script>
 	<script async src="https://www.google-analytics.com/analytics.js"></script>
 	<script>
 	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)}
@@ -108,7 +69,7 @@ z{}</style>
 <p>Smooth animated scrolling. No&nbsp;more abrupt jumps on your page.
 Move&nbsp;elements into view, center them, or scroll to any Y&nbsp;position.</p>
 
-<p>870 bytes of pure JavaScript. No&nbsp;dependencies.</p>
+<p><em>870 bytes of pure JavaScript. No&nbsp;dependencies.</em></p>
 
 			<a class="hero-button" href="https://github.com/zengabor/zenscroll">View Zenscroll on GitHub</a>
 
@@ -349,7 +310,7 @@ zenscroll.setup(defaultDuration, edgeOffset, disableInternalLinkSmoothing)
 	</main>
 	
 	<footer>
-		<div style="float:right"><a href="#">Scroll Back to Top &uarr;</a></div>
+		<div class="back-to-top"><a href="#">Scroll Back to Top &uarr;</a></div>
 		<small>
 			&copy; 2015 Gabor Lenard
 		</small>
