@@ -50,8 +50,12 @@
 		var docElem = doc.documentElement
 
 		var getScrollTop = function () { 
-			return scrollContainer ? scrollContainer.scrollTop : win.scrollY || docElem.scrollTop 
+			return scrollContainer ? scrollContainer.scrollTop : win.pageYOffset || docElem.scrollTop;
 		}
+
+        var getClientTop = function(){
+            return docElem.clientTop || doc.body.clientTop || 0;
+        }
 
 		var getViewHeight = function () { 
 			return scrollContainer ? 
@@ -60,7 +64,9 @@
 		}
 
 		var getRelativeTopOf = function (elem) { 
-			return elem.offsetTop - (scrollContainer || docElem).offsetTop 
+            var box = elem.getBoundingClientRect();
+            var top  = box.top +  getScrollTop() - getClientTop();
+            return  Math.round(top);
 		}
 	
 		/**
