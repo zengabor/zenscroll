@@ -1,5 +1,5 @@
 /*jshint devel:true, asi:true */
-/*global zenscroll */
+/*global zenscroll, Zenscroll */
 
 (function (win, doc) {
 	"use strict"
@@ -55,7 +55,7 @@
 
 	// Example 3:
 	insertButtonBefore(next(examples[2]), null, function () {
-		zenscroll.toY(123)
+		zenscroll.toY(50)
 	})
 
 	// Example 4:
@@ -64,13 +64,19 @@
 	image1.alt = "image1"
 	image1.className = "example-img"
 	image1.src = "image1.jpg" // or https://unsplash.it/1072/712?image=734
-	main.insertBefore(image1, examples[3])
+	var image1a = doc.createElement("A")
+	image1a.href = "#4.scrollanelementintoview"
+	image1a.appendChild(image1)
+	main.insertBefore(image1a, examples[3])
 	var image2 = doc.createElement("IMG")
 	image2.id = "image2"
 	image2.alt = "image2"
 	image2.className = "example-img is-small"
 	image2.src = "image2.jpg"
-	main.insertBefore(image2, examples[4])
+	var image2a = doc.createElement("A")
+	image2a.href = "#4.scrollanelementintoview"
+	image2a.appendChild(image2)
+	main.insertBefore(image2a, examples[4])
 	insertButtonBefore(next(next(examples[3])), null, function () {
 		zenscroll.intoView(image1)
 	})
@@ -90,14 +96,14 @@
 		var offset = 200 // pixels
 		zenscroll.center(image2, duration, offset)
 	})
-	insertHelpText(main, image2, 
+	insertHelpText(main, image2a, 
 		"Tip: For best experience position the little image at the very bottom of the viewable area before hitting ‘Play’."
 	)
 
 	// Example 6:
 	var code6 = next(next(next(examples[5])))
 	insertButtonBefore(code6, null, function () {
-		zenscroll.toY(70, 100)
+		zenscroll.toY(50, 100)
 	})
 	insertButtonBefore(next(code6), null, function () {
 		zenscroll.to(about, 250)
@@ -121,7 +127,7 @@
 	main.insertBefore(c, next(code9))
 	var defaultDuration = 500
 	var edgeOffset = 6
-	var cScroll = zenscroll.newFor(c, defaultDuration, edgeOffset)
+	var cScroll = new Zenscroll(c, defaultDuration, edgeOffset)
 	var target = document.getElementById("item4")
 	insertButtonBefore(code9, null, function () {
 		zenscroll.intoView(c, 100)
