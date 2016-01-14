@@ -157,14 +157,11 @@
 			)
 		}
 
-		var historyReplaceState = win.history.replaceState
 		var replaceUrl = function replaceUrl(hash) {
-			if (historyReplaceState) {
-				try {
-					historyReplaceState({}, "", win.location.href.split("#")[0] + "#" + hash)
-				} catch (e) {
-					// To avoid the Security exception in Chrome when the page was opened via the file protocol, e.g., file://index.html
-				}
+			try {
+				history.replaceState({}, "", win.location.href.split("#")[0] + (hash ? "#" + hash : ""))
+			} catch (e) {
+				// To avoid the Security exception in Chrome when the page was opened via the file protocol, e.g., file://index.html
 			}
 		} 
 		var internalLinkHandler = function internalLinkHandler(event) {
