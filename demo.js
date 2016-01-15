@@ -20,7 +20,7 @@
 		button.innerHTML = "▶ Play"
 		if ("addEventListener" in win) {
 			button.addEventListener("click", func, false)
-		} else if (win.attachEvent) {
+		} else if (doc.attachEvent) {
 			button.attachEvent("onclick", func)
 		}
 		parent.insertBefore(button, beforeElem)
