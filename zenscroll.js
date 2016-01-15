@@ -165,7 +165,7 @@
 			}
 		} 
 		var internalLinkHandler = function internalLinkHandler(event) {
-			var anchor = event.target
+			var anchor = event.target || event.srcElement
 			while (anchor && anchor.tagName !== "A") {
 				anchor = anchor.parentNode
 			}
