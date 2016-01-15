@@ -66,7 +66,7 @@
 <p>Smooth animated scrolling. No&nbsp;more abrupt jumps.
 Move&nbsp;elements&nbsp;into&nbsp;view, to&nbsp;the&nbsp;center, or&nbsp;scroll&nbsp;to any vertical&nbsp;position.</p>
 
-<p><em>863 bytes of pure JavaScript. No&nbsp;dependencies.</em></p>
+<p><em>875 bytes of pure JavaScript. No&nbsp;dependencies.</em></p>
 
 			<a class="hero-button" href="https://github.com/zengabor/zenscroll">View Zenscroll on GitHub</a>
 
@@ -87,7 +87,7 @@ Move&nbsp;elements&nbsp;into&nbsp;view, to&nbsp;the&nbsp;center, or&nbsp;scroll&
 <li>Scroll to an element while centering it on the screen.</li>
 <li>Customize the duration.</li>
 <li>Specify the spacing between the element and the edge of the screen (required for fixed navigation bars and footers).</li>
-<li>Only 863 bytes minimized &amp; gzipped.</li>
+<li>Only 875 bytes minimized &amp; gzipped.</li>
 <li>No dependencies.</li>
 </ul>
 
@@ -128,6 +128,16 @@ Move&nbsp;elements&nbsp;into&nbsp;view, to&nbsp;the&nbsp;center, or&nbsp;scroll&
 
 <pre><code>npm install zenscroll
 </code></pre>
+
+<p>If you want to use Zenscroll programmatically but you don’t need the automatic smoothing on local links then set <code>window.noZensmooth</code> to a non-falsy value. In this case the event handler for automatic smoothing is not installed but you can still use everything, like <code>zenscroll.intoView()</code>, etc. For&nbsp;example:</p>
+
+<pre><code class="html">    ...
+    &lt;script&gt;window.noZensmooth = true&lt;/script&gt;
+    &lt;script src=&quot;zenscroll-min.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+</code></pre>
+
+<p>(I consider this a rare scenario that’s why I keep the default behavior of installing the event handler.)</p>
 
 <h2 id="howtouse">How to use</h2>
 
