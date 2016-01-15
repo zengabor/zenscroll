@@ -10,7 +10,7 @@ Features:
 - Scroll to an element while centering it on the screen.
 - Customize the duration.
 - Specify the spacing between the element and the edge of the screen (required for fixed navigation bars and footers).
-- Only 864 bytes minimized & gzipped.
+- Only 875 bytes minimized & gzipped.
 - No dependencies.
 
 Full support tested and works under:

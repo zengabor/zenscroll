@@ -190,7 +190,7 @@
 		}
 
 		// create listeners for the documentElement only & exclude IE8-
-		if (!scrollContainer && "addEventListener" in win) { 
+		if (!scrollContainer && "addEventListener" in win && !win.noZensmooth) {
 			win.addEventListener("click", internalLinkHandler, false)
 		}
 
