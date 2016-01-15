@@ -1,5 +1,6 @@
 ## How to use
 
+
 ### 1. Smooth scroll within your page
 
 If Zenscroll is included in your page it will automatically animate the scrolling to anchors on the same page. This works even with content you dynamically load via ajax, as Zenscroll uses a generic click handler.
@@ -7,12 +8,6 @@ If Zenscroll is included in your page it will automatically animate the scrollin
 Since this is implemented a progressive enhancement, all internal links still work even in very old browsers. Note that internal links are intentionally not added to the history to save the users from having to hit the Back button too many times afterwards.
 
 If you want some links to be excluded from this, then start with the path of the page. E.g., instead of writing `<a href="#about">` write  `<a href="/#about">`. 
-
-You can also disable this automatic smoothing for all internal links by executing:
-
-````js
-zenscroll.setup(null, null, true)
-````
 
 
 ### 2. Scroll to the top of an element
@@ -24,11 +19,13 @@ zenscroll.to(about)
 
 Note that Zenscroll intentionally leaves a few pixels (by default 9px) from the edges of the screen or scolling container. If you have a fixed navigation bar or footer bar then you probably need more than that. Or you may want to set it to zero. You can globally override the default value by calling `zenscroll.setup()` (see below) or with the `edgeOffset` parameter of the constructor when you create a scroller for a DIV.
 
+
 ### 3. Scroll to a specific vertical position
 
 ````js
-zenscroll.toY(123)
+zenscroll.toY(50)
 ````
+
 
 ### 4. Scroll an element into view 
 
@@ -64,14 +61,15 @@ zenscroll.center(image2, duration, offset)
 
 Note that a zero value for offset is ignored. You can work around this by using `zenscroll.toY()`.
 
+
 ### 6. Set the duration of the scroll
 
-The default duration is 999 which is ~1 second. The duration is automatically reduced for elements that are very close. You can specifically set the duration via an optional second parameter. (Note that a value of zero for duration is ignored.)
+The default duration is 999 which is ~1 second. The duration is automatically reduced for elements that are very close. You can specifically set the duration for each scroll method via an optional second parameter. (Note that a value of zero for duration is ignored.)
 
 Examples:
 
 ````js
-zenscroll.toY(70, 100) // 100ms == 0.1 second
+zenscroll.toY(50, 100) // 100ms == 0.1 second
 ````
 
 ````js
@@ -81,6 +79,7 @@ zenscroll.to(about, 500) // 500ms == half a second
 ````js
 zenscroll.center(image2, 2000) // 2 seconds
 ````
+
 
 ### 7. Scroll inside a scrollable DIV
 
@@ -103,7 +102,7 @@ Example:
   var c = document.getElementById("container")
   var defaultDuration = 500
   var edgeOffset = 4
-  var cScroll = zenscroll.newFor(c, defaultDuration, edgeOffset)
+  var cScroll = new Zenscroll(c, defaultDuration, edgeOffset)
   var target = document.getElementById("item4")
   cScroll.center(target)
 </script>
@@ -119,37 +118,30 @@ cScroll.toY(35)
 cScroll.intoView(target, 750)
 ````
 
+
 ### 8. Change settings
 
 It’s easy to change the basic parameters of scrolling:
 
 - You can set the default value for duration. This will be valid for internal scrolls and all your direct scroll calls where you don’t specify a duration.
-- Change the edge offset (the spacing between the element and the screen edge). This is very useful if you have a fixed navigation bar or footer bar: set it to at least the height of your fixed bar.
-- You can also turn on or off the automatic smoothing for internal links.
+- Change the edge offset (the spacing between the element and the screen edge). If you have a fixed navigation bar or footer bar then set the offset to their height.
 
 ````js
-var defaultDuration = 777
-var edgeOffset = 42
-var disableInternalLinkSmoothing = false
-zenscroll.setup(defaultDuration, edgeOffset, disableInternalLinkSmoothing)
+var defaultDuration = 777 // ms
+var edgeOffset = 42 // px
+zenscroll.setup(defaultDuration, edgeOffset)
 ````
 
 If you don’t want to change a value just omit the parameter or pass `null`. For example, the line below sets the default duration, while leaving other settings unchanged:
 
 ````js
-zenscroll.setup(500)
+zenscroll.setup(777)
 ````
 
 Sets the the spacing between the edge of the screen (or a DIV) and the target element you are scrolling to, while leaving the default duration unchanged:
 
 ````js
-zenscroll.setup(null, 5)
-````
-
-Disable the automatic smoothing for internal links, while leaving both other settings unchanged:
-
-````js
-zenscroll.setup(null, null, true)
+zenscroll.setup(null, 42)
 ````
 
 

@@ -38,13 +38,14 @@ figure,
 	font-style: italic;
 	color: $c-gray;
 	& + .example-item {
-		border-top: 0.125em dashed rgba(red($c-gray),green($c-gray),blue($c-gray), 0.5);
+		border-top: 0.125em dashed rgba($c-gray, 0.5);
 	}
 	&:nth-child(4) {
-		background-color: rgba(255,255,255, 0.4);
+		background-color: rgba(#fff, 0.4);
 		color: $c-red;
-		border-bottom: 0.125em dashed;
+		border-bottom: 0.125em solid;
 		border-color: $c-red;
+		border-top-style: solid;
 		& + .example-item {
 			border: none;
 		}

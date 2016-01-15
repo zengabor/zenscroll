@@ -10,8 +10,8 @@ Features:
 - Scroll to an element while centering it on the screen.
 - Customize the duration.
 - Specify the spacing between the element and the edge of the screen (required for fixed navigation bars and footers).
+- Only 864 bytes minimized & gzipped.
 - No dependencies.
-- Small size: 870 bytes (minimized & gzipped).
 
 Full support tested and works under:
 
@@ -23,11 +23,11 @@ Full support tested and works under:
 - Internet Explorer 9+
 - iOS Safari 4+
 - Opera 10.6+ (probably earlier too)
-- Safari 4+ (including Safari 9 on OS X 10.11 beta)
+- Safari 4+
 - Windows Phone 8.1
 - Yandex 14.12
 
-Basic support (animated scroll in document) tested and works under:
+Limited support (programmatic animated scroll in document) tested and works under:
 
 - Firefox 3+
 - Internet Explorer 6+

@@ -1,8 +1,8 @@
 /**
- * Zenscroll 1.0.0
+ * Zenscroll 2.0.0
  * https://github.com/zengabor/zenscroll/
  *
- * Copyright 2015 Gabor Lenard
+ * Copyright 2015–2016 Gabor Lenard
  *
  * This is free and unencumbered software released into the public domain.
  * 
@@ -35,11 +35,10 @@
 
 
 (function (win, doc) {
+	"use strict"
 
+	win.Zenscroll = function Zenscroll(scrollContainer, defaultDuration, edgeOffset) {
 
-	var makeScroller = function makeScroller(scrollContainer, defaultDuration, edgeOffset) {
-		"use strict"
-	
 		defaultDuration = defaultDuration || 999 //ms
 		if (!edgeOffset || edgeOffset !== 0) {
 			// When scrolling this amount of distance is kept from the edges of the scrollContainer
@@ -59,10 +58,14 @@
 				win.innerHeight || docElem.clientHeight
 		}
 
-		var getRelativeTopOf = function (elem) { 
-			return elem.offsetTop - (scrollContainer || docElem).offsetTop 
+		var getRelativeTopOf = function (elem) {
+			if (scrollContainer) {
+				return elem.offsetTop - scrollContainer.offsetTop
+			} else {
+				return elem.getBoundingClientRect().top + getScrollTop() - docElem.offsetTop
+			}
 		}
-	
+
 		/**
 		 * Immediately stops the current smooth scroll operation
 		 */
@@ -153,58 +156,61 @@
 				duration
 			)
 		}
-	
+
 		var replaceUrl = function replaceUrl(hash) {
-			if (win.history.replaceState) {
-				history.replaceState({}, "", win.location.href.split("#")[0] + "#" + hash)
+			try {
+				history.replaceState({}, "", win.location.href.split("#")[0] + (hash ? "#" + hash : ""))
+			} catch (e) {
+				// To avoid the Security exception in Chrome when the page was opened via the file protocol, e.g., file://index.html
 			}
 		} 
 		var internalLinkHandler = function internalLinkHandler(event) {
 			var anchor = event.target
-			var href = anchor.getAttribute("href") || ""
-			if (anchor.tagName === "A" && href.indexOf("#") === 0) {
-				if (href === "#") {
-					event.preventDefault()
-					win.zenscroll.toY(0)
-					replaceUrl("")
-				} else {
-					var targetId = anchor.hash.substring(1)
-					var targetElem = document.getElementById(targetId)
-					if (targetElem) {
+			while (anchor && anchor.tagName !== "A") {
+				anchor = anchor.parentNode
+			}
+			if (anchor) {
+				var href = anchor.getAttribute("href") || ""
+				if (href.indexOf("#") === 0) {
+					if (href === "#") {
 						event.preventDefault()
-						win.zenscroll.to(targetElem)
-						replaceUrl(targetId)
+						win.zenscroll.toY(0)
+						replaceUrl("")
+					} else {
+						var targetId = anchor.hash.substring(1)
+						var targetElem = document.getElementById(targetId)
+						if (targetElem) {
+							event.preventDefault()
+							win.zenscroll.to(targetElem)
+							replaceUrl(targetId)
+						}
 					}
 				}
 			}
 		}
-	
-		var removeEventListener
-		if (!scrollContainer) {
-			if ("addEventListener" in win) {
-				win.addEventListener("click", internalLinkHandler, false)
-				removeEventListener = function () { win.removeEventListener("click", internalLinkHandler, false) }
-			} else if (win.attachEvent) {
-				win.attachEvent("onclick", internalLinkHandler)
-				removeEventListener = function () { win.detachEvent("onclick", internalLinkHandler) }
-			}
+
+		// create listeners for the documentElement only & exclude IE8-
+		if (!scrollContainer && "addEventListener" in win) { 
+			win.addEventListener("click", internalLinkHandler, false)
 		}
 
-		var setup = function setup(newDuration, newEdgeOffset, disableInternalLinks) {
-			if (newDuration) {
-				defaultDuration = newDuration
+		/**
+		 * Changes default settings for this scroller.
+		 *
+		 * @param {newDefaultDuration} New value for default duration, used for each scroll method by default.
+		 *        Ignored if 0 or falsy.
+		 * @param {newEdgeOffset} New value for the edge offset, used by each scroll method by default.
+		 */
+		var setup = function setup(newDefaultDuration, newEdgeOffset) {
+			if (newDefaultDuration) {
+				defaultDuration = newDefaultDuration
 			}
 			if (newEdgeOffset !== null) {
 				edgeOffset = newEdgeOffset
 			}
-			if (disableInternalLinks && removeEventListener) {
-				removeEventListener()
-				removeEventListener = null
-			}
 		}
 
 		return {
-			newFor: makeScroller,
 			setup: setup,
 			to: scrollToElem,
 			toY: scrollToY,
@@ -217,7 +223,7 @@
 	}
 
 
-	win.zenscroll = makeScroller()
+	win.zenscroll = new win.Zenscroll()
 
 
 })(this, document);

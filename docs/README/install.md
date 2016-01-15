@@ -8,7 +8,7 @@
 </body>
 ````
 
-You can also use npm to install Zenscroll:
+You can also use npm to get Zenscroll:
 
 ````
 npm install zenscroll
