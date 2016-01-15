@@ -165,7 +165,7 @@
 			}
 		} 
 		var internalLinkHandler = function internalLinkHandler(event) {
-			var anchor = event.target || event.srcElement
+			var anchor = event.target
 			while (anchor && anchor.tagName !== "A") {
 				anchor = anchor.parentNode
 			}
@@ -189,12 +189,9 @@
 			}
 		}
 
-		if (!scrollContainer) { // create listeners for the documentElement only
-			if ("addEventListener" in win) {
-				win.addEventListener("click", internalLinkHandler, false)
-			} else if (win.attachEvent) {
-				win.attachEvent("onclick", internalLinkHandler)
-			}
+		// create listeners for the documentElement only & exclude IE8-
+		if (!scrollContainer && "addEventListener" in win) { 
+			win.addEventListener("click", internalLinkHandler, false)
 		}
 
 		/**
