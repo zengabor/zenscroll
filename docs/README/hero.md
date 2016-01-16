@@ -1,6 +1,5 @@
-# One JavaScript to Smooth-Scroll Them All
+# One JavaScript to Smooth-Scroll&nbsp;Them&nbsp;All
 
-Smooth animated scrolling. No&nbsp;more abrupt jumps.
-Move&nbsp;elements&nbsp;into&nbsp;view, to&nbsp;the&nbsp;center, or&nbsp;scroll&nbsp;to any vertical&nbsp;position.
+Smooth animated scrolling. Move&nbsp;elements&nbsp;into&nbsp;view, or&nbsp;scroll&nbsp;to any vertical&nbsp;position.
 
-*875 bytes of pure JavaScript. No&nbsp;dependencies.*
+875 bytes of pure JavaScript. No&nbsp;dependencies.
