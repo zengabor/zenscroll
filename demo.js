@@ -45,7 +45,7 @@
 
 	// Example 1:
 	var div = doc.createElement("DIV")
-	div.innerHTML = 'For example, try the navigation links <a href="#">at the top of this page &uarr;</a>.'
+	div.innerHTML = 'For example, try the navigation links <a href="#">at the top of this page</a>. &larr; Or this very link here.'
 	main.insertBefore(div, next(next(examples[0])))
 
 	// Example 2:

@@ -143,7 +143,7 @@ Move&nbsp;elements&nbsp;into&nbsp;view, to&nbsp;the&nbsp;center, or&nbsp;scroll&
 
 <h3 id="1.smoothscrollwithinyourpage">1. Smooth scroll within your page</h3>
 
-<p>If Zenscroll is included in your page it will automatically animate the scrolling to anchors on the same page. This works even with content you dynamically load via ajax, as Zenscroll uses a generic click handler.</p>
+<p>If Zenscroll is included in your page it will automatically animate the scrolling to anchors on the same page, unless you set <code>window.noZensmooth</code> to a non-falsy value (see <a href="#install">above</a>). This works even with content you dynamically load via ajax, as Zenscroll uses a generic click handler.</p>
 
 <p>Since this is implemented a progressive enhancement, all internal links still work even in very old browsers. Note that internal links are intentionally not added to the history to save the users from having to hit the Back button too many times afterwards.</p>
 
