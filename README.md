@@ -8,12 +8,11 @@
 #### [**Demo**](https://zengabor.github.io/zenscroll/) &nbsp; &nbsp; &nbsp; &nbsp; [**Download**](https://github.com/zengabor/zenscroll/archive/latest.zip) &nbsp; &nbsp; &nbsp; &nbsp; [**About**](#about) &nbsp; &nbsp; &nbsp; &nbsp; [**Install**](#install) &nbsp; &nbsp; &nbsp; &nbsp; [**How to use**](#how-to-use) &nbsp; &nbsp; &nbsp; &nbsp; [**License**](#license)
 
 
-# One JavaScript to Smooth-Scroll Them All
+# One JavaScript to Smooth-Scroll&nbsp;Them&nbsp;All
 
-Smooth animated scrolling. No&nbsp;more abrupt jumps.
-Move&nbsp;elements&nbsp;into&nbsp;view, to&nbsp;the&nbsp;center, or&nbsp;scroll&nbsp;to any vertical&nbsp;position.
+Smooth animated scrolling. Move&nbsp;elements&nbsp;into&nbsp;view, or&nbsp;scroll&nbsp;to any vertical&nbsp;position.
 
-*875 bytes of pure JavaScript. No&nbsp;dependencies.*
+875 bytes of pure JavaScript. No&nbsp;dependencies.
 
 
 ## About
