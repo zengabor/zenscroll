@@ -82,7 +82,7 @@ If you want to use Zenscroll programmatically but you don’t need the automatic
 
 ### 1. Smooth scroll within your page
 
-If Zenscroll is included in your page it will automatically animate the scrolling to anchors on the same page. This works even with content you dynamically load via ajax, as Zenscroll uses a generic click handler.
+If Zenscroll is included in your page it will automatically animate the scrolling to anchors on the same page, unless you set `window.noZensmooth` to a non-falsy value (see [above](#install)). This works even with content you dynamically load via ajax, as Zenscroll uses a generic click handler.
 
 Since this is implemented a progressive enhancement, all internal links still work even in very old browsers. Note that internal links are intentionally not added to the history to save the users from having to hit the Back button too many times afterwards.
 
