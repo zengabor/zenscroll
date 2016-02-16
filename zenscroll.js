@@ -46,10 +46,7 @@
 	}
 }(this, function () {
 	"use strict"
-
-	var win = window
-	var doc = document
-
+	
 	var createScroller = function (scrollContainer, defaultDuration, edgeOffset) {
 
 		defaultDuration = defaultDuration || 999 //ms
@@ -59,16 +56,21 @@
 		}
 
 		var scrollTimeoutId
-		var docElem = doc.documentElement
+		var docElem = document.documentElement
+		
+		// Detect if the browser already supports native smooth scrolling (e.g., Firefox 36+ and Chrome 49+) and it is enabled:
+		var nativeSmoothScrollEnabled = function () {
+			return (scrollContainer ? scrollContainer : document.body).style.scrollBehavior === "smooth"
+		}
 
 		var getScrollTop = function () { 
-			return scrollContainer ? scrollContainer.scrollTop : win.scrollY || docElem.scrollTop 
+			return scrollContainer ? scrollContainer.scrollTop : (window.scrollY || docElem.scrollTop)
 		}
 
 		var getViewHeight = function () { 
 			return scrollContainer ? 
-				Math.min(scrollContainer.offsetHeight, win.innerHeight) : 
-				win.innerHeight || docElem.clientHeight
+				Math.min(scrollContainer.offsetHeight, window.innerHeight) : 
+				window.innerHeight || docElem.clientHeight
 		}
 
 		var getRelativeTopOf = function (elem) {
@@ -97,26 +99,30 @@
 		 */
 		var scrollToY = function (endY, duration) {
 			stopScroll()
-			var startY = getScrollTop()
-			var distance = Math.max(endY,0) - startY
-			duration = duration || Math.min(Math.abs(distance), defaultDuration)
-			var startTime = new Date().getTime();
-			(function loopScroll() {
-				scrollTimeoutId = setTimeout(function () {
-					var p = Math.min((new Date().getTime() - startTime) / duration, 1) // percentage
-					var y = Math.max(Math.floor(startY + distance*(p < 0.5 ? 2*p*p : p*(4 - p*2)-1)), 0)
-					if (scrollContainer) {
-						scrollContainer.scrollTop = y
-					} else {
-						win.scrollTo(0, y)
-					}
-					if (p < 1 && (getViewHeight() + y) < (scrollContainer || docElem).scrollHeight) {
-						loopScroll()
-					} else {
-						setTimeout(stopScroll, 99) // with cooldown time
-					}
-				}, 9)
-			})()
+			if (nativeSmoothScrollEnabled()) {
+				(scrollContainer || window).scrollTo(0, endY)
+			} else {
+				var startY = getScrollTop()
+				var distance = Math.max(endY,0) - startY
+				duration = duration || Math.min(Math.abs(distance), defaultDuration)
+				var startTime = new Date().getTime();
+				(function loopScroll() {
+					scrollTimeoutId = setTimeout(function () {
+						var p = Math.min((new Date().getTime() - startTime) / duration, 1) // percentage
+						var y = Math.max(Math.floor(startY + distance*(p < 0.5 ? 2*p*p : p*(4 - p*2)-1)), 0)
+						if (scrollContainer) {
+							scrollContainer.scrollTop = y
+						} else {
+							window.scrollTo(0, y)
+						}
+						if (p < 1 && (getViewHeight() + y) < (scrollContainer || docElem).scrollHeight) {
+							loopScroll()
+						} else {
+							setTimeout(stopScroll, 99) // with cooldown time
+						}
+					}, 9)
+				})()
+			}
 		}
 
 		/**
@@ -181,7 +187,7 @@
 			if (newDefaultDuration) {
 				defaultDuration = newDefaultDuration
 			}
-			if (newEdgeOffset !== null) {
+			if (newEdgeOffset === 0 || newEdgeOffset) {
 				edgeOffset = newEdgeOffset
 			}
 		}
@@ -202,33 +208,35 @@
 	var defaultScroller = createScroller()
 	
 	// Create listeners for the documentElement only & exclude IE8-
-	if ("addEventListener" in win && !win.noZensmooth) {
+	if ("addEventListener" in window && document.body.style.scrollBehavior !== "smooth" && !window.noZensmooth) {
 		var replaceUrl = function (hash) {
-			event.preventDefault() // Prevent the browser from handling the activation of the link
 			try {
-				history.replaceState({}, "", win.location.href.split("#")[0] + hash)
+				history.replaceState({}, "", window.location.href.split("#")[0] + hash)
 			} catch (e) {
 				// To avoid the Security exception in Chrome when the page was opened via the file protocol, e.g., file://index.html
 			}
 		} 
-		win.addEventListener("click", function (event) {
+		window.addEventListener("click", function (event) {
 			var anchor = event.target
 			while (anchor && anchor.tagName !== "A") {
 				anchor = anchor.parentNode
 			}
-			if (anchor) {
-				var href = anchor.getAttribute("href") || ""
-				if (href.indexOf("#") === 0) {
-					if (href === "#") {
-						defaultScroller.toY(0)
-						replaceUrl("")
-					} else {
-						var targetId = anchor.hash.substring(1)
-						var targetElem = document.getElementById(targetId)
-						if (targetElem) {
-							defaultScroller.to(targetElem)
-							replaceUrl("#" + targetId)
-						}
+			if (!anchor || event.which !== 1 || event.shiftKey || event.metaKey || event.ctrlKey || event.altKey) {
+				return
+			}
+			var href = anchor.getAttribute("href") || ""
+			if (href.indexOf("#") === 0) {
+				if (href === "#") {
+					event.preventDefault() // Prevent the browser from handling the activation of the link
+					defaultScroller.toY(0)
+					replaceUrl("")
+				} else {
+					var targetId = anchor.hash.substring(1)
+					var targetElem = document.getElementById(targetId)
+					if (targetElem) {
+						event.preventDefault() // Prevent the browser from handling the activation of the link
+						defaultScroller.to(targetElem)
+						replaceUrl("#" + targetId)
 					}
 				}
 			}

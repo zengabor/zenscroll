@@ -2,4 +2,4 @@
 
 Smooth animated scrolling. Move&nbsp;elements&nbsp;into&nbsp;view, or&nbsp;scroll&nbsp;to any vertical&nbsp;position.
 
-947 bytes of pure JavaScript. No&nbsp;dependencies.
+1&nbsp;kilobyte of pure&nbsp;JavaScript. No&nbsp;dependencies.

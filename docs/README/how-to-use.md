@@ -3,11 +3,16 @@
 
 ### 1. Smooth scroll within your page
 
-If Zenscroll is included in your page it will automatically animate the scrolling to anchors on the same page, unless you set `window.noZensmooth` to a non-falsy value (see [above](#install)). This works even with content you dynamically load via ajax, as Zenscroll uses a generic click handler.
+If Zenscroll is included in your page it will automatically animate the scrolling to anchors on the same page. 
 
-Since this is implemented a progressive enhancement, all internal links still work even in very old browsers. Note that internal links are intentionally not added to the history to save the users from having to hit the Back button too many times afterwards.
+However, automatic smooth scrolling is not enabled in these two cases:
 
-If you want some links to be excluded from this, then start with the path of the page. E.g., instead of writing `<a href="#about">` write  `<a href="/#about">`. 
+1. If you set `window.noZensmooth` to a non-falsy value (see [above](#disablingautomaticsmoothingonlocallinks)).
+2. If the `scroll-behavior` CSS property is set to `smooth` on the `body` (see [above](#enablingnativesmooth-scrollinginthebrowser)).
+
+If you want only some of the links to be excluded from the automatic smoothing then start with the path of the page. E.g., instead of writing `<a href="#about">` use `<a href="/#about">`.
+
+Automatic smooth scrolling works with content you dynamically load via AJAX, as Zenscroll uses a generic click handler. Internal links are intentionally not added to the history to save the users from having to hit the Back button too many times afterwards. Since the automatic smooth-scrolling is implemented a progressive enhancement, all internal links still work even in old browsers.
 
 
 ### 2. Scroll to the top of an element
@@ -64,7 +69,7 @@ Note that a zero value for offset is ignored. You can work around this by using 
 
 ### 6. Set the duration of the scroll
 
-The default duration is 999 which is ~1 second. The duration is automatically reduced for elements that are very close. You can specifically set the duration for each scroll method via an optional second parameter. (Note that a value of zero for duration is ignored.)
+The default duration is 999 which is ~1 second. The duration is automatically reduced for elements that are very close. You can specifically set the duration for each scroll function via an optional second parameter. (Note that a value of zero for duration is ignored.)
 
 Examples:
 
@@ -83,7 +88,7 @@ zenscroll.center(image2, 2000) // 2 seconds
 
 ### 7. Scroll inside a scrollable DIV
 
-Anything you can do within the document you can also do inside a scrollable element. You just need to instantiate a new scoller for that element.
+Anything you can do within the document you can also do inside a scrollable element. You just need to instantiate a new scoller for that element. It also falls back by default to the native browser smooth-scrolling if available (which can be overridden via `setup()`).
 
 Example:
 
@@ -108,7 +113,7 @@ Example:
 </script>
 ````
 
-Obviously you can use all other scroll methods and parameters with the scrollable container. Two more examples:
+Obviously you can use all other scroll functions and parameters with the scrollable container. Two more examples:
 
 ````js
 myScroller.toY(35)
@@ -130,6 +135,12 @@ It’s easy to change the basic parameters of scrolling:
 var defaultDuration = 777 // ms
 var edgeOffset = 42 // px
 zenscroll.setup(defaultDuration, edgeOffset)
+````
+
+You can change custom scrollers similarly:
+
+````js
+myScroller.setup(500, 10)
 ````
 
 If you don’t want to change a value just omit the parameter or pass `null`. For example, the line below sets the default duration, while leaving other settings unchanged:
