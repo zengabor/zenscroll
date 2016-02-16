@@ -1,5 +1,5 @@
 /*jshint devel:true, asi:true */
-/*global zenscroll, Zenscroll */
+/*global zenscroll */
 
 (function (win, doc) {
 	"use strict"
@@ -127,19 +127,19 @@
 	main.insertBefore(c, next(code9))
 	var defaultDuration = 500
 	var edgeOffset = 6
-	var cScroll = new Zenscroll(c, defaultDuration, edgeOffset)
+	var myScroller = zenscroll.createScroller(c, defaultDuration, edgeOffset)
 	var target = document.getElementById("item4")
 	insertButtonBefore(code9, null, function () {
 		zenscroll.intoView(c, 100)
-		cScroll.center(target)
+		myScroller.center(target)
 	})
 	insertButtonBefore(next(next(next(code9))), null, function () {
 		zenscroll.intoView(c, 100)
-		cScroll.toY(35)
+		myScroller.toY(35)
 	})
 	insertButtonBefore(next(next(next(next(code9)))), null, function () {
 		zenscroll.intoView(c, 100)
-		cScroll.intoView(target, 750)
+		myScroller.intoView(target, 750)
 	})
 	insertHelpText(main, next(next(next(next(next(code9))))), 
 		"Tip: Scroll <em>ITEM 4</em> manually upwards/downwards out of view, then hit ‘Play’."

@@ -69,7 +69,7 @@ zenfonts("PT Mono",{fallbackClass:"fallback-mono",swap:9999})
 
 <p>Smooth animated scrolling. Move&nbsp;elements&nbsp;into&nbsp;view, or&nbsp;scroll&nbsp;to any vertical&nbsp;position.</p>
 
-<p>875 bytes of pure JavaScript. No&nbsp;dependencies.</p>
+<p>947 bytes of pure JavaScript. No&nbsp;dependencies.</p>
 
 			<a class="hero-button" href="https://github.com/zengabor/zenscroll">View Zenscroll on GitHub</a>
 
@@ -87,10 +87,10 @@ zenfonts("PT Mono",{fallbackClass:"fallback-mono",swap:9999})
 <li>Animated scrolling to anchors on the same page.</li>
 <li>Scroll to the top of a specific element.</li>
 <li>Scrolling an element into view, making sure both top &amp; bottom are visible, if possible.</li>
-<li>Scroll to an element while centering it on the screen.</li>
-<li>Customize the duration.</li>
-<li>Specify the spacing between the element and the edge of the screen (required for fixed navigation bars and footers).</li>
-<li>Only 875 bytes minimized &amp; gzipped.</li>
+<li>Scroll to an element and center it on the screen.</li>
+<li>Customize the duration of the individual scroll operations.</li>
+<li>Specify the spacing between the element and the edge of the screen (e.g., for fixed navigation bars and footers).</li>
+<li>Less than 1 kilobyte minimized &amp; gzipped.</li>
 <li>No dependencies.</li>
 </ul>
 
@@ -226,21 +226,21 @@ zenscroll.center(image2, duration, offset)
 &lt;/div&gt;
 
 &lt;script&gt;
-  var c = document.getElementById(&quot;container&quot;)
   var defaultDuration = 500
   var edgeOffset = 4
-  var cScroll = new Zenscroll(c, defaultDuration, edgeOffset)
+  var myDiv = document.getElementById(&quot;container&quot;)
+  var myScroller = zenscroll.createScroller(myDiv, defaultDuration, edgeOffset)
   var target = document.getElementById(&quot;item4&quot;)
-  cScroll.center(target)
+  myScroller.center(target)
 &lt;/script&gt;
 </code></pre>
 
 <p>Obviously you can use all other scroll methods and parameters with the scrollable container. Two more examples:</p>
 
-<pre><code class="js">cScroll.toY(35)
+<pre><code class="js">myScroller.toY(35)
 </code></pre>
 
-<pre><code class="js">cScroll.intoView(target, 750)
+<pre><code class="js">myScroller.intoView(target, 750)
 </code></pre>
 
 <h3 id="8.changesettings">8. Change settings</h3>
