@@ -41,20 +41,20 @@
 	
 	var about = doc.getElementById("about")
 	var examples = doc.getElementsByTagName("h3")
-	var main = examples[0].parentElement
+	var main = examples[3].parentElement
 
 	// Example 1:
 	var div = doc.createElement("DIV")
 	div.innerHTML = 'For example, try the navigation links <a href="#">at the top of this&nbsp;page</a>.&nbsp;&larr;&nbsp;Or&nbsp;this very link here.'
-	main.insertBefore(div, next(next(examples[0])))
+	main.insertBefore(div, next(next(examples[3])))
 
 	// Example 2:
-	insertButtonBefore(next(examples[1]), null, function () {
+	insertButtonBefore(next(examples[4]), null, function () {
 		zenscroll.to(about)
 	})
 
 	// Example 3:
-	insertButtonBefore(next(examples[2]), null, function () {
+	insertButtonBefore(next(examples[5]), null, function () {
 		zenscroll.toY(50)
 	})
 
@@ -67,7 +67,7 @@
 	var image1a = doc.createElement("A")
 	image1a.href = "#4.scrollanelementintoview"
 	image1a.appendChild(image1)
-	main.insertBefore(image1a, examples[3])
+	main.insertBefore(image1a, examples[6])
 	var image2 = doc.createElement("IMG")
 	image2.id = "image2"
 	image2.alt = "image2"
@@ -76,21 +76,21 @@
 	var image2a = doc.createElement("A")
 	image2a.href = "#4.scrollanelementintoview"
 	image2a.appendChild(image2)
-	main.insertBefore(image2a, examples[4])
-	insertButtonBefore(next(next(examples[3])), null, function () {
+	main.insertBefore(image2a, examples[7])
+	insertButtonBefore(next(next(examples[6])), null, function () {
 		zenscroll.intoView(image1)
 	})
-	insertButtonBefore(next(next(next(next(examples[3])))), null, function () {
+	insertButtonBefore(next(next(next(next(examples[6])))), null, function () {
 		image2.className = "example-img"
 		setTimeout(function () { zenscroll.intoView(image2) }, 500)
 		setTimeout(function () { image2.className = "example-img is-small" }, 2500)
 	})
 
 	// Example 5:
-	insertButtonBefore(next(examples[4]), null, function () {
+	insertButtonBefore(next(examples[7]), null, function () {
 		zenscroll.center(image2)
 	})
-	var code5b = next(next(next(examples[4])))
+	var code5b = next(next(next(examples[7])))
 	insertButtonBefore(code5b, null, function () {
 		var duration = 500 // miliseconds
 		var offset = 200 // pixels
@@ -101,7 +101,7 @@
 	)
 
 	// Example 6:
-	var code6 = next(next(next(examples[5])))
+	var code6 = next(next(next(examples[8])))
 	insertButtonBefore(code6, null, function () {
 		zenscroll.toY(50, 100)
 	})
@@ -113,7 +113,7 @@
 	})
 
 	// Example 7:
-	var code9 = next(next(next(examples[6])))
+	var code9 = next(next(next(examples[9])))
 	var c = doc.createElement("DIV")
 	c.id = "container"
 	c.className = "example-content example-container"

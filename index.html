@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <!-- Description and demo for https://github.com/zengabor/zenscroll -->
 
@@ -55,8 +55,8 @@ zenfonts("PT Mono",{fallbackClass:"fallback-mono",swap:9999})
 		</a>
 		<nav>
 			<a href="#about">About</a>
-			<a href="#install">Install</a>
-			<a href="#howtouse">How to Use</a>
+			<a href="#gettingstarted">Getting&nbsp;&nbsp;Started</a>
+			<a href="#howtouse">How&nbsp;&nbsp;to&nbsp;&nbsp;Use</a>
 			<a href="#license">License</a>
 		</nav>
 	</header>
@@ -69,7 +69,7 @@ zenfonts("PT Mono",{fallbackClass:"fallback-mono",swap:9999})
 
 <p>Smooth animated scrolling. Move&nbsp;elements&nbsp;into&nbsp;view, or&nbsp;scroll&nbsp;to any vertical&nbsp;position.</p>
 
-<p>947 bytes of pure JavaScript. No&nbsp;dependencies.</p>
+<p>1&nbsp;kilobyte of pure&nbsp;JavaScript. No&nbsp;dependencies.</p>
 
 			<a class="hero-button" href="https://github.com/zengabor/zenscroll">View Zenscroll on GitHub</a>
 
@@ -84,13 +84,13 @@ zenfonts("PT Mono",{fallbackClass:"fallback-mono",swap:9999})
 <p>Features:</p>
 
 <ul>
-<li>Animated scrolling to anchors on the same page.</li>
+<li>Animated scrolling to anchors on the same page (unless the browser natively supports it and it’s enabled).</li>
 <li>Scroll to the top of a specific element.</li>
 <li>Scrolling an element into view, making sure both top &amp; bottom are visible, if possible.</li>
 <li>Scroll to an element and center it on the screen.</li>
 <li>Customize the duration of the individual scroll operations.</li>
 <li>Specify the spacing between the element and the edge of the screen (e.g., for fixed navigation bars and footers).</li>
-<li>Less than 1 kilobyte minimized &amp; gzipped.</li>
+<li>Just 1 kilobyte minimized &amp; gzipped.</li>
 <li>No dependencies.</li>
 </ul>
 
@@ -118,7 +118,9 @@ zenfonts("PT Mono",{fallbackClass:"fallback-mono",swap:9999})
 <li>iOS Safari 3+</li>
 </ul>
 
-<h2 id="install">Install</h2>
+<h2 id="gettingstarted">Getting Started</h2>
+
+<h3 id="installingzenscroll">Installing Zenscroll</h3>
 
 <p><a href="https://github.com/zengabor/zenscroll/archive/latest.zip">Download Zenscroll</a> and include it into your page. A good place is at the very bottom, just before the closing <code>&lt;/body&gt;</code> tag. For&nbsp;example:</p>
 
@@ -131,6 +133,19 @@ zenfonts("PT Mono",{fallbackClass:"fallback-mono",swap:9999})
 
 <pre><code>npm install zenscroll
 </code></pre>
+
+<h3 id="enablingnativesmooth-scrollinginthebrowser">Enabling native smooth-scrolling in the browser</h3>
+
+<p>If you want to leverage the native smooth-scrolling by the browser (currently available in Firefox 36+ and Chrome 49+) then set the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-behavior"><code>scroll-behavior</code> CSS property</a> to <code>smooth</code> on the body and on the elements you want to scroll. E.g.,</p>
+
+<pre><code class="css">    body, .smooth-container { scroll-behavior: smooth }
+</code></pre>
+
+<p>In this case the browser already does native smooth scrolling which is probably more efficient so Zenscroll uses that automatically. </p>
+
+<p>However, note that if you enable native smooth-scrolling then you loose the finer control options that Zenscroll offers: the speed of the animation, and the edge offset. So only set this CSS property on the <code>body</code> or on the elements if you don’t need this level of control.</p>
+
+<h3 id="disablingautomaticsmoothingonlocallinks">Disabling automatic smoothing on local links</h3>
 
 <p>If you want to use Zenscroll programmatically but you don’t need the automatic smoothing on local links then set <code>window.noZensmooth</code> to a non-falsy value. In this case the event handler for automatic smoothing is not installed but you can still use everything, like <code>zenscroll.intoView()</code>, etc. For&nbsp;example:</p>
 
@@ -146,11 +161,18 @@ zenfonts("PT Mono",{fallbackClass:"fallback-mono",swap:9999})
 
 <h3 id="1.smoothscrollwithinyourpage">1. Smooth scroll within your page</h3>
 
-<p>If Zenscroll is included in your page it will automatically animate the scrolling to anchors on the same page, unless you set <code>window.noZensmooth</code> to a non-falsy value (see <a href="#install">above</a>). This works even with content you dynamically load via ajax, as Zenscroll uses a generic click handler.</p>
+<p>If Zenscroll is included in your page it will automatically animate the scrolling to anchors on the same page. </p>
 
-<p>Since this is implemented a progressive enhancement, all internal links still work even in very old browsers. Note that internal links are intentionally not added to the history to save the users from having to hit the Back button too many times afterwards.</p>
+<p>However, automatic smooth scrolling is not enabled in these two cases:</p>
 
-<p>If you want some links to be excluded from this, then start with the path of the page. E.g., instead of writing <code>&lt;a href=&quot;#about&quot;&gt;</code> write <code>&lt;a href=&quot;/#about&quot;&gt;</code>. </p>
+<ol>
+<li>If you set <code>window.noZensmooth</code> to a non-falsy value (see <a href="#disablingautomaticsmoothingonlocallinks">above</a>).</li>
+<li>If the <code>scroll-behavior</code> CSS property is set to <code>smooth</code> on the <code>body</code> (see <a href="#enablingnativesmooth-scrollinginthebrowser">above</a>).</li>
+</ol>
+
+<p>If you want only some of the links to be excluded from the automatic smoothing then start with the path of the page. E.g., instead of writing <code>&lt;a href=&quot;#about&quot;&gt;</code> use <code>&lt;a href=&quot;/#about&quot;&gt;</code>.</p>
+
+<p>Automatic smooth scrolling works with content you dynamically load via AJAX, as Zenscroll uses a generic click handler. Internal links are intentionally not added to the history to save the users from having to hit the Back button too many times afterwards. Since the automatic smooth-scrolling is implemented a progressive enhancement, all internal links still work even in old browsers.</p>
 
 <h3 id="2.scrolltothetopofanelement">2. Scroll to the top of an element</h3>
 
@@ -196,7 +218,7 @@ zenscroll.center(image2, duration, offset)
 
 <h3 id="6.setthedurationofthescroll">6. Set the duration of the scroll</h3>
 
-<p>The default duration is 999 which is ~1 second. The duration is automatically reduced for elements that are very close. You can specifically set the duration for each scroll method via an optional second parameter. (Note that a value of zero for duration is ignored.)</p>
+<p>The default duration is 999 which is ~1 second. The duration is automatically reduced for elements that are very close. You can specifically set the duration for each scroll function via an optional second parameter. (Note that a value of zero for duration is ignored.)</p>
 
 <p>Examples:</p>
 
@@ -211,7 +233,7 @@ zenscroll.center(image2, duration, offset)
 
 <h3 id="7.scrollinsideascrollablediv">7. Scroll inside a scrollable DIV</h3>
 
-<p>Anything you can do within the document you can also do inside a scrollable element. You just need to instantiate a new scoller for that element.</p>
+<p>Anything you can do within the document you can also do inside a scrollable element. You just need to instantiate a new scoller for that element. It also falls back by default to the native browser smooth-scrolling if available (which can be overridden via <code>setup()</code>).</p>
 
 <p>Example:</p>
 
@@ -235,7 +257,7 @@ zenscroll.center(image2, duration, offset)
 &lt;/script&gt;
 </code></pre>
 
-<p>Obviously you can use all other scroll methods and parameters with the scrollable container. Two more examples:</p>
+<p>Obviously you can use all other scroll functions and parameters with the scrollable container. Two more examples:</p>
 
 <pre><code class="js">myScroller.toY(35)
 </code></pre>
@@ -255,6 +277,11 @@ zenscroll.center(image2, duration, offset)
 <pre><code class="js">var defaultDuration = 777 // ms
 var edgeOffset = 42 // px
 zenscroll.setup(defaultDuration, edgeOffset)
+</code></pre>
+
+<p>You can change custom scrollers similarly:</p>
+
+<pre><code class="js">myScroller.setup(500, 10)
 </code></pre>
 
 <p>If you don’t want to change a value just omit the parameter or pass <code>null</code>. For example, the line below sets the default duration, while leaving other settings unchanged:</p>
