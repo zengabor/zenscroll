@@ -1,5 +1,5 @@
 /**
- * Zenscroll 2.0.0
+ * Zenscroll 3.0.0
  * https://github.com/zengabor/zenscroll/
  *
  * Copyright 2015–2016 Gabor Lenard
@@ -33,29 +33,44 @@
 
 /*jshint devel:true, asi:true */
 
+/*global define, module */
 
-(function (win, doc) {
+
+(function (root, zenscroll) {
+	if (typeof define === "function" && define.amd) {
+		define([], zenscroll())
+	} else if (typeof module === "object" && module.exports) {
+		module.exports = zenscroll()
+	} else {
+		root.zenscroll = zenscroll()
+	}
+}(this, function () {
 	"use strict"
-
-	win.Zenscroll = function Zenscroll(scrollContainer, defaultDuration, edgeOffset) {
+	
+	var createScroller = function (scrollContainer, defaultDuration, edgeOffset) {
 
 		defaultDuration = defaultDuration || 999 //ms
 		if (!edgeOffset || edgeOffset !== 0) {
-			// When scrolling this amount of distance is kept from the edges of the scrollContainer
+			// When scrolling, this amount of distance is kept from the edges of the scrollContainer:
 			edgeOffset = 9 //px
 		}
 
 		var scrollTimeoutId
-		var docElem = doc.documentElement
+		var docElem = document.documentElement
+		
+		// Detect if the browser already supports native smooth scrolling (e.g., Firefox 36+ and Chrome 49+) and it is enabled:
+		var nativeSmoothScrollEnabled = function () {
+			return (scrollContainer ? scrollContainer : document.body).style.scrollBehavior === "smooth"
+		}
 
 		var getScrollTop = function () { 
-			return scrollContainer ? scrollContainer.scrollTop : win.scrollY || docElem.scrollTop 
+			return scrollContainer ? scrollContainer.scrollTop : (window.scrollY || docElem.scrollTop)
 		}
 
 		var getViewHeight = function () { 
 			return scrollContainer ? 
-				Math.min(scrollContainer.offsetHeight, win.innerHeight) : 
-				win.innerHeight || docElem.clientHeight
+				Math.min(scrollContainer.offsetHeight, window.innerHeight) : 
+				window.innerHeight || docElem.clientHeight
 		}
 
 		var getRelativeTopOf = function (elem) {
@@ -69,7 +84,7 @@
 		/**
 		 * Immediately stops the current smooth scroll operation
 		 */
-		var stopScroll = function stopScroll() {
+		var stopScroll = function () {
 			clearTimeout(scrollTimeoutId)
 			scrollTimeoutId = 0
 		}
@@ -84,26 +99,30 @@
 		 */
 		var scrollToY = function (endY, duration) {
 			stopScroll()
-			var startY = getScrollTop()
-			var distance = Math.max(endY,0) - startY
-			duration = duration || Math.min(Math.abs(distance), defaultDuration)
-			var startTime = new Date().getTime();
-			(function loopScroll() {
-				scrollTimeoutId = setTimeout(function () {
-					var p = Math.min((new Date().getTime() - startTime) / duration, 1) // percentage
-					var y = Math.max(Math.floor(startY + distance*(p < 0.5 ? 2*p*p : p*(4 - p*2)-1)), 0)
-					if (scrollContainer) {
-						scrollContainer.scrollTop = y
-					} else {
-						win.scrollTo(0, y)
-					}
-					if (p < 1 && (getViewHeight() + y) < (scrollContainer || docElem).scrollHeight) {
-						loopScroll()
-					} else {
-						setTimeout(stopScroll, 99) // with cooldown time
-					}
-				}, 9)
-			})()
+			if (nativeSmoothScrollEnabled()) {
+				(scrollContainer || window).scrollTo(0, endY)
+			} else {
+				var startY = getScrollTop()
+				var distance = Math.max(endY,0) - startY
+				duration = duration || Math.min(Math.abs(distance), defaultDuration)
+				var startTime = new Date().getTime();
+				(function loopScroll() {
+					scrollTimeoutId = setTimeout(function () {
+						var p = Math.min((new Date().getTime() - startTime) / duration, 1) // percentage
+						var y = Math.max(Math.floor(startY + distance*(p < 0.5 ? 2*p*p : p*(4 - p*2)-1)), 0)
+						if (scrollContainer) {
+							scrollContainer.scrollTop = y
+						} else {
+							window.scrollTo(0, y)
+						}
+						if (p < 1 && (getViewHeight() + y) < (scrollContainer || docElem).scrollHeight) {
+							loopScroll()
+						} else {
+							setTimeout(stopScroll, 99) // with cooldown time
+						}
+					}, 9)
+				})()
+			}
 		}
 
 		/**
@@ -113,7 +132,7 @@
 		 * @param {duration} Optionally the duration of the scroll operation.
 		 *        A value of 0 is ignored.
 		 */
-		var scrollToElem = function scrollToElem(elem, duration) {
+		var scrollToElem = function (elem, duration) {
 			scrollToY(getRelativeTopOf(elem) - edgeOffset, duration)
 		}
 
@@ -124,7 +143,7 @@
 		 * @param {duration} Optionally the duration of the scroll operation.
 		 *        A value of 0 is ignored.
 		 */
-		var scrollIntoView = function scrollIntoView(elem, duration) {
+		var scrollIntoView = function (elem, duration) {
 			var elemScrollHeight = elem.getBoundingClientRect().height + 2*edgeOffset
 			var vHeight = getViewHeight()
 			var elemTop = getRelativeTopOf(elem)
@@ -147,7 +166,7 @@
 		 * @param {offset} Optionally the offset of the top of the element from the center of the screen.
 		 *        A value of 0 is ignored.
 		 */
-		var scrollToCenterOf = function scrollToCenterOf(elem, duration, offset) {
+		var scrollToCenterOf = function (elem, duration, offset) {
 			scrollToY(
 				Math.max(
 					getRelativeTopOf(elem) - getViewHeight()/2 + (offset || elem.getBoundingClientRect().height/2), 
@@ -157,43 +176,6 @@
 			)
 		}
 
-		var replaceUrl = function replaceUrl(hash) {
-			try {
-				history.replaceState({}, "", win.location.href.split("#")[0] + (hash ? "#" + hash : ""))
-			} catch (e) {
-				// To avoid the Security exception in Chrome when the page was opened via the file protocol, e.g., file://index.html
-			}
-		} 
-		var internalLinkHandler = function internalLinkHandler(event) {
-			var anchor = event.target
-			while (anchor && anchor.tagName !== "A") {
-				anchor = anchor.parentNode
-			}
-			if (anchor) {
-				var href = anchor.getAttribute("href") || ""
-				if (href.indexOf("#") === 0) {
-					if (href === "#") {
-						event.preventDefault()
-						win.zenscroll.toY(0)
-						replaceUrl("")
-					} else {
-						var targetId = anchor.hash.substring(1)
-						var targetElem = document.getElementById(targetId)
-						if (targetElem) {
-							event.preventDefault()
-							win.zenscroll.to(targetElem)
-							replaceUrl(targetId)
-						}
-					}
-				}
-			}
-		}
-
-		// create listeners for the documentElement only & exclude IE8-
-		if (!scrollContainer && "addEventListener" in win && !win.noZensmooth) {
-			win.addEventListener("click", internalLinkHandler, false)
-		}
-
 		/**
 		 * Changes default settings for this scroller.
 		 *
@@ -201,11 +183,11 @@
 		 *        Ignored if 0 or falsy.
 		 * @param {newEdgeOffset} New value for the edge offset, used by each scroll method by default.
 		 */
-		var setup = function setup(newDefaultDuration, newEdgeOffset) {
+		var setup = function (newDefaultDuration, newEdgeOffset) {
 			if (newDefaultDuration) {
 				defaultDuration = newDefaultDuration
 			}
-			if (newEdgeOffset !== null) {
+			if (newEdgeOffset === 0 || newEdgeOffset) {
 				edgeOffset = newEdgeOffset
 			}
 		}
@@ -222,10 +204,58 @@
 
 	}
 
+	// Create a scroller for the browser window, omitting parameters:
+	var defaultScroller = createScroller()
+	
+	// Create listeners for the documentElement only & exclude IE8-
+	if ("addEventListener" in window && document.body.style.scrollBehavior !== "smooth" && !window.noZensmooth) {
+		var replaceUrl = function (hash) {
+			try {
+				history.replaceState({}, "", window.location.href.split("#")[0] + hash)
+			} catch (e) {
+				// To avoid the Security exception in Chrome when the page was opened via the file protocol, e.g., file://index.html
+			}
+		} 
+		window.addEventListener("click", function (event) {
+			var anchor = event.target
+			while (anchor && anchor.tagName !== "A") {
+				anchor = anchor.parentNode
+			}
+			if (!anchor || event.which !== 1 || event.shiftKey || event.metaKey || event.ctrlKey || event.altKey) {
+				return
+			}
+			var href = anchor.getAttribute("href") || ""
+			if (href.indexOf("#") === 0) {
+				if (href === "#") {
+					event.preventDefault() // Prevent the browser from handling the activation of the link
+					defaultScroller.toY(0)
+					replaceUrl("")
+				} else {
+					var targetId = anchor.hash.substring(1)
+					var targetElem = document.getElementById(targetId)
+					if (targetElem) {
+						event.preventDefault() // Prevent the browser from handling the activation of the link
+						defaultScroller.to(targetElem)
+						replaceUrl("#" + targetId)
+					}
+				}
+			}
+		}, false)
+	}
 
-	win.zenscroll = new win.Zenscroll()
+	return {
+		// Expose the "constructor" that can create a new scroller:
+		createScroller: createScroller,
+		// Surface the methods of the default scroller:
+		setup: defaultScroller.setup,
+		to: defaultScroller.to,
+		toY: defaultScroller.toY,
+		intoView: defaultScroller.intoView,
+		center: defaultScroller.center,
+		stop: defaultScroller.stop,
+		moving: defaultScroller.moving
+	}
 
-
-})(this, document);
+}));
 
 
