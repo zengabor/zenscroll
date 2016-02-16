@@ -99,23 +99,23 @@ Example:
 </div>
 
 <script>
-  var c = document.getElementById("container")
   var defaultDuration = 500
   var edgeOffset = 4
-  var cScroll = new Zenscroll(c, defaultDuration, edgeOffset)
+  var myDiv = document.getElementById("container")
+  var myScroller = zenscroll.createScroller(myDiv, defaultDuration, edgeOffset)
   var target = document.getElementById("item4")
-  cScroll.center(target)
+  myScroller.center(target)
 </script>
 ````
 
 Obviously you can use all other scroll methods and parameters with the scrollable container. Two more examples:
 
 ````js
-cScroll.toY(35)
+myScroller.toY(35)
 ````
 
 ````js
-cScroll.intoView(target, 750)
+myScroller.intoView(target, 750)
 ````
 
 

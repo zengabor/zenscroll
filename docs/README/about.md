@@ -7,10 +7,10 @@ Features:
 - Animated scrolling to anchors on the same page.
 - Scroll to the top of a specific element.
 - Scrolling an element into view, making sure both top & bottom are visible, if possible.
-- Scroll to an element while centering it on the screen.
-- Customize the duration.
-- Specify the spacing between the element and the edge of the screen (required for fixed navigation bars and footers).
-- Only 875 bytes minimized & gzipped.
+- Scroll to an element and center it on the screen.
+- Customize the duration of the individual scroll operations.
+- Specify the spacing between the element and the edge of the screen (e.g., for fixed navigation bars and footers).
+- Less than 1 kilobyte minimized & gzipped.
 - No dependencies.
 
 Full support tested and works under:
