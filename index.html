@@ -147,7 +147,7 @@ zenfonts("PT Mono",{fallbackClass:"fallback-mono",swap:9999})
 
 <h3 id="disablingautomaticsmoothingonlocallinks">Disabling automatic smoothing on local links</h3>
 
-<p>If you want to use Zenscroll programmatically but you don’t need the automatic smoothing on local links then set <code>window.noZensmooth</code> to a non-falsy value. In this case the event handler for automatic smoothing is not installed but you can still use everything, like <code>zenscroll.intoView()</code>, etc. For&nbsp;example:</p>
+<p>If you want to use Zenscroll programmatically but you don’t need the automatic smoothing on local links then set <code>window.noZensmooth</code> to a non-falsy value. In this case the event handler for automatic smoothing is not installed but you can still use everything, like <code>zenscroll.intoView()</code>, etc. It’s important to set this value before Zenscroll is executed, otherwise the handler will be installed. So make sure that setting the variable comes before the loading of the script. For&nbsp;example:</p>
 
 <pre><code class="html">    ...
     &lt;script&gt;window.noZensmooth = true&lt;/script&gt;
