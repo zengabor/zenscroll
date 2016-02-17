@@ -1,5 +1,5 @@
 /**
- * Zenscroll 3.0.0
+ * Zenscroll 3.0.1
  * https://github.com/zengabor/zenscroll/
  *
  * Copyright 2015–2016 Gabor Lenard
@@ -60,7 +60,8 @@
 		
 		// Detect if the browser already supports native smooth scrolling (e.g., Firefox 36+ and Chrome 49+) and it is enabled:
 		var nativeSmoothScrollEnabled = function () {
-			return (scrollContainer ? scrollContainer : document.body).style.scrollBehavior === "smooth"
+			return ("getComputedStyle" in window) && 
+				window.getComputedStyle(scrollContainer ? scrollContainer : document.body)["scroll-behavior"] === "smooth"
 		}
 
 		var getScrollTop = function () { 
