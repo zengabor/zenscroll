@@ -12,7 +12,7 @@
 
 Smooth animated scrolling. Move&nbsp;elements&nbsp;into&nbsp;view, or&nbsp;scroll&nbsp;to any vertical&nbsp;position.
 
-1&nbsp;kilobyte of pure&nbsp;JavaScript. No&nbsp;dependencies.
+One&nbsp;kilobyte of pure&nbsp;JavaScript. No&nbsp;dependencies.
 
 
 ## About
@@ -21,7 +21,8 @@ Zenscroll is a vanilla JavaScript module that enables animated vertical scrollin
 
 Features:
 
-- Animated scrolling to anchors on the same page (unless the browser natively supports it and it’s enabled).
+- Smooth animated scrolling, using the browser’s built-in smooth-behavior if it’s enabled.
+- Automatic smooth-scolling on links within the same page.
 - Scroll to the top of a specific element.
 - Scrolling an element into view, making sure both top & bottom are visible, if possible.
 - Scroll to an element and center it on the screen.
@@ -73,12 +74,10 @@ npm install zenscroll
 If you want to leverage the native smooth-scrolling by the browser (currently available in Firefox 36+ and Chrome 49+) then set the [`scroll-behavior` CSS property](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-behavior) to `smooth` on the body and on the elements you want to scroll. E.g.,
 
 ````css
-    body, .smooth-container { scroll-behavior: smooth }
+body, .smooth-container { scroll-behavior: smooth }
 ````
 
-In this case the browser already does native smooth scrolling which is probably more efficient so Zenscroll uses that automatically. 
-
-However, note that if you enable native smooth-scrolling then you loose the finer control options that Zenscroll offers: the speed of the animation, and the edge offset. So only set this CSS property on the `body` or on the elements if you don’t need this level of control.
+In this case Zenscroll will use the browser’s built-in support for all scroll functions. However, note that if you use the native smooth-scrolling then you loose the finer control options that Zenscroll offers: the speed of the animation, and the edge offset for links within the page. Only set this CSS property on the `body` or on the elements if you don’t need this level of control.
 
 ### Disabling automatic smoothing on local links
 
@@ -100,14 +99,14 @@ If you want to use Zenscroll programmatically but you don’t need the automatic
 
 If Zenscroll is included in your page it will automatically animate the scrolling to anchors on the same page. 
 
-However, automatic smooth scrolling is not enabled in these two cases:
+However, automatic smooth scrolling within the same page is not enabled in these two cases:
 
 1. If you set `window.noZensmooth` to a non-falsy value (see [above](#disablingautomaticsmoothingonlocallinks)).
-2. If the `scroll-behavior` CSS property is set to `smooth` on the `body` (see [above](#enablingnativesmooth-scrollinginthebrowser)).
+2. If the `scroll-behavior` CSS property is set to `smooth` on the `body` (see [above](#enablingnativesmooth-scrollinginthebrowser)). In this case the browser is already smooth-scrolling within the same page.
 
 If you want only some of the links to be excluded from the automatic smoothing then start with the path of the page. E.g., instead of writing `<a href="#about">` use `<a href="/#about">`.
 
-Automatic smooth scrolling works with content you dynamically load via AJAX, as Zenscroll uses a generic click handler. Internal links are intentionally not added to the history to save the users from having to hit the Back button too many times afterwards. Since the automatic smooth-scrolling is implemented a progressive enhancement, all internal links still work even in old browsers.
+Automatic smooth-scrolling works also with content you dynamically load via AJAX, as Zenscroll uses a generic click handler. Internal links are intentionally not added to the history to save the users from having to hit the Back button too many times afterwards. Since the automatic smooth-scrolling is implemented a progressive enhancement, all internal links still work even in old browsers.
 
 
 ### 2. Scroll to the top of an element
@@ -117,7 +116,7 @@ var about = document.getElementById("about")
 zenscroll.to(about)
 ````
 
-Note that Zenscroll intentionally leaves a few pixels (by default 9px) from the edges of the screen or scolling container. If you have a fixed navigation bar or footer bar then you probably need more than that. Or you may want to set it to zero. You can globally override the default value by calling `zenscroll.setup()` (see below) or with the `edgeOffset` parameter of the constructor when you create a scroller for a DIV.
+Note that Zenscroll intentionally leaves a few pixels (by default 9px) from the edges of the screen or scolling container. If you have a fixed navigation bar or footer bar then you probably need more than that. Or you may want to set it to zero. You can globally override the default value by calling `zenscroll.setup()` (see below), or by providing the `edgeOffset` parameter when you create a scroller for a DIV, e.g., `zenscroll.createScroller(myDiv, null, 0)`
 
 
 ### 3. Scroll to a specific vertical position
@@ -200,7 +199,7 @@ Example:
 
 <script>
   var defaultDuration = 500
-  var edgeOffset = 4
+  var edgeOffset = 30
   var myDiv = document.getElementById("container")
   var myScroller = zenscroll.createScroller(myDiv, defaultDuration, edgeOffset)
   var target = document.getElementById("item4")
@@ -215,7 +214,7 @@ myScroller.toY(35)
 ````
 
 ````js
-myScroller.intoView(target, 750)
+myScroller.intoView(target)
 ````
 
 

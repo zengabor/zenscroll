@@ -1,5 +1,5 @@
 /**
- * Zenscroll 3.0.1
+ * Zenscroll 3.0.2
  * https://github.com/zengabor/zenscroll/
  *
  * Copyright 2015–2016 Gabor Lenard
@@ -36,21 +36,26 @@
 /*global define, module */
 
 
-(function (root, zenscroll) {
+(function (root, factory) {
 	if (typeof define === "function" && define.amd) {
-		define([], zenscroll())
+		define([], factory())
 	} else if (typeof module === "object" && module.exports) {
-		module.exports = zenscroll()
+		module.exports = factory()
 	} else {
-		root.zenscroll = zenscroll()
+		root.zenscroll = factory()
 	}
 }(this, function () {
 	"use strict"
-	
+
+	// Exit if it’s not a browser environment:
+	if (!window || !document) {
+		return {}
+	}
+
 	var createScroller = function (scrollContainer, defaultDuration, edgeOffset) {
 
 		defaultDuration = defaultDuration || 999 //ms
-		if (!edgeOffset || edgeOffset !== 0) {
+		if (!edgeOffset && edgeOffset !== 0) {
 			// When scrolling, this amount of distance is kept from the edges of the scrollContainer:
 			edgeOffset = 9 //px
 		}
@@ -148,12 +153,12 @@
 			var elemScrollHeight = elem.getBoundingClientRect().height + 2*edgeOffset
 			var vHeight = getViewHeight()
 			var elemTop = getRelativeTopOf(elem)
-			var elemBottom = elemTop + elemScrollHeight
+			var elemBottom = elemTop + elemScrollHeight - edgeOffset
 			var scrollTop = getScrollTop()
 			if ((elemTop - scrollTop) < edgeOffset || elemScrollHeight > vHeight) {
 				// Element is clipped at top or is higher than screen.
 				scrollToElem(elem, duration)
-			} else if ((scrollTop + vHeight - elemBottom) < edgeOffset) {
+			} else if ((scrollTop + vHeight - elemBottom) < 0) {
 				// Element is clipped at the bottom.
 				scrollToY(elemBottom - vHeight, duration)
 			}
@@ -207,7 +212,7 @@
 
 	// Create a scroller for the browser window, omitting parameters:
 	var defaultScroller = createScroller()
-	
+
 	// Create listeners for the documentElement only & exclude IE8-
 	if ("addEventListener" in window && document.body.style.scrollBehavior !== "smooth" && !window.noZensmooth) {
 		var replaceUrl = function (hash) {
@@ -222,20 +227,21 @@
 			while (anchor && anchor.tagName !== "A") {
 				anchor = anchor.parentNode
 			}
+			// Only handle links that were clicked with the primary button, without modifier keys:
 			if (!anchor || event.which !== 1 || event.shiftKey || event.metaKey || event.ctrlKey || event.altKey) {
 				return
 			}
 			var href = anchor.getAttribute("href") || ""
 			if (href.indexOf("#") === 0) {
 				if (href === "#") {
-					event.preventDefault() // Prevent the browser from handling the activation of the link
+					event.preventDefault()
 					defaultScroller.toY(0)
 					replaceUrl("")
 				} else {
 					var targetId = anchor.hash.substring(1)
 					var targetElem = document.getElementById(targetId)
 					if (targetElem) {
-						event.preventDefault() // Prevent the browser from handling the activation of the link
+						event.preventDefault()
 						defaultScroller.to(targetElem)
 						replaceUrl("#" + targetId)
 					}
