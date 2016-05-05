@@ -28,6 +28,7 @@
 		<link rel="stylesheet" type="text/css" href="ie.css">
 		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	<![endif]-->
+	<link rel="stylesheet" href="railscasts.css">
 	<style>.loading body{visibility:hidden}body,.play-button{font-family:"Alegreya Sans", sans-serif}nav a,h2,h3,strong,.play-button{font-weight:700}h3{font-style:italic}.fallback body{font-family:"Avenir Next", Avenir, "Segoe UI", Calibri, "Helvetica Neue", Helvetica, sans-serif}.fallback h2,.fallback strong{font-weight:bold}.logotype h1{font-family:"Merienda One", serif;font-weight:normal}.fallback-logotype .logotype h1{font-family:"Iowan Old Style", "Hoefler Text", Literata, "Droid Serif", serif;font-style:italic}code{font-family:"PT Mono", monospace}.fallback-mono code{font-family:monospace}
  z{}</style>
 	<script>this.zenfonts=function(e){"use strict";var t=function(){},n="serif",i=e.documentElement,a=function s(e,t){return function(n){if(n||e.offsetWidth!==t){var i=e.parentNode;return i&&i.removeChild(e),!0}}},o=function f(e){e&&(i.className=i.className.replace(new RegExp("(^|\\s)*"+e+"(\\s|$)*","g")," "))};return function r(s,f){if(s instanceof Array||(s=[s]),f=f||{},!e.body)return setTimeout(function(){r(s,f)},1);for(var l=[],c=s.length;c--;){var u=s[c];"string"==typeof u&&(u={family:u});var m=u.family,d=e.createElement("div");d.style.cssText="position:absolute;top:-999px;left:-9999px;visibility:hidden;white-space:nowrap;font-size:20em;font-family:"+n+";"+u.style||"",d.appendChild(e.createTextNode("// Zenfonts([{}]);")),e.body.appendChild(d);var p=a(d,d.offsetWidth);d.style.fontFamily="'"+m+"',"+n,p()||l.push(p)}var v=f.onDone||t;if(0===l.length)return v(0);var h=f.loadingClass;h&&(i.className+=" "+h);var y=function D(){o(h)},g=1,T=f.fallback,b=f.fallbackClass;if(b){var w=y,N=function E(){g=2,i.className+=" "+b,w()},x;y=function k(){clearTimeout(x),o(b),w()},0===T?N():(T=T||999,x=setTimeout(N,T))}var C=(new Date).getTime()+(T||0)+(f.swap||0);!function z(e){setTimeout(function(){for(var t=(new Date).getTime(),n=t>C+9999,i=l.length;i--;)l[i](n)&&l.splice(i,1);0===l.length?(t>C&&(g=3,b=""),y(),v(n?-1:g)):z(1.5*e)},e)}(9)}}(document);</script>
@@ -69,7 +70,7 @@ zenfonts("PT Mono",{fallbackClass:"fallback-mono",swap:9999})
 
 <p>Smooth animated scrolling. Move&nbsp;elements&nbsp;into&nbsp;view, or&nbsp;scroll&nbsp;to any vertical&nbsp;position.</p>
 
-<p>1&nbsp;kilobyte of pure&nbsp;JavaScript. No&nbsp;dependencies.</p>
+<p>One&nbsp;kilobyte of pure&nbsp;JavaScript. No&nbsp;dependencies.</p>
 
 			<a class="hero-button" href="https://github.com/zengabor/zenscroll">View Zenscroll on GitHub</a>
 
@@ -84,7 +85,8 @@ zenfonts("PT Mono",{fallbackClass:"fallback-mono",swap:9999})
 <p>Features:</p>
 
 <ul>
-<li>Animated scrolling to anchors on the same page (unless the browser natively supports it and it’s enabled).</li>
+<li>Smooth animated scrolling, using the browser’s built-in smooth-behavior if it’s enabled.</li>
+<li>Automatic smooth-scolling on links within the same page.</li>
 <li>Scroll to the top of a specific element.</li>
 <li>Scrolling an element into view, making sure both top &amp; bottom are visible, if possible.</li>
 <li>Scroll to an element and center it on the screen.</li>
@@ -138,12 +140,10 @@ zenfonts("PT Mono",{fallbackClass:"fallback-mono",swap:9999})
 
 <p>If you want to leverage the native smooth-scrolling by the browser (currently available in Firefox 36+ and Chrome 49+) then set the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-behavior"><code>scroll-behavior</code> CSS property</a> to <code>smooth</code> on the body and on the elements you want to scroll. E.g.,</p>
 
-<pre><code class="css">    body, .smooth-container { scroll-behavior: smooth }
+<pre><code class="css">body, .smooth-container { scroll-behavior: smooth }
 </code></pre>
 
-<p>In this case the browser already does native smooth scrolling which is probably more efficient so Zenscroll uses that automatically. </p>
-
-<p>However, note that if you enable native smooth-scrolling then you loose the finer control options that Zenscroll offers: the speed of the animation, and the edge offset. So only set this CSS property on the <code>body</code> or on the elements if you don’t need this level of control.</p>
+<p>In this case Zenscroll will use the browser’s built-in support for all scroll functions. However, note that if you use the native smooth-scrolling then you loose the finer control options that Zenscroll offers: the speed of the animation, and the edge offset for links within the page. Only set this CSS property on the <code>body</code> or on the elements if you don’t need this level of control.</p>
 
 <h3 id="disablingautomaticsmoothingonlocallinks">Disabling automatic smoothing on local links</h3>
 
@@ -163,16 +163,16 @@ zenfonts("PT Mono",{fallbackClass:"fallback-mono",swap:9999})
 
 <p>If Zenscroll is included in your page it will automatically animate the scrolling to anchors on the same page. </p>
 
-<p>However, automatic smooth scrolling is not enabled in these two cases:</p>
+<p>However, automatic smooth scrolling within the same page is not enabled in these two cases:</p>
 
 <ol>
 <li>If you set <code>window.noZensmooth</code> to a non-falsy value (see <a href="#disablingautomaticsmoothingonlocallinks">above</a>).</li>
-<li>If the <code>scroll-behavior</code> CSS property is set to <code>smooth</code> on the <code>body</code> (see <a href="#enablingnativesmooth-scrollinginthebrowser">above</a>).</li>
+<li>If the <code>scroll-behavior</code> CSS property is set to <code>smooth</code> on the <code>body</code> (see <a href="#enablingnativesmooth-scrollinginthebrowser">above</a>). In this case the browser is already smooth-scrolling within the same page.</li>
 </ol>
 
 <p>If you want only some of the links to be excluded from the automatic smoothing then start with the path of the page. E.g., instead of writing <code>&lt;a href=&quot;#about&quot;&gt;</code> use <code>&lt;a href=&quot;/#about&quot;&gt;</code>.</p>
 
-<p>Automatic smooth scrolling works with content you dynamically load via AJAX, as Zenscroll uses a generic click handler. Internal links are intentionally not added to the history to save the users from having to hit the Back button too many times afterwards. Since the automatic smooth-scrolling is implemented a progressive enhancement, all internal links still work even in old browsers.</p>
+<p>Automatic smooth-scrolling works also with content you dynamically load via AJAX, as Zenscroll uses a generic click handler. Internal links are intentionally not added to the history to save the users from having to hit the Back button too many times afterwards. Since the automatic smooth-scrolling is implemented a progressive enhancement, all internal links still work even in old browsers.</p>
 
 <h3 id="2.scrolltothetopofanelement">2. Scroll to the top of an element</h3>
 
@@ -180,7 +180,7 @@ zenfonts("PT Mono",{fallbackClass:"fallback-mono",swap:9999})
 zenscroll.to(about)
 </code></pre>
 
-<p>Note that Zenscroll intentionally leaves a few pixels (by default 9px) from the edges of the screen or scolling container. If you have a fixed navigation bar or footer bar then you probably need more than that. Or you may want to set it to zero. You can globally override the default value by calling <code>zenscroll.setup()</code> (see below) or with the <code>edgeOffset</code> parameter of the constructor when you create a scroller for a DIV.</p>
+<p>Note that Zenscroll intentionally leaves a few pixels (by default 9px) from the edges of the screen or scolling container. If you have a fixed navigation bar or footer bar then you probably need more than that. Or you may want to set it to zero. You can globally override the default value by calling <code>zenscroll.setup()</code> (see below), or by providing the <code>edgeOffset</code> parameter when you create a scroller for a DIV, e.g., <code>zenscroll.createScroller(myDiv, null, 0)</code></p>
 
 <h3 id="3.scrolltoaspecificverticalposition">3. Scroll to a specific vertical position</h3>
 
@@ -249,7 +249,7 @@ zenscroll.center(image2, duration, offset)
 
 &lt;script&gt;
   var defaultDuration = 500
-  var edgeOffset = 4
+  var edgeOffset = 30
   var myDiv = document.getElementById(&quot;container&quot;)
   var myScroller = zenscroll.createScroller(myDiv, defaultDuration, edgeOffset)
   var target = document.getElementById(&quot;item4&quot;)
@@ -262,7 +262,7 @@ zenscroll.center(image2, duration, offset)
 <pre><code class="js">myScroller.toY(35)
 </code></pre>
 
-<pre><code class="js">myScroller.intoView(target, 750)
+<pre><code class="js">myScroller.intoView(target)
 </code></pre>
 
 <h3 id="8.changesettings">8. Change settings</h3>
@@ -336,15 +336,18 @@ zenscroll.setup(defaultDuration, edgeOffset)
 	</main>
 	
 	<footer class="dark">
-		<div class="back-to-top"><a href="#">Back to Top &uarr;</a></div>
+		<div class="back-to-top"><a href="#"><strong>Back to Top &uarr;</strong></a></div>
 		<small>
 			&copy; 2015–2016 Gabor Lenard
 		</small>
 	</footer>
 	
 	<script src="zenscroll.js"></script>
-	
+
 	<script src="demo.js"></script>
+
+	<script src="highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad()</script>
 
 </body>
 </html>

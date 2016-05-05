@@ -3,8 +3,8 @@
 
 (function (win, doc) {
 	"use strict"
-	
-	var next = function next(el) {
+
+	var next = function (el) {
 		do {
 			el = el.nextSibling
 			if (el.nodeType === 1) {
@@ -24,14 +24,10 @@
 			button.attachEvent("onclick", func)
 		}
 		parent.insertBefore(button, beforeElem)
-		var spacer = doc.createElement("DIV")
-		spacer.className = "try-spacer"
-		parent.insertBefore(spacer, beforeElem)
 	}
 
 	var insertHelpText = function insertHelpText(parent, beforeElem, helpText) {
 		var p = doc.createElement("P")
-		p.className = "try-help"
 		p.innerHTML = helpText
 		parent.insertBefore(p, beforeElem)
 	}
@@ -126,7 +122,7 @@
 	}
 	main.insertBefore(c, next(code9))
 	var defaultDuration = 500
-	var edgeOffset = 6
+	var edgeOffset = 30
 	var myScroller = zenscroll.createScroller(c, defaultDuration, edgeOffset)
 	var target = document.getElementById("item4")
 	insertButtonBefore(code9, null, function () {
@@ -139,7 +135,7 @@
 	})
 	insertButtonBefore(next(next(next(next(code9)))), null, function () {
 		zenscroll.intoView(c, 100)
-		myScroller.intoView(target, 750)
+		myScroller.intoView(target)
 	})
 	insertHelpText(main, next(next(next(next(next(code9))))), 
 		"Tip: Scroll <em>ITEM 4</em> manually upwards/downwards out of view, then hit ‘Play’."
