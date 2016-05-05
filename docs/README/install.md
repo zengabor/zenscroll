@@ -21,12 +21,10 @@ npm install zenscroll
 If you want to leverage the native smooth-scrolling by the browser (currently available in Firefox 36+ and Chrome 49+) then set the [`scroll-behavior` CSS property](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-behavior) to `smooth` on the body and on the elements you want to scroll. E.g.,
 
 ````css
-    body, .smooth-container { scroll-behavior: smooth }
+body, .smooth-container { scroll-behavior: smooth }
 ````
 
-In this case the browser already does native smooth scrolling which is probably more efficient so Zenscroll uses that automatically. 
-
-However, note that if you enable native smooth-scrolling then you loose the finer control options that Zenscroll offers: the speed of the animation, and the edge offset. So only set this CSS property on the `body` or on the elements if you don’t need this level of control.
+In this case Zenscroll will use the browser’s built-in support for all scroll functions. However, note that if you use the native smooth-scrolling then you loose the finer control options that Zenscroll offers: the speed of the animation, and the edge offset for links within the page. Only set this CSS property on the `body` or on the elements if you don’t need this level of control.
 
 ### Disabling automatic smoothing on local links
 

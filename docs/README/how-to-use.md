@@ -5,14 +5,14 @@
 
 If Zenscroll is included in your page it will automatically animate the scrolling to anchors on the same page. 
 
-However, automatic smooth scrolling is not enabled in these two cases:
+However, automatic smooth scrolling within the same page is not enabled in these two cases:
 
 1. If you set `window.noZensmooth` to a non-falsy value (see [above](#disablingautomaticsmoothingonlocallinks)).
-2. If the `scroll-behavior` CSS property is set to `smooth` on the `body` (see [above](#enablingnativesmooth-scrollinginthebrowser)).
+2. If the `scroll-behavior` CSS property is set to `smooth` on the `body` (see [above](#enablingnativesmooth-scrollinginthebrowser)). In this case the browser is already smooth-scrolling within the same page.
 
 If you want only some of the links to be excluded from the automatic smoothing then start with the path of the page. E.g., instead of writing `<a href="#about">` use `<a href="/#about">`.
 
-Automatic smooth scrolling works with content you dynamically load via AJAX, as Zenscroll uses a generic click handler. Internal links are intentionally not added to the history to save the users from having to hit the Back button too many times afterwards. Since the automatic smooth-scrolling is implemented a progressive enhancement, all internal links still work even in old browsers.
+Automatic smooth-scrolling works also with content you dynamically load via AJAX, as Zenscroll uses a generic click handler. Internal links are intentionally not added to the history to save the users from having to hit the Back button too many times afterwards. Since the automatic smooth-scrolling is implemented a progressive enhancement, all internal links still work even in old browsers.
 
 
 ### 2. Scroll to the top of an element
@@ -22,7 +22,7 @@ var about = document.getElementById("about")
 zenscroll.to(about)
 ````
 
-Note that Zenscroll intentionally leaves a few pixels (by default 9px) from the edges of the screen or scolling container. If you have a fixed navigation bar or footer bar then you probably need more than that. Or you may want to set it to zero. You can globally override the default value by calling `zenscroll.setup()` (see below) or with the `edgeOffset` parameter of the constructor when you create a scroller for a DIV.
+Note that Zenscroll intentionally leaves a few pixels (by default 9px) from the edges of the screen or scolling container. If you have a fixed navigation bar or footer bar then you probably need more than that. Or you may want to set it to zero. You can globally override the default value by calling `zenscroll.setup()` (see below), or by providing the `edgeOffset` parameter when you create a scroller for a DIV, e.g., `zenscroll.createScroller(myDiv, null, 0)`
 
 
 ### 3. Scroll to a specific vertical position
@@ -105,7 +105,7 @@ Example:
 
 <script>
   var defaultDuration = 500
-  var edgeOffset = 4
+  var edgeOffset = 30
   var myDiv = document.getElementById("container")
   var myScroller = zenscroll.createScroller(myDiv, defaultDuration, edgeOffset)
   var target = document.getElementById("item4")
@@ -120,7 +120,7 @@ myScroller.toY(35)
 ````
 
 ````js
-myScroller.intoView(target, 750)
+myScroller.intoView(target)
 ````
 
 
