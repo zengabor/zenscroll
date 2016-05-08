@@ -10,8 +10,9 @@ Features:
 - Scrolling an element into view, making sure both top & bottom are visible, if possible.
 - Scroll to an element and center it on the screen.
 - Customize the duration of the individual scroll operations.
+- If you provide a callback function it will be executed when the scrolling is done.
 - Specify the spacing between the element and the edge of the screen (e.g., for fixed navigation bars and footers).
-- Just 1 kilobyte minimized & gzipped.
+- Just 1.1 kilobyte minimized & gzipped.
 - No dependencies.
 
 Full support tested and works under:
