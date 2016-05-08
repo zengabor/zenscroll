@@ -241,15 +241,6 @@
 		"outputPathIsOutsideProject": 1,
 		"outputPathIsSetByUser": 1
 		},
-	"\/docs\/zentaps-min-js.kit": {
-		"fileType": 2048,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/docs\/zentaps-min-js.kit",
-		"outputAbbreviatedPath": "\/Users\/gabor\/Repositories\/Zen-Tools\/zenscroll\/gh-pages\/zentaps-min.js",
-		"outputPathIsOutsideProject": 1,
-		"outputPathIsSetByUser": 1
-		},
 	"\/zenscroll.js": {
 		"fileType": 64,
 		"ignore": 0,
