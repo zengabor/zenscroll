@@ -70,7 +70,7 @@ zenfonts("PT Mono",{fallbackClass:"fallback-mono",swap:9999})
 
 <p>Smooth animated scrolling. Move&nbsp;elements&nbsp;into&nbsp;view, or&nbsp;scroll&nbsp;to any vertical&nbsp;position.</p>
 
-<p>One&nbsp;kilobyte of pure&nbsp;JavaScript. No&nbsp;dependencies.</p>
+<p>1.1&nbsp;kilobyte of vanilla&nbsp;JavaScript. No&nbsp;dependencies.</p>
 
 			<a class="hero-button" href="https://github.com/zengabor/zenscroll">View Zenscroll on GitHub</a>
 
@@ -91,8 +91,9 @@ zenfonts("PT Mono",{fallbackClass:"fallback-mono",swap:9999})
 <li>Scrolling an element into view, making sure both top &amp; bottom are visible, if possible.</li>
 <li>Scroll to an element and center it on the screen.</li>
 <li>Customize the duration of the individual scroll operations.</li>
+<li>If you provide a callback function it will be executed when the scrolling is done.</li>
 <li>Specify the spacing between the element and the edge of the screen (e.g., for fixed navigation bars and footers).</li>
-<li>Just 1 kilobyte minimized &amp; gzipped.</li>
+<li>Just 1.1 kilobyte minimized &amp; gzipped.</li>
 <li>No dependencies.</li>
 </ul>
 
@@ -265,7 +266,34 @@ zenscroll.center(image2, duration, offset)
 <pre><code class="js">myScroller.intoView(target)
 </code></pre>
 
-<h3 id="8.changesettings">8. Change settings</h3>
+<h3 id="8.executesomethingwhenthescrollingisdone">8. Execute something when the scrolling is done</h3>
+
+<p>You can provide a callback function to all four scroll functions, which is executed when the scroll operation is finished. For example, you change some UI elements but first you want to make sure that the relevant elements are visible.</p>
+
+<p>If you look at the code examples above under the previous point, <a href="#7.scrollinsideascrollablediv">7. Scroll inside a scrollable DIV</a> they are actually implemented like this:</p>
+
+<pre><code class="js">// Last line of example 1:
+zenscroll.intoView(container, 100, function () { myScroller.center(target) })
+
+// Example 2:
+zenscroll.intoView(container, 100, function () { myScroller.toY(35) })
+
+// Example 3:
+zenscroll.intoView(container, 100, function () { myScroller.intoView(target) })
+</code></pre>
+
+<p>So first the container (with <em>ITEM 1</em> to <em>ITEM 7</em>) is scrolled into view if necessary, and then the scrolling inside the container is performed. Try scrolling out the above container and then hit one of the ‘Play’ buttons above to see how it works.</p>
+
+<p>This works with all four scrolling functions. The <code>onDone</code> parameter is always the last parameter:</p>
+
+<ol>
+<li><code>to(element, duration, onDone)</code></li>
+<li><code>toY(y, duration, onDone)</code></li>
+<li><code>intoView(element, duration, onDone)</code></li>
+<li><code>center(element, duration, offset, onDone)</code></li>
+</ol>
+
+<h3 id="9.changesettings">9. Change settings</h3>
 
 <p>It’s easy to change the basic parameters of scrolling:</p>
 
@@ -294,7 +322,7 @@ zenscroll.setup(defaultDuration, edgeOffset)
 <pre><code class="js">zenscroll.setup(null, 42)
 </code></pre>
 
-<h3 id="9.controllingthesmoothoperation">9. Controlling the smooth operation</h3>
+<h3 id="10.controllingthesmoothoperation">10. Controlling the smooth operation</h3>
 
 <p>To check whether a scoll is being performed right now:</p>
 

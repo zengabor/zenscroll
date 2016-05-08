@@ -103,10 +103,13 @@
 		 *        If 0 or not provided it is automatically calculated based on the 
 		 *        distance and the default duration.
 		 */
-		var scrollToY = function (endY, duration) {
+		var scrollToY = function (endY, duration, onDone) {
 			stopScroll()
 			if (nativeSmoothScrollEnabled()) {
 				(scrollContainer || window).scrollTo(0, endY)
+				if (onDone) {
+					onDone()
+				}
 			} else {
 				var startY = getScrollTop()
 				var distance = Math.max(endY,0) - startY
@@ -125,6 +128,9 @@
 							loopScroll()
 						} else {
 							setTimeout(stopScroll, 99) // with cooldown time
+							if (onDone) {
+								onDone()
+							}
 						}
 					}, 9)
 				})()
@@ -138,8 +144,8 @@
 		 * @param {duration} Optionally the duration of the scroll operation.
 		 *        A value of 0 is ignored.
 		 */
-		var scrollToElem = function (elem, duration) {
-			scrollToY(getRelativeTopOf(elem) - edgeOffset, duration)
+		var scrollToElem = function (elem, duration, onDone) {
+			scrollToY(getRelativeTopOf(elem) - edgeOffset, duration, onDone)
 		}
 
 		/**
@@ -149,7 +155,7 @@
 		 * @param {duration} Optionally the duration of the scroll operation.
 		 *        A value of 0 is ignored.
 		 */
-		var scrollIntoView = function (elem, duration) {
+		var scrollIntoView = function (elem, duration, onDone) {
 			var elemScrollHeight = elem.getBoundingClientRect().height + 2*edgeOffset
 			var vHeight = getViewHeight()
 			var elemTop = getRelativeTopOf(elem)
@@ -157,10 +163,12 @@
 			var scrollTop = getScrollTop()
 			if ((elemTop - scrollTop) < edgeOffset || elemScrollHeight > vHeight) {
 				// Element is clipped at top or is higher than screen.
-				scrollToElem(elem, duration)
+				scrollToElem(elem, duration, onDone)
 			} else if ((scrollTop + vHeight - elemBottom) < 0) {
 				// Element is clipped at the bottom.
-				scrollToY(elemBottom - vHeight, duration)
+				scrollToY(elemBottom - vHeight, duration, onDone)
+			} else if (onDone) {
+				onDone()
 			}
 		}
 
@@ -172,13 +180,14 @@
 		 * @param {offset} Optionally the offset of the top of the element from the center of the screen.
 		 *        A value of 0 is ignored.
 		 */
-		var scrollToCenterOf = function (elem, duration, offset) {
+		var scrollToCenterOf = function (elem, duration, offset, onDone) {
 			scrollToY(
 				Math.max(
 					getRelativeTopOf(elem) - getViewHeight()/2 + (offset || elem.getBoundingClientRect().height/2), 
 					0
 				), 
-				duration
+				duration,
+				onDone
 			)
 		}
 
