@@ -12,7 +12,7 @@
 
 Smooth animated scrolling. Move&nbsp;elements&nbsp;into&nbsp;view, or&nbsp;scroll&nbsp;to any vertical&nbsp;position.
 
-One&nbsp;kilobyte of pure&nbsp;JavaScript. No&nbsp;dependencies.
+1.1&nbsp;kilobyte of vanilla&nbsp;JavaScript. No&nbsp;dependencies.
 
 
 ## About
@@ -27,8 +27,9 @@ Features:
 - Scrolling an element into view, making sure both top & bottom are visible, if possible.
 - Scroll to an element and center it on the screen.
 - Customize the duration of the individual scroll operations.
+- If you provide a callback function it will be executed when the scrolling is done.
 - Specify the spacing between the element and the edge of the screen (e.g., for fixed navigation bars and footers).
-- Just 1 kilobyte minimized & gzipped.
+- Just 1.1 kilobyte minimized & gzipped.
 - No dependencies.
 
 Full support tested and works under:
@@ -218,7 +219,34 @@ myScroller.intoView(target)
 ````
 
 
-### 8. Change settings
+### 8. Execute something when the scrolling is done
+
+You can provide a callback function to all four scroll functions, which is executed when the scroll operation is finished. For example, you change some UI elements but first you want to make sure that the relevant elements are visible.
+
+If you look at the code examples above under the previous point, [7. Scroll inside a scrollable DIV](#7.scrollinsideascrollablediv) they are actually implemented like this:
+
+````js
+// Last line of example 1:
+zenscroll.intoView(container, 100, function () { myScroller.center(target) })
+
+// Example 2:
+zenscroll.intoView(container, 100, function () { myScroller.toY(35) })
+
+// Example 3:
+zenscroll.intoView(container, 100, function () { myScroller.intoView(target) })
+````
+
+So first the container (with _ITEM 1_ to _ITEM 7_) is scrolled into view if necessary, and then the scrolling inside the container is performed. Try scrolling out the above container and then hit one of the ‘Play’ buttons above to see how it works.
+
+This works with all four scrolling functions. The `onDone` parameter is always the last parameter:
+
+1. `to(element, duration, onDone)`
+1. `toY(y, duration, onDone)`
+1. `intoView(element, duration, onDone)`
+1. `center(element, duration, offset, onDone)`
+
+
+### 9. Change settings
 
 It’s easy to change the basic parameters of scrolling:
 
@@ -250,7 +278,7 @@ zenscroll.setup(null, 42)
 ````
 
 
-### 9. Controlling the smooth operation
+### 10. Controlling the smooth operation
 
 To check whether a scoll is being performed right now:
 
