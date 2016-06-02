@@ -48,7 +48,7 @@
 	"use strict"
 
 	// Exit if it’s not a browser environment:
-	if (!window || !document) {
+	if (typeof (window) === 'undefined' || !window.document) {
 		return {}
 	}
 
