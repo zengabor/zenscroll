@@ -183,12 +183,12 @@ zenscroll.center(image2, 2000) // 2 seconds
 
 ### 7. Scroll inside a scrollable DIV
 
-Anything you can do within the document you can also do inside a scrollable element. You just need to instantiate a new scoller for that element. It also falls back by default to the native browser smooth-scrolling if available (which can be overridden via `setup()`).
+Anything you can do within the document you can also do inside a scrollable element. You just need to instantiate a new scoller for that element. I will also fall back by default to the native browser smooth-scrolling if available (which can be overridden via `setup()`).
 
-Example:
+**Important:** the container DIV must have its `position` CSS property set to `relative`, `absolute` or `fixed`. If you want to keep it in the normal document flow, just assign `position: relative` to it via a class or a `style` attribute, like in the example below:
 
 ````html
-<div id="container">
+<div id="container" style="position: relative">
   <div id="item1">ITEM 1</div>
   <div id="item2">ITEM 2</div>
   <div id="item3">ITEM 3</div>
