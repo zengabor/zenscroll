@@ -1,5 +1,5 @@
 /**
- * Zenscroll 3.1.0
+ * Zenscroll 3.2.0
  * https://github.com/zengabor/zenscroll/
  *
  * Copyright 2015–2016 Gabor Lenard
@@ -81,7 +81,7 @@
 
 		var getRelativeTopOf = function (elem) {
 			if (scrollContainer) {
-				return elem.offsetTop - scrollContainer.offsetTop
+				return elem.offsetTop
 			} else {
 				return elem.getBoundingClientRect().top + getScrollTop() - docElem.offsetTop
 			}

@@ -23,10 +23,13 @@ figure,
 }
 
 .example-container {
+	/* The first two lines are important for the scroll to work: */
+	position: relative;
+	overflow: scroll;
+
 	max-width: 20em;
 	max-height: 12em;
 	margin: 2em 0;
-	overflow: scroll;
 	background: $c-lightgray;
 	text-align: center;
 	box-shadow: inset 1em 0 1em -1em rgba(0,0,0, 0.25), inset -1em 0 1em -1em rgba(0,0,0, 0.25);
