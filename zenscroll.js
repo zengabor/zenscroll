@@ -65,18 +65,24 @@
 		
 		// Detect if the browser already supports native smooth scrolling (e.g., Firefox 36+ and Chrome 49+) and it is enabled:
 		var nativeSmoothScrollEnabled = function () {
-			return ("getComputedStyle" in window) && 
+			return ("getComputedStyle" in window) &&
 				window.getComputedStyle(scrollContainer ? scrollContainer : document.body)["scroll-behavior"] === "smooth"
 		}
 
-		var getScrollTop = function () { 
-			return scrollContainer ? scrollContainer.scrollTop : (window.scrollY || docElem.scrollTop)
+		var getScrollTop = function () {
+			if (scrollContainer) {
+				return scrollContainer.scrollTop
+			} else {
+				return window.scrollY || docElem.scrollTop
+			}
 		}
 
-		var getViewHeight = function () { 
-			return scrollContainer ? 
-				Math.min(scrollContainer.offsetHeight, window.innerHeight) : 
-				window.innerHeight || docElem.clientHeight
+		var getViewHeight = function () {
+			if (scrollContainer) {
+				return Math.min(scrollContainer.offsetHeight, window.innerHeight)
+			} else {
+				return window.innerHeight || docElem.clientHeight
+			}
 		}
 
 		var getRelativeTopOf = function (elem) {
@@ -156,17 +162,18 @@
 		 *        A value of 0 is ignored.
 		 */
 		var scrollIntoView = function (elem, duration, onDone) {
-			var elemScrollHeight = elem.getBoundingClientRect().height + 2*edgeOffset
-			var vHeight = getViewHeight()
+			var elemHeight = elem.getBoundingClientRect().height
 			var elemTop = getRelativeTopOf(elem)
-			var elemBottom = elemTop + elemScrollHeight - edgeOffset
-			var scrollTop = getScrollTop()
-			if ((elemTop - scrollTop) < edgeOffset || elemScrollHeight > vHeight) {
+			var elemBottom = elemTop + elemHeight
+			var containerHeight = getViewHeight()
+			var containerTop = getScrollTop()
+			var containerBottom = containerTop + containerHeight
+			if ((elemTop - edgeOffset) < containerTop || (elemHeight + edgeOffset) > containerHeight) {
 				// Element is clipped at top or is higher than screen.
 				scrollToElem(elem, duration, onDone)
-			} else if ((scrollTop + vHeight - elemBottom) < 0) {
+			} else if ((elemBottom + edgeOffset) > containerBottom) {
 				// Element is clipped at the bottom.
-				scrollToY(elemBottom - vHeight, duration, onDone)
+				scrollToY(elemBottom - containerHeight + edgeOffset, duration, onDone)
 			} else if (onDone) {
 				onDone()
 			}
