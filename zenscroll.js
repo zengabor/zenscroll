@@ -1,5 +1,5 @@
 /**
- * Zenscroll 3.2.0
+ * Zenscroll 3.2.1
  * https://github.com/zengabor/zenscroll/
  *
  * Copyright 2015–2016 Gabor Lenard
@@ -48,7 +48,7 @@
 	"use strict"
 
 	// Exit if it’s not a browser environment:
-	if (!window || !document) {
+	if (typeof window === "undefined" || !("document" in window)) {
 		return {}
 	}
 
