@@ -3,19 +3,12 @@
 "buildSteps": [
 	{
 		"name": "Process All Remaining Files and Folders",
-		"scriptType": 0,
 		"stepType": 1,
 		"uuidString": "22DD95C2-EBBE-4B8D-96BE-A8040B7FA300"
 		}
 	],
-"creatorBuild": "24670",
+"creatorBuild": "24794",
 "files": {
-	"\/config.codekit3": {
-		"ft": 8192,
-		"oA": 2,
-		"oAP": "\/config.codekit3",
-		"oF": 0
-		},
 	"\/demo.js": {
 		"ft": 64,
 		"mi": 1,
@@ -156,6 +149,7 @@
 	"iconImageName": "brackets_gray"
 	},
 "projectSettings": {
+	"abortBuildOnError": 1,
 	"alwaysUseExternalServer": 0,
 	"animateCSSInjections": 1,
 	"autoprefixerBrowserString": "> 1%, last 2 versions, Firefox ESR, Opera 12.1",
@@ -416,6 +410,7 @@
 	"browserRefreshDelay": 0,
 	"buildFolderActive": 0,
 	"buildFolderName": "build",
+	"cleanBuild": 1,
 	"coffeeLintFlags2": {
 		"arrow_spacing": {
 			"active": 0,
@@ -1426,6 +1421,7 @@
 			}
 		},
 	"externalServerAddress": "http:\/\/localhost:8888",
+	"hideConfigFile": 0,
 	"jsCheckerReservedNamesString": "",
 	"jsHintFlags2": {
 		"asi": {
