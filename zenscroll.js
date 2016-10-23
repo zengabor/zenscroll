@@ -1,5 +1,5 @@
 /**
- * Zenscroll 3.2.2
+ * Zenscroll 3.2.3
  * https://github.com/zengabor/zenscroll/
  *
  * Copyright 2015–2016 Gabor Lenard
@@ -61,6 +61,9 @@
 		}
 
 		var scrollTimeoutId
+		var setScrollTimeoutId = function (newValue) {
+			scrollTimeoutId = newValue
+		}
 		var docElem = document.documentElement
 		
 		// Detect if the browser already supports native smooth scrolling (e.g., Firefox 36+ and Chrome 49+) and it is enabled:
@@ -98,7 +101,7 @@
 		 */
 		var stopScroll = function () {
 			clearTimeout(scrollTimeoutId)
-			scrollTimeoutId = 0
+			setScrollTimeoutId(0)
 		}
 
 		/**
@@ -122,7 +125,7 @@
 				duration = duration || Math.min(Math.abs(distance), defaultDuration)
 				var startTime = new Date().getTime();
 				(function loopScroll() {
-					scrollTimeoutId = setTimeout(function () {
+					setScrollTimeoutId(setTimeout(function () {
 						var p = Math.min((new Date().getTime() - startTime) / duration, 1) // percentage
 						var y = Math.max(Math.floor(startY + distance*(p < 0.5 ? 2*p*p : p*(4 - p*2)-1)), 0)
 						if (scrollContainer) {
@@ -138,7 +141,7 @@
 								onDone()
 							}
 						}
-					}, 9)
+					}, 9))
 				})()
 			}
 		}
