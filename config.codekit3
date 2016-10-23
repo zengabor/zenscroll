@@ -7,7 +7,7 @@
 		"uuidString": "1C93EDCC-C6CB-475E-94CF-C5832A031D10"
 		}
 	],
-"creatorBuild": "24794",
+"creatorBuild": "25340",
 "files": {
 	"\/docs\/ie.scss": {
 		"aP": 1,
@@ -221,9 +221,11 @@
 	"abortBuildOnError": 1,
 	"alwaysUseExternalServer": 0,
 	"animateCSSInjections": 1,
+	"autoBuildNewItems": 1,
 	"autoprefixerBrowserString": "> 1%, last 2 versions, Firefox ESR, Opera 12.1",
 	"babelAuxiliaryCommentAfter": "",
 	"babelAuxiliaryCommentBefore": "",
+	"babelConfigFileHandlingType": 0,
 	"babelCustomPluginsList": "",
 	"babelCustomPresetsList": "",
 	"babelInsertModuleIDs": 0,
@@ -236,13 +238,13 @@
 		"async-to-module-method": {
 			"active": 0
 			},
-		"class-constructor-call": {
-			"active": 0
-			},
 		"class-properties": {
 			"active": 0
 			},
 		"decorators": {
+			"active": 0
+			},
+		"decorators-legacy": {
 			"active": 0
 			},
 		"do-expressions": {
@@ -419,13 +421,7 @@
 		"strict-mode": {
 			"active": 0
 			},
-		"syntax-async-functions": {
-			"active": 0
-			},
 		"syntax-async-generators": {
-			"active": 0
-			},
-		"syntax-class-constructor-call": {
 			"active": 0
 			},
 		"syntax-class-properties": {
@@ -435,9 +431,6 @@
 			"active": 0
 			},
 		"syntax-do-expressions": {
-			"active": 0
-			},
-		"syntax-exponentiation-operator": {
 			"active": 0
 			},
 		"syntax-export-extensions": {
@@ -456,9 +449,6 @@
 			"active": 0
 			},
 		"syntax-object-rest-spread": {
-			"active": 0
-			},
-		"syntax-trailing-function-commas": {
 			"active": 0
 			},
 		"undeclared-variables-check": {
@@ -618,6 +608,8 @@
 			"flagValue": -1
 			}
 		},
+	"esLintConfigFileHandlingType": 1,
+	"esLintECMAVersion": 7,
 	"esLintEnvironmentsMask": 1,
 	"esLintRules": {
 		"accessor-pairs": {
@@ -663,6 +655,10 @@
 		"camelcase": {
 			"active": 0,
 			"optionString": "{'properties': 'always'}"
+			},
+		"class-methods-use-this": {
+			"active": 0,
+			"optionString": "{'exceptMethods': []}"
 			},
 		"comma-dangle": {
 			"active": 1,
@@ -720,6 +716,14 @@
 			"active": 0,
 			"optionString": "'always'"
 			},
+		"func-call-spacing": {
+			"active": 0,
+			"optionString": "'never'"
+			},
+		"func-name-matching": {
+			"active": 0,
+			"optionString": "{'includeCommonJSModuleExports': false}"
+			},
 		"func-names": {
 			"active": 0,
 			"optionString": "'always'"
@@ -776,6 +780,10 @@
 			"active": 0,
 			"optionString": "{'before': true, 'after': true, 'overrides': {}}"
 			},
+		"line-comment-position": {
+			"active": 0,
+			"optionString": "{'position': 'above'}"
+			},
 		"linebreak-style": {
 			"active": 0,
 			"optionString": "'unix'"
@@ -783,6 +791,10 @@
 		"lines-around-comment": {
 			"active": 0,
 			"optionString": "{'beforeBlockComment': true}"
+			},
+		"lines-around-directive": {
+			"active": 0,
+			"optionString": "{'before': 'always', 'after': 'always'}"
 			},
 		"max-depth": {
 			"active": 0,
@@ -984,6 +996,10 @@
 			"active": 1,
 			"optionString": ""
 			},
+		"no-global-assign": {
+			"active": 0,
+			"optionString": "{'exceptions': []}"
+			},
 		"no-implicit-coercion": {
 			"active": 0,
 			"optionString": "{'boolean': true, 'number': true, 'string': true, 'allow': []}"
@@ -1068,16 +1084,8 @@
 			"active": 0,
 			"optionString": "{'max': 2, 'maxBOF': 2, 'maxEOF': 2}"
 			},
-		"no-native-reassign": {
-			"active": 0,
-			"optionString": "{'exceptions': []}"
-			},
 		"no-negated-condition": {
 			"active": 0,
-			"optionString": ""
-			},
-		"no-negated-in-lhs": {
-			"active": 1,
 			"optionString": ""
 			},
 		"no-nested-ternary": {
@@ -1164,6 +1172,10 @@
 			"active": 0,
 			"optionString": ""
 			},
+		"no-restricted-properties": {
+			"active": 0,
+			"optionString": "[{'object': 'disallowedObjectName', 'property': 'disallowedPropertyName'}, {'object': 'disallowedObjectName', 'property': 'anotherDisallowedPropertyName', 'message': 'Please use allowedObjectName.allowedPropertyName.'}]"
+			},
 		"no-restricted-syntax": {
 			"active": 0,
 			"optionString": "{'WithStatement', 'try-catch'}"
@@ -1196,16 +1208,20 @@
 			"active": 0,
 			"optionString": ""
 			},
-		"no-spaced-func": {
-			"active": 0,
-			"optionString": ""
-			},
 		"no-sparse-arrays": {
 			"active": 1,
 			"optionString": ""
 			},
 		"no-sync": {
 			"active": 0,
+			"optionString": ""
+			},
+		"no-tabs": {
+			"active": 0,
+			"optionString": ""
+			},
+		"no-template-curly-in-string": {
+			"active": 1,
 			"optionString": ""
 			},
 		"no-ternary": {
@@ -1258,6 +1274,10 @@
 			},
 		"no-unsafe-finally": {
 			"active": 1,
+			"optionString": ""
+			},
+		"no-unsafe-negation": {
+			"active": 0,
 			"optionString": ""
 			},
 		"no-unused-expressions": {
@@ -1364,6 +1384,10 @@
 			"active": 0,
 			"optionString": "{'destructuring': 'any', 'ignoreReadBeforeAssign': false}"
 			},
+		"prefer-numeric-literals": {
+			"active": 0,
+			"optionString": ""
+			},
 		"prefer-reflect": {
 			"active": 0,
 			"optionString": "{'exceptions': []}"
@@ -1416,6 +1440,10 @@
 			"active": 0,
 			"optionString": "{'ignoreCase': false, 'ignoreMemberSort': true, 'memberSyntaxSortOrder': ['none', 'all', 'multiple', 'single']}"
 			},
+		"sort-keys": {
+			"active": 0,
+			"optionString": "'asc', {'caseSensitive': true, 'natural': false}"
+			},
 		"sort-vars": {
 			"active": 0,
 			"optionString": "{'ignoreCase': false}"
@@ -1447,6 +1475,10 @@
 		"strict": {
 			"active": 0,
 			"optionString": "'safe'"
+			},
+		"symbol-description": {
+			"active": 0,
+			"optionString": ""
 			},
 		"template-curly-spacing": {
 			"active": 0,
@@ -1489,7 +1521,9 @@
 			"optionString": "'never', {'exceptRange': false, 'onlyEquality': false}"
 			}
 		},
+	"esLintSourceType": 0,
 	"externalServerAddress": "http:\/\/localhost:8888",
+	"gitIgnoreBuildFolder": 1,
 	"hideConfigFile": 0,
 	"jsCheckerReservedNamesString": "",
 	"jsHintFlags2": {
@@ -1859,6 +1893,8 @@
 		"autoOutputPathReplace1": "",
 		"autoOutputPathReplace2": "",
 		"autoOutputPathStyle": 0,
+		"createSourceMap": 0,
+		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0
 		},
@@ -2067,6 +2103,8 @@
 		"suppressImplicitAnyIndexErrors": 0,
 		"targetECMAVersion": 0
 		},
+	"languageDefaultsUserDefined": [
+		],
 	"previewPathAddition": "",
 	"skippedFoldersString": "log, _logs, logs, _cache, cache, node_modules",
 	"sourceFolderName": "source",
