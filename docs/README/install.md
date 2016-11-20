@@ -24,7 +24,7 @@ If you want to leverage the native smooth-scrolling by the browser (currently av
 body, .smooth-container { scroll-behavior: smooth }
 ````
 
-In this case Zenscroll will use the browser’s built-in support for all scroll functions. However, note that if you use the native smooth-scrolling then you loose the finer control options that Zenscroll offers: the speed of the animation, and the edge offset for links within the page. Only set this CSS property on the `body` or on the elements if you don’t need this level of control.
+If this is set and the browser supports it, Zenscroll will use the browser’s built-in support for smooth-scrolling. However, note that if you use the native smooth-scrolling then you loose the finer control options that Zenscroll offers: the speed settings of the animation, and the edge offset for links within the page. Only set this CSS property on the `body` or on the elements if you don’t need this level of control.
 
 ### Disabling automatic smoothing on local links
 

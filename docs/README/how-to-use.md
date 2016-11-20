@@ -3,7 +3,7 @@
 
 ### 1. Smooth scroll within your page
 
-If Zenscroll is included in your page it will automatically animate the scrolling to anchors on the same page. 
+If Zenscroll is included in your page it will automatically animate the scrolling to anchors on the same page.
 
 However, automatic smooth scrolling within the same page is not enabled in these two cases:
 
@@ -11,8 +11,10 @@ However, automatic smooth scrolling within the same page is not enabled in these
 2. If the `scroll-behavior` CSS property is set to `smooth` on the `body` (see [above](#enablingnativesmooth-scrollinginthebrowser)). In this case the browser is already smooth-scrolling within the same page.
 
 If you want only some of the links to be excluded from the automatic smoothing then start with the path of the page. E.g., instead of writing `<a href="#about">` use `<a href="/#about">`.
+	
+The scroll is also animated when the Back and Forward buttons are used. (Note that it remembers the vertical scroll position but it doesn’t calculate changes caused by browser window resizing or collapsing/expanding elements, etc.) This functionality requires browser support for `history.scrollRestoration` which is available in Chrome 46+ and Firefox 46+. WebKit already has a [ticket](https://bugs.webkit.org/show_bug.cgi?id=147782) for it, in the meantime you can use a polyfill for Safari, like [scroll-restoration-polyfill](https://github.com/bfred-it/scroll-restoration-polyfill).
 
-Automatic smooth-scrolling works also with content you dynamically load via AJAX, as Zenscroll uses a generic click handler. Internal links are intentionally not added to the history to save the users from having to hit the Back button too many times afterwards. Since the automatic smooth-scrolling is implemented a progressive enhancement, all internal links still work even in old browsers.
+Automatic smooth-scrolling works also with content you dynamically load via AJAX, as Zenscroll uses a generic click handler. Since the automatic smooth-scrolling is implemented a progressive enhancement, internal links work in older browsers as well.
 
 
 ### 2. Scroll to the top of an element
@@ -128,7 +130,7 @@ myScroller.intoView(target)
 
 You can provide a callback function to all four scroll functions, which is executed when the scroll operation is finished. For example, you change some UI elements but first you want to make sure that the relevant elements are visible.
 
-If you look at the code examples above under the previous point, [7. Scroll inside a scrollable DIV](#7.scrollinsideascrollablediv) they are actually implemented like this:
+If you look at the code examples above under the previous point, [Scroll inside a scrollable DIV](#7.scrollinsideascrollablediv) they are actually implemented like this:
 
 ````js
 // Last line of example 1:

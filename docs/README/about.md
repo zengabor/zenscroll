@@ -4,15 +4,17 @@ Zenscroll is a vanilla JavaScript module that enables animated vertical scrollin
 
 Features:
 
-- Smooth animated scrolling, using the browser’s built-in smooth-behavior if it’s enabled.
+- Smooth animated scrolling.
 - Automatic smooth-scolling on links within the same page.
+- Works even if the Back and Forward buttons are used (on compatible browsers).
 - Scroll to the top of a specific element.
 - Scrolling an element into view, making sure both top & bottom are visible, if possible.
 - Scroll to an element and center it on the screen.
 - Customize the duration of the individual scroll operations.
 - If you provide a callback function it will be executed when the scrolling is done.
 - Specify the spacing between the element and the edge of the screen (e.g., for fixed navigation bars and footers).
-- Just 1.1 kilobyte minimized & gzipped.
+- Uses the browser’s built-in smooth-behavior if it’s enabled.
+- Just 1.2 kilobyte minimized & gzipped.
 - No dependencies.
 
 Full support tested and works under:
