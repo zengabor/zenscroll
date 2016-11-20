@@ -1,5 +1,5 @@
 {
-"AAInfo": "This is a CodeKit 3 project config file. MODIFYING THE CONTENTS OF THIS FILE IS A POOR LIFE DECISION. Doing so will cause CodeKit to crash and\/or corrupt your project. I know it looks like JSON, but it is *not*. Many numbers in this file are 64-bit long long bitFlags, which JSON does not support. These numbers *cannot* be treated as discrete values and if you attempt to parse this file as standard JSON with any public JSON parser, these values will be corrupted. This file is not backwards-compatible with CodeKit 1 or 2. For more information, see https:\/\/codekitapp.com",
+"AAInfo": "This is a CodeKit 3 project config file. MODIFYING THE CONTENTS OF THIS FILE IS A POOR LIFE DECISION. Doing so will cause CodeKit to crash and\/or corrupt your project. I know it looks like JSON, but it is *not*. Many numbers in this file are 64-bit long long bitFlags, which JSON does not support. These numbers *cannot* be treated as discrete values and if you attempt to parse this file as standard JSON with any public JSON parser, these values will be corrupted. This file is not backwards-compatible with CodeKit 1 or 2. For more information, see https:\/\/codekitapp.com\/",
 "buildSteps": [
 	{
 		"name": "Process All Remaining Files and Folders",
@@ -7,7 +7,7 @@
 		"uuidString": "22DD95C2-EBBE-4B8D-96BE-A8040B7FA300"
 		}
 	],
-"creatorBuild": "25340",
+"creatorBuild": "25444",
 "files": {
 	"\/demo.js": {
 		"ft": 64,
@@ -169,6 +169,9 @@
 	"babelModuleID": "",
 	"babelNoComments": 0,
 	"babelPlugins": {
+		"async-generator-functions": {
+			"active": 0
+			},
 		"async-to-generator": {
 			"active": 0
 			},
@@ -1257,6 +1260,10 @@
 			"active": 0,
 			"optionString": "{'ignoreDestructuring': false, 'ignoreImport': false, 'ignoreExport': false}"
 			},
+		"no-useless-return": {
+			"active": 0,
+			"optionString": ""
+			},
 		"no-var": {
 			"active": 0,
 			"optionString": ""
@@ -1324,10 +1331,6 @@
 		"prefer-numeric-literals": {
 			"active": 0,
 			"optionString": ""
-			},
-		"prefer-reflect": {
-			"active": 0,
-			"optionString": "{'exceptions': []}"
 			},
 		"prefer-rest-params": {
 			"active": 0,

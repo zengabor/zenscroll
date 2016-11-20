@@ -30,14 +30,8 @@
 	<![endif]-->
 	<link rel="stylesheet" href="railscasts.css">
 	<style>.loading body{visibility:hidden}body,.play-button{font-family:"Alegreya Sans", sans-serif}nav a,h2,h3,strong,.play-button{font-weight:700}h3{font-style:italic}.fallback body{font-family:"Avenir Next", Avenir, "Segoe UI", Calibri, "Helvetica Neue", Helvetica, sans-serif}.fallback h2,.fallback strong{font-weight:bold}.logotype h1{font-family:"Merienda One", serif;font-weight:normal}.fallback-logotype .logotype h1{font-family:"Iowan Old Style", "Hoefler Text", Literata, "Droid Serif", serif;font-style:italic}code{font-family:"PT Mono", monospace}.fallback-mono code{font-family:monospace}
- z{}</style>
-	<script>this.zenfonts=function(e){"use strict";var t=function(){},n="serif",i=e.documentElement,a=function s(e,t){return function(n){if(n||e.offsetWidth!==t){var i=e.parentNode;return i&&i.removeChild(e),!0}}},o=function f(e){e&&(i.className=i.className.replace(new RegExp("(^|\\s)*"+e+"(\\s|$)*","g")," "))};return function r(s,f){if(s instanceof Array||(s=[s]),f=f||{},!e.body)return setTimeout(function(){r(s,f)},1);for(var l=[],c=s.length;c--;){var u=s[c];"string"==typeof u&&(u={family:u});var m=u.family,d=e.createElement("div");d.style.cssText="position:absolute;top:-999px;left:-9999px;visibility:hidden;white-space:nowrap;font-size:20em;font-family:"+n+";"+u.style||"",d.appendChild(e.createTextNode("// Zenfonts([{}]);")),e.body.appendChild(d);var p=a(d,d.offsetWidth);d.style.fontFamily="'"+m+"',"+n,p()||l.push(p)}var v=f.onDone||t;if(0===l.length)return v(0);var h=f.loadingClass;h&&(i.className+=" "+h);var y=function D(){o(h)},g=1,T=f.fallback,b=f.fallbackClass;if(b){var w=y,N=function E(){g=2,i.className+=" "+b,w()},x;y=function k(){clearTimeout(x),o(b),w()},0===T?N():(T=T||999,x=setTimeout(N,T))}var C=(new Date).getTime()+(T||0)+(f.swap||0);!function z(e){setTimeout(function(){for(var t=(new Date).getTime(),n=t>C+9999,i=l.length;i--;)l[i](n)&&l.splice(i,1);0===l.length?(t>C&&(g=3,b=""),y(),v(n?-1:g)):z(1.5*e)},e)}(9)}}(document);</script>
-	<script>if(!("fonts" in document)){
-zenfonts(["Alegreya Sans",{family:"Alegreya Sans",style:"font-style: italic"},{family:"Alegreya Sans",style:"font-weight: bold"},{family:"Alegreya Sans",style:"font-weight: bold; font-style: italic"}],{fallbackClass:"fallback"})
-zenfonts("Merienda One",{fallbackClass:"fallback-logotype",swap:9999})
-zenfonts("PT Mono",{fallbackClass:"fallback-mono",swap:9999})
-}</script>
-	<script async src="https://www.google-analytics.com/analytics.js"></script>
+	 z{}</style>
+		<script async src="https://www.google-analytics.com/analytics.js"></script>
 	<script>
 	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)}
 	ga.l=+new Date
@@ -67,10 +61,11 @@ zenfonts("PT Mono",{fallbackClass:"fallback-mono",swap:9999})
 		<section class="hero dark">
 
 			<h1 id="onejavascripttosmooth-scrollnbspthemnbspall">One JavaScript to Smooth-Scroll&nbsp;Them&nbsp;All</h1>
-
-<p>Smooth animated scrolling. Move&nbsp;elements&nbsp;into&nbsp;view, or&nbsp;scroll&nbsp;to any vertical&nbsp;position.</p>
-
-<p>1.1&nbsp;kilobyte of vanilla&nbsp;JavaScript. No&nbsp;dependencies.</p>
+			
+			<p>Smooth animated scrolling. Move&nbsp;elements&nbsp;into&nbsp;view, or&nbsp;scroll&nbsp;to any vertical&nbsp;position.</p>
+			
+			<p>1.2&nbsp;kilobyte of vanilla&nbsp;JavaScript. No&nbsp;dependencies.</p>
+			
 
 			<a class="hero-button" href="https://github.com/zengabor/zenscroll">View Zenscroll on GitHub</a>
 
@@ -85,15 +80,17 @@ zenfonts("PT Mono",{fallbackClass:"fallback-mono",swap:9999})
 <p>Features:</p>
 
 <ul>
-<li>Smooth animated scrolling, using the browser’s built-in smooth-behavior if it’s enabled.</li>
+<li>Smooth animated scrolling.</li>
 <li>Automatic smooth-scolling on links within the same page.</li>
+<li>Works even if the Back button is used (on compatible browsers).</li>
 <li>Scroll to the top of a specific element.</li>
 <li>Scrolling an element into view, making sure both top &amp; bottom are visible, if possible.</li>
 <li>Scroll to an element and center it on the screen.</li>
 <li>Customize the duration of the individual scroll operations.</li>
 <li>If you provide a callback function it will be executed when the scrolling is done.</li>
 <li>Specify the spacing between the element and the edge of the screen (e.g., for fixed navigation bars and footers).</li>
-<li>Just 1.1 kilobyte minimized &amp; gzipped.</li>
+<li>Uses the browser’s built-in smooth-behavior if it’s enabled.</li>
+<li>Just 1.2 kilobyte minimized &amp; gzipped.</li>
 <li>No dependencies.</li>
 </ul>
 
@@ -121,6 +118,7 @@ zenfonts("PT Mono",{fallbackClass:"fallback-mono",swap:9999})
 <li>iOS Safari 3+</li>
 </ul>
 
+
 <h2 id="gettingstarted">Getting Started</h2>
 
 <h3 id="installingzenscroll">Installing Zenscroll</h3>
@@ -144,7 +142,7 @@ zenfonts("PT Mono",{fallbackClass:"fallback-mono",swap:9999})
 <pre><code class="css">body, .smooth-container { scroll-behavior: smooth }
 </code></pre>
 
-<p>In this case Zenscroll will use the browser’s built-in support for all scroll functions. However, note that if you use the native smooth-scrolling then you loose the finer control options that Zenscroll offers: the speed of the animation, and the edge offset for links within the page. Only set this CSS property on the <code>body</code> or on the elements if you don’t need this level of control.</p>
+<p>If this is set and the browser supports it, Zenscroll will use the browser’s built-in support for smooth-scrolling. However, note that if you use the native smooth-scrolling then you loose the finer control options that Zenscroll offers: the speed settings of the animation, and the edge offset for links within the page. Only set this CSS property on the <code>body</code> or on the elements if you don’t need this level of control.</p>
 
 <h3 id="disablingautomaticsmoothingonlocallinks">Disabling automatic smoothing on local links</h3>
 
@@ -158,11 +156,12 @@ zenfonts("PT Mono",{fallbackClass:"fallback-mono",swap:9999})
 
 <p>(I consider this a rare scenario that’s why I keep the default behavior of installing the event handler.)</p>
 
+
 <h2 id="howtouse">How to use</h2>
 
 <h3 id="1.smoothscrollwithinyourpage">1. Smooth scroll within your page</h3>
 
-<p>If Zenscroll is included in your page it will automatically animate the scrolling to anchors on the same page. </p>
+<p>If Zenscroll is included in your page it will automatically animate the scrolling to anchors on the same page.</p>
 
 <p>However, automatic smooth scrolling within the same page is not enabled in these two cases:</p>
 
@@ -173,7 +172,9 @@ zenfonts("PT Mono",{fallbackClass:"fallback-mono",swap:9999})
 
 <p>If you want only some of the links to be excluded from the automatic smoothing then start with the path of the page. E.g., instead of writing <code>&lt;a href=&quot;#about&quot;&gt;</code> use <code>&lt;a href=&quot;/#about&quot;&gt;</code>.</p>
 
-<p>Automatic smooth-scrolling works also with content you dynamically load via AJAX, as Zenscroll uses a generic click handler. Internal links are intentionally not added to the history to save the users from having to hit the Back button too many times afterwards. Since the automatic smooth-scrolling is implemented a progressive enhancement, all internal links still work even in old browsers.</p>
+<p>The scroll is also animated when the Back button is used. (Note that it remembers the last vertical scroll position but it doesn’t calculate changes due to browser window resizing or collapsing/expanding elements, etc.) This functionality requires browser support for <code>history.scrollRestoration</code> which is available in Chrome 46+ and Firefox 46+. WebKit already has a <a href="https://bugs.webkit.org/show_bug.cgi?id=147782">ticket</a> for it, in the meantime you can use a polyfill for Safari, like <a href="https://github.com/bfred-it/scroll-restoration-polyfill">scroll-restoration-polyfill</a>.</p>
+
+<p>Automatic smooth-scrolling works also with content you dynamically load via AJAX, as Zenscroll uses a generic click handler. Since the automatic smooth-scrolling is implemented a progressive enhancement, internal links work in older browsers as well.</p>
 
 <h3 id="2.scrolltothetopofanelement">2. Scroll to the top of an element</h3>
 
@@ -270,7 +271,7 @@ zenscroll.center(image2, duration, offset)
 
 <p>You can provide a callback function to all four scroll functions, which is executed when the scroll operation is finished. For example, you change some UI elements but first you want to make sure that the relevant elements are visible.</p>
 
-<p>If you look at the code examples above under the previous point, <a href="#7.scrollinsideascrollablediv">7. Scroll inside a scrollable DIV</a> they are actually implemented like this:</p>
+<p>If you look at the code examples above under the previous point, <a href="#7.scrollinsideascrollablediv">Scroll inside a scrollable DIV</a> they are actually implemented like this:</p>
 
 <pre><code class="js">// Last line of example 1:
 zenscroll.intoView(container, 100, function () { myScroller.center(target) })
@@ -334,9 +335,11 @@ zenscroll.setup(defaultDuration, edgeOffset)
 <pre><code class="js">zenscroll.stop()
 </code></pre>
 
+
 <h2 id="license">License</h2>
 
 <p><a href="http://unlicense.org">Public Domain</a>. You can do with it whatever you want and I am not responsible for anything.</p>
+
 
 
 
@@ -351,6 +354,7 @@ zenscroll.setup(defaultDuration, edgeOffset)
 		</p>
 
 	</div>
+
 		
 			<p>Other projects by me:</p>
 
@@ -358,6 +362,7 @@ zenscroll.setup(defaultDuration, edgeOffset)
 <li><a href="https://github.com/zengabor/zenfonts">Zenfonts</a>, a tiny JavaScript helper for @font-face web font loading.</li>
 <li><a href="http://zenvite.com/">Zenvite.com</a>: Create invitation pages &amp; get everybody on the same page.</li>
 </ul>
+
 
 		</section>
 		
