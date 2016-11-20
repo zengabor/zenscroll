@@ -82,7 +82,7 @@
 <ul>
 <li>Smooth animated scrolling.</li>
 <li>Automatic smooth-scolling on links within the same page.</li>
-<li>Works even if the Back button is used (on compatible browsers).</li>
+<li>Works even if the Back and Forward buttons are used (on compatible browsers).</li>
 <li>Scroll to the top of a specific element.</li>
 <li>Scrolling an element into view, making sure both top &amp; bottom are visible, if possible.</li>
 <li>Scroll to an element and center it on the screen.</li>
@@ -172,7 +172,7 @@
 
 <p>If you want only some of the links to be excluded from the automatic smoothing then start with the path of the page. E.g., instead of writing <code>&lt;a href=&quot;#about&quot;&gt;</code> use <code>&lt;a href=&quot;/#about&quot;&gt;</code>.</p>
 
-<p>The scroll is also animated when the Back button is used. (Note that it remembers the last vertical scroll position but it doesn’t calculate changes due to browser window resizing or collapsing/expanding elements, etc.) This functionality requires browser support for <code>history.scrollRestoration</code> which is available in Chrome 46+ and Firefox 46+. WebKit already has a <a href="https://bugs.webkit.org/show_bug.cgi?id=147782">ticket</a> for it, in the meantime you can use a polyfill for Safari, like <a href="https://github.com/bfred-it/scroll-restoration-polyfill">scroll-restoration-polyfill</a>.</p>
+<p>The scroll is also animated when the Back and Forward buttons are used. (Note that it remembers the vertical scroll position but it doesn’t calculate changes caused by browser window resizing or collapsing/expanding elements, etc.) This functionality requires browser support for <code>history.scrollRestoration</code> which is available in Chrome 46+ and Firefox 46+. WebKit already has a <a href="https://bugs.webkit.org/show_bug.cgi?id=147782">ticket</a> for it, in the meantime you can use a polyfill for Safari, like <a href="https://github.com/bfred-it/scroll-restoration-polyfill">scroll-restoration-polyfill</a>.</p>
 
 <p>Automatic smooth-scrolling works also with content you dynamically load via AJAX, as Zenscroll uses a generic click handler. Since the automatic smooth-scrolling is implemented a progressive enhancement, internal links work in older browsers as well.</p>
 
