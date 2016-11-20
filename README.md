@@ -12,7 +12,8 @@
 
 Smooth animated scrolling. Move&nbsp;elements&nbsp;into&nbsp;view, or&nbsp;scroll&nbsp;to any vertical&nbsp;position.
 
-1.1&nbsp;kilobyte of vanilla&nbsp;JavaScript. No&nbsp;dependencies.
+1.2&nbsp;kilobyte of vanilla&nbsp;JavaScript. No&nbsp;dependencies.
+
 
 
 ## About
@@ -21,15 +22,17 @@ Zenscroll is a vanilla JavaScript module that enables animated vertical scrollin
 
 Features:
 
-- Smooth animated scrolling, using the browser’s built-in smooth-behavior if it’s enabled.
+- Smooth animated scrolling.
 - Automatic smooth-scolling on links within the same page.
+- Works even if the Back and Forward buttons are used (on compatible browsers).
 - Scroll to the top of a specific element.
 - Scrolling an element into view, making sure both top & bottom are visible, if possible.
 - Scroll to an element and center it on the screen.
 - Customize the duration of the individual scroll operations.
 - If you provide a callback function it will be executed when the scrolling is done.
 - Specify the spacing between the element and the edge of the screen (e.g., for fixed navigation bars and footers).
-- Just 1.1 kilobyte minimized & gzipped.
+- Uses the browser’s built-in smooth-behavior if it’s enabled.
+- Just 1.2 kilobyte minimized & gzipped.
 - No dependencies.
 
 Full support tested and works under:
@@ -51,6 +54,7 @@ Limited support (programmatic animated scroll in document) tested and works unde
 - Firefox 3+
 - Internet Explorer 6+
 - iOS Safari 3+
+
 
 ## Getting Started
 
@@ -78,7 +82,7 @@ If you want to leverage the native smooth-scrolling by the browser (currently av
 body, .smooth-container { scroll-behavior: smooth }
 ````
 
-In this case Zenscroll will use the browser’s built-in support for all scroll functions. However, note that if you use the native smooth-scrolling then you loose the finer control options that Zenscroll offers: the speed of the animation, and the edge offset for links within the page. Only set this CSS property on the `body` or on the elements if you don’t need this level of control.
+If this is set and the browser supports it, Zenscroll will use the browser’s built-in support for smooth-scrolling. However, note that if you use the native smooth-scrolling then you loose the finer control options that Zenscroll offers: the speed settings of the animation, and the edge offset for links within the page. Only set this CSS property on the `body` or on the elements if you don’t need this level of control.
 
 ### Disabling automatic smoothing on local links
 
@@ -93,12 +97,13 @@ If you want to use Zenscroll programmatically but you don’t need the automatic
 
 (I consider this a rare scenario that’s why I keep the default behavior of installing the event handler.)
 
+
 ## How to use
 
 
 ### 1. Smooth scroll within your page
 
-If Zenscroll is included in your page it will automatically animate the scrolling to anchors on the same page. 
+If Zenscroll is included in your page it will automatically animate the scrolling to anchors on the same page.
 
 However, automatic smooth scrolling within the same page is not enabled in these two cases:
 
@@ -106,8 +111,10 @@ However, automatic smooth scrolling within the same page is not enabled in these
 2. If the `scroll-behavior` CSS property is set to `smooth` on the `body` (see [above](#enablingnativesmooth-scrollinginthebrowser)). In this case the browser is already smooth-scrolling within the same page.
 
 If you want only some of the links to be excluded from the automatic smoothing then start with the path of the page. E.g., instead of writing `<a href="#about">` use `<a href="/#about">`.
+	
+The scroll is also animated when the Back and Forward buttons are used. (Note that it remembers the vertical scroll position but it doesn’t calculate changes caused by browser window resizing or collapsing/expanding elements, etc.) This functionality requires browser support for `history.scrollRestoration` which is available in Chrome 46+ and Firefox 46+. WebKit already has a [ticket](https://bugs.webkit.org/show_bug.cgi?id=147782) for it, in the meantime you can use a polyfill for Safari, like [scroll-restoration-polyfill](https://github.com/bfred-it/scroll-restoration-polyfill).
 
-Automatic smooth-scrolling works also with content you dynamically load via AJAX, as Zenscroll uses a generic click handler. Internal links are intentionally not added to the history to save the users from having to hit the Back button too many times afterwards. Since the automatic smooth-scrolling is implemented a progressive enhancement, all internal links still work even in old browsers.
+Automatic smooth-scrolling works also with content you dynamically load via AJAX, as Zenscroll uses a generic click handler. Since the automatic smooth-scrolling is implemented a progressive enhancement, internal links work in older browsers as well.
 
 
 ### 2. Scroll to the top of an element
@@ -223,7 +230,7 @@ myScroller.intoView(target)
 
 You can provide a callback function to all four scroll functions, which is executed when the scroll operation is finished. For example, you change some UI elements but first you want to make sure that the relevant elements are visible.
 
-If you look at the code examples above under the previous point, [7. Scroll inside a scrollable DIV](#7.scrollinsideascrollablediv) they are actually implemented like this:
+If you look at the code examples above under the previous point, [Scroll inside a scrollable DIV](#7.scrollinsideascrollablediv) they are actually implemented like this:
 
 ````js
 // Last line of example 1:
@@ -292,12 +299,15 @@ To stop the current scrolling:
 zenscroll.stop()
 ````
 
+
 ## License
 
 [Public Domain](http://unlicense.org). You can do with it whatever you want and I am not responsible for anything.
+
 
 
 ## Other projects by me:
 
 - [Zenfonts](https://github.com/zengabor/zenfonts), a tiny JavaScript helper for @font-face web font loading.
 - [Zenvite.com](http://zenvite.com/): Create invitation pages & get everybody on the same page.
+

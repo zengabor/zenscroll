@@ -1,5 +1,5 @@
 /**
- * Zenscroll 3.2.3
+ * Zenscroll 3.3.0
  * https://github.com/zengabor/zenscroll/
  *
  * Copyright 2015–2016 Gabor Lenard
@@ -46,6 +46,12 @@
 	}
 }(this, function () {
 	"use strict"
+	
+	// Detect if the browser already supports native smooth scrolling (e.g., Firefox 36+ and Chrome 49+) and it is enabled:
+	var isNativeSmoothScrollEnabledOn = function (elem) {
+		return ("getComputedStyle" in window) &&
+			window.getComputedStyle(elem)["scroll-behavior"] === "smooth"
+	}
 
 	// Exit if it’s not a browser environment:
 	if (typeof window === "undefined" || !("document" in window)) {
@@ -66,12 +72,6 @@
 		}
 		var docElem = document.documentElement
 		
-		// Detect if the browser already supports native smooth scrolling (e.g., Firefox 36+ and Chrome 49+) and it is enabled:
-		var nativeSmoothScrollEnabled = function () {
-			return ("getComputedStyle" in window) &&
-				window.getComputedStyle(scrollContainer ? scrollContainer : document.body)["scroll-behavior"] === "smooth"
-		}
-
 		var getScrollTop = function () {
 			if (scrollContainer) {
 				return scrollContainer.scrollTop
@@ -111,10 +111,11 @@
 		 * @param {duration} Optionally the duration of the scroll operation.
 		 *        If 0 or not provided it is automatically calculated based on the 
 		 *        distance and the default duration.
+		 * @param {onDone} Callback function to be invoken once the scroll finishes.
 		 */
 		var scrollToY = function (endY, duration, onDone) {
 			stopScroll()
-			if (nativeSmoothScrollEnabled()) {
+			if (isNativeSmoothScrollEnabledOn(scrollContainer ? scrollContainer : document.body)) {
 				(scrollContainer || window).scrollTo(0, endY)
 				if (onDone) {
 					onDone()
@@ -152,9 +153,13 @@
 		 * @param {elem} The element.
 		 * @param {duration} Optionally the duration of the scroll operation.
 		 *        A value of 0 is ignored.
+		 * @param {onDone} Callback function to be invoken once the scroll finishes.
+		 * @returns {endY} The new vertical scoll position that will be valid once the scroll finishes.
 		 */
 		var scrollToElem = function (elem, duration, onDone) {
-			scrollToY(getRelativeTopOf(elem) - edgeOffset, duration, onDone)
+			var endY = getRelativeTopOf(elem) - edgeOffset
+			scrollToY(endY, duration, onDone)
+			return endY
 		}
 
 		/**
@@ -163,6 +168,7 @@
 		 * @param {elem} The element.
 		 * @param {duration} Optionally the duration of the scroll operation.
 		 *        A value of 0 is ignored.
+		 * @param {onDone} Callback function to be invoken once the scroll finishes.
 		 */
 		var scrollIntoView = function (elem, duration, onDone) {
 			var elemHeight = elem.getBoundingClientRect().height
@@ -189,6 +195,7 @@
 		 * @param {duration} Optionally the duration of the scroll operation.
 		 * @param {offset} Optionally the offset of the top of the element from the center of the screen.
 		 *        A value of 0 is ignored.
+		 * @param {onDone} Callback function to be invoken once the scroll finishes.
 		 */
 		var scrollToCenterOf = function (elem, duration, offset, onDone) {
 			scrollToY(
@@ -224,7 +231,8 @@
 			intoView: scrollIntoView,
 			center: scrollToCenterOf,
 			stop: stopScroll,
-			moving: function () { return !!scrollTimeoutId }
+			moving: function () { return !!scrollTimeoutId },
+			getY: getScrollTop
 		}
 
 	}
@@ -233,14 +241,23 @@
 	var defaultScroller = createScroller()
 
 	// Create listeners for the documentElement only & exclude IE8-
-	if ("addEventListener" in window && document.body.style.scrollBehavior !== "smooth" && !window.noZensmooth) {
-		var replaceUrl = function (hash) {
+	if ("addEventListener" in window && !(isNativeSmoothScrollEnabledOn(document.body) || window.noZensmooth)) {
+		if ("scrollRestoration" in history) {
+			history.scrollRestoration = "manual"
+			window.addEventListener("popstate", function (event) {
+				if (event.state && "scrollY" in event.state) {
+					defaultScroller.toY(event.state.scrollY)
+				}
+			}, false)
+		}
+		var replaceUrl = function (hash, newY) {
 			try {
-				history.replaceState({}, "", window.location.href.split("#")[0] + hash)
+				history.replaceState({scrollY:defaultScroller.getY()}, "") // remember the scroll position before scrolling
+				history.pushState({scrollY:newY}, "", window.location.href.split("#")[0] + hash) // remember the new scroll position (which will be after scrolling)
 			} catch (e) {
 				// To avoid the Security exception in Chrome when the page was opened via the file protocol, e.g., file://index.html
 			}
-		} 
+		}
 		window.addEventListener("click", function (event) {
 			var anchor = event.target
 			while (anchor && anchor.tagName !== "A") {
@@ -255,14 +272,13 @@
 				if (href === "#") {
 					event.preventDefault()
 					defaultScroller.toY(0)
-					replaceUrl("")
+					replaceUrl("", 0)
 				} else {
 					var targetId = anchor.hash.substring(1)
 					var targetElem = document.getElementById(targetId)
 					if (targetElem) {
 						event.preventDefault()
-						defaultScroller.to(targetElem)
-						replaceUrl("#" + targetId)
+						replaceUrl("#" + targetId, defaultScroller.to(targetElem))
 					}
 				}
 			}
