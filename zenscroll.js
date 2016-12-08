@@ -92,7 +92,7 @@
 			if (scrollContainer) {
 				return elem.offsetTop
 			} else {
-				return elem.getBoundingClientRect().top + getScrollTop() - docElem.offsetTop
+				return Math.ceil(elem.getBoundingClientRect().top + getScrollTop() - docElem.offsetTop)
 			}
 		}
 
