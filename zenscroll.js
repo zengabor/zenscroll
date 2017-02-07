@@ -274,7 +274,7 @@
 					defaultScroller.toY(0)
 					replaceUrl("", 0)
 				} else {
-					var targetId = anchor.hash.substring(1)
+					var targetId = decodeURI(anchor.hash.substring(1));
 					var targetElem = document.getElementById(targetId)
 					if (targetElem) {
 						event.preventDefault()
