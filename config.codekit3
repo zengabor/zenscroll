@@ -21,6 +21,18 @@
 		"oAP": "\/.gitignore",
 		"oF": 0
 		},
+	"\/docs\/_body.kit": {
+		"ft": 2048,
+		"oA": 1,
+		"oAP": "\/docs\/_body.html",
+		"oF": 0
+		},
+	"\/docs\/_head.kit": {
+		"ft": 2048,
+		"oA": 1,
+		"oAP": "\/docs\/_head.html",
+		"oF": 0
+		},
 	"\/docs\/ie.scss": {
 		"aP": 1,
 		"bl": 0,
