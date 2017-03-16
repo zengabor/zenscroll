@@ -42,7 +42,15 @@
 	} else if (typeof module === "object" && module.exports) {
 		module.exports = factory()
 	} else {
-		root.zenscroll = factory()
+		(function install() {
+			// To make sure Zenscroll can be referenced from the header, before `body` is available
+			if (document && document.body) {
+				root.zenscroll = factory()
+			} else {
+				// retry 9ms later
+				setTimeout(install, 9)
+			}
+		})()
 	}
 }(this, function () {
 	"use strict"
