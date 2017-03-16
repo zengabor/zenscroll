@@ -295,7 +295,7 @@
 							setTimeout(function () { console.log(zenscroll.getY()) }, 250)
 						}
 					}
-				}, 9)
+				}, 99)
 			}
 
 		}, false)
