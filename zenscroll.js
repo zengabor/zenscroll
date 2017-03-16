@@ -295,7 +295,7 @@
 							setTimeout(function () { console.log(zenscroll.getY()) }, 250)
 						}
 					}
-				}, 99)
+				}, 99) // looks like IE requires at least a timeout of 99 milliseconds
 			}
 
 		}, false)

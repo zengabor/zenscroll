@@ -83,12 +83,6 @@
 		"oF": 0,
 		"oS": 0
 		},
-	"\/scrolltest.html": {
-		"ft": 8192,
-		"oA": 2,
-		"oAP": "\/scrolltest.html",
-		"oF": 0
-		},
 	"\/styles.css": {
 		"aP": 0,
 		"bl": 0,
@@ -143,24 +137,6 @@
 		"oA": 2,
 		"oAP": "\/zenscroll-in-header.html",
 		"oF": 0
-		},
-	"\/zenscroll-min.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 1,
-		"oAP": "\/zenscroll-min-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
-	"\/zenscroll.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/zenscroll-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
 		},
 	"\/zenscroll.png": {
 		"ft": 32768,
