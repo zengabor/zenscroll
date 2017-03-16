@@ -41,8 +41,9 @@
 
 	// Example 1:
 	var div = doc.createElement("DIV")
-	div.innerHTML = 'For example, try the navigation links <a href="#">at the top of this&nbsp;page</a>.&nbsp;&larr;&nbsp;Or&nbsp;this very link here.'
-	main.insertBefore(div, next(next(examples[3])))
+	div.id = "禪"
+	div.innerHTML = 'To see it in action try the navigation links <a href="#">at the top of this&nbsp;page</a>.&nbsp;&larr;&nbsp;Or&nbsp;press this very link here.'
+	main.insertBefore(div, next(next(next(examples[3]))))
 
 	// Example 2:
 	insertButtonBefore(next(examples[4]), null, function () {
@@ -70,7 +71,7 @@
 	image2.className = "example-img is-small"
 	image2.src = "image2.jpg"
 	var image2a = doc.createElement("A")
-	image2a.href = "#4.scrollanelementintoview"
+	image2a.href = "#5.scrollstheelementtothecenterofthescreen"
 	image2a.appendChild(image2)
 	main.insertBefore(image2a, examples[7])
 	insertButtonBefore(next(next(examples[6])), null, function () {
@@ -107,6 +108,9 @@
 	insertButtonBefore(next(next(code6)), null, function () {
 		zenscroll.center(image2, 2000)
 	})
+	insertButtonBefore(next(next(next(code6))), null, function () {
+		zenscroll.to(about, 0)
+	})
 
 	// Example 7:
 	var code9 = next(next(next(examples[9])))
@@ -123,16 +127,22 @@
 	main.insertBefore(container, next(code9))
 	var defaultDuration = 500
 	var edgeOffset = 30
-	var myScroller = zenscroll.createScroller(container, defaultDuration, edgeOffset)
+	var myScroller
+	var getMyScroller = function () { 
+		if (!myScroller) {
+			myScroller = zenscroll.createScroller(container, defaultDuration, edgeOffset)
+		}
+		return myScroller
+	}
 	var target = document.getElementById("item4")
 	insertButtonBefore(code9, null, function () {
-		zenscroll.intoView(container, 100, function () { myScroller.center(target) })
+		zenscroll.intoView(container, 100, function () { getMyScroller().center(target) })
 	})
 	insertButtonBefore(next(next(next(code9))), null, function () {
-		zenscroll.intoView(container, 100, function () { myScroller.toY(35) })
+		zenscroll.intoView(container, 100, function () { getMyScroller().toY(35) })
 	})
 	insertButtonBefore(next(next(next(next(code9)))), null, function () {
-		zenscroll.intoView(container, 100, function () { myScroller.intoView(target) })
+		zenscroll.intoView(container, 100, function () { getMyScroller().intoView(target) })
 	})
 	insertHelpText(main, next(next(next(next(next(code9))))), 
 		"Tip: Scroll <em>ITEM 4</em> manually upwards/downwards out of view, then hit ‘Play’."
