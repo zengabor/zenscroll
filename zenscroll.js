@@ -264,12 +264,6 @@
 		if (isScrollRestorationSupported) {
 			history.scrollRestoration = "auto"
 		}
-		var replaceUrl = function (hash, newY) {
-			try {
-				history.replaceState({scrollY:defaultScroller.getY()}, "") // remember the scroll position before scrolling
-				history.pushState({scrollY:newY}, "", window.location.href.split("#")[0] + hash) // remember the new scroll position (which will be after scrolling)
-			} catch (e) {
-				// To avoid the Security exception in Chrome when the page was opened via the file protocol, e.g., file://index.html
 
 		window.addEventListener("load", function () {
 
@@ -301,6 +295,9 @@
 			}
 
 		}, false)
+
+		// Handling clicks on anchors
+		var RE_noZensmooth = new RegExp("(^|\\s)noZensmooth(\\s|$)")
 		window.addEventListener("click", function (event) {
 			var anchor = event.target
 			while (anchor && anchor.tagName !== "A") {
@@ -318,23 +315,30 @@
 					// Avoid the Chrome Security exception on file protocol, e.g., file://index.html
 				}
 			}
+			// Find the referenced ID:
 			var href = anchor.getAttribute("href") || ""
-			if (href.indexOf("#") === 0) {
-				if (href === "#") {
-					event.preventDefault()
-					defaultScroller.toY(0)
-					replaceUrl("", 0)
-				} else {
-					var targetId = anchor.hash.substring(1)
-					var targetElem = document.getElementById(targetId)
-					if (targetElem) {
-						event.preventDefault()
-						replaceUrl("#" + targetId, defaultScroller.to(targetElem))
+			if (href.indexOf("#") === 0 && !RE_noZensmooth.test(anchor.className)) {
+				var targetY = 0
+				var targetElem = document.getElementById(href.substring(1))
+				if (href !== "#") {
+					if (!targetElem) {
+						// Let the browser handle the click if the target ID is not found.
+						return
 					}
+					targetY = zenscroll.getTopOf(targetElem)
 				}
+				event.preventDefault()
+				// By default trigger the browser's `hashchange` event...
+				var onDone = function () { window.location = href }
+				// ...unless there is an edge offset specified
+				var edgeOffset = zenscroll.setup().edgeOffset
+				if (edgeOffset) {
+					targetY = Math.max(0, targetY - edgeOffset)
+					onDone = function () { history.pushState(null, "", href) }
+				}
+				zenscroll.toY(targetY, null, onDone)
 			}
 		}, false)
-	}
 
 	}
 
