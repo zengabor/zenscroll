@@ -78,13 +78,14 @@
 			edgeOffset = 9 //px
 		}
 
+		// Handling the life-cycle of the scroller
 		var scrollTimeoutId
 		var setScrollTimeoutId = function (newValue) {
 			scrollTimeoutId = newValue
 		}
 
 		/**
-		 * Immediately stops the current smooth scroll operation
+		 * Stop the current smooth scroll operation immediately
 		 */
 		var stopScroll = function () {
 			clearTimeout(scrollTimeoutId)
@@ -98,11 +99,10 @@
 		/**
 		 * Scrolls to a specific vertical position in the document.
 		 *
-		 * @param {endY} The vertical position within the document.
+		 * @param {targetY} The vertical position within the document.
 		 * @param {duration} Optionally the duration of the scroll operation.
-		 *        If 0 or not provided it is automatically calculated based on the 
-		 *        distance and the default duration.
-		 * @param {onDone} Callback function to be invoken once the scroll finishes.
+		 *        If not provided the default duration is used.
+		 * @param {onDone} An optional callback function to be invoked once the scroll finished.
 		 */
 		var scrollToY = function (targetY, duration, onDone) {
 			stopScroll()
@@ -139,11 +139,9 @@
 		/**
 		 * Scrolls to the top of a specific element.
 		 *
-		 * @param {elem} The element.
+		 * @param {elem} The element to scroll to.
 		 * @param {duration} Optionally the duration of the scroll operation.
-		 *        A value of 0 is ignored.
-		 * @param {onDone} Callback function to be invoken once the scroll finishes.
-		 * @returns {endY} The new vertical scoll position that will be valid once the scroll finishes.
+		 * @param {onDone} An optional callback function to be invoked once the scroll finished.
 		 */
 		var scrollToElem = function (elem, duration, onDone) {
 			scrollToY(getTopWithEdgeOffset(elem), duration, onDone)
@@ -154,8 +152,7 @@
 		 *
 		 * @param {elem} The element.
 		 * @param {duration} Optionally the duration of the scroll operation.
-		 *        A value of 0 is ignored.
-		 * @param {onDone} Callback function to be invoken once the scroll finishes.
+		 * @param {onDone} An optional callback function to be invoked once the scroll finished.
 		 */
 		var scrollIntoView = function (elem, duration, onDone) {
 			var elemHeight = elem.getBoundingClientRect().height
@@ -180,8 +177,7 @@
 		 * @param {elem} The element.
 		 * @param {duration} Optionally the duration of the scroll operation.
 		 * @param {offset} Optionally the offset of the top of the element from the center of the screen.
-		 *        A value of 0 is ignored.
-		 * @param {onDone} Callback function to be invoken once the scroll finishes.
+		 * @param {onDone} An optional callback function to be invoked once the scroll finished.
 		 */
 		var scrollToCenterOf = function (elem, duration, offset, onDone) {
 			scrollToY(Math.max(0, container.getTopOf(elem) - container.getHeight()/2 + (offset || elem.getBoundingClientRect().height/2)), duration, onDone)
@@ -190,9 +186,10 @@
 		/**
 		 * Changes default settings for this scroller.
 		 *
-		 * @param {newDefaultDuration} New value for default duration, used for each scroll method by default.
-		 *        Ignored if 0 or falsy.
-		 * @param {newEdgeOffset} New value for the edge offset, used by each scroll method by default.
+		 * @param {newDefaultDuration} Optionally a new value for default duration, used for each scroll method by default.
+		 *        Ignored if null or undefined.
+		 * @param {newEdgeOffset} Optionally a new value for the edge offset, used by each scroll method by default. Ignored if null or undefined.
+		 * @returns An object with the current values.
 		 */
 		var setup = function (newDefaultDuration, newEdgeOffset) {
 			if (newDefaultDuration) {
@@ -259,6 +256,10 @@
 			getTopOf: function (elem) { return elem.offsetTop }
 		}, defaultDuration, edgeOffset)
 	}
+
+
+	// Automatic link-smoothing on achors
+	// Exclude IE8- or when native is enabled or Zenscroll auto- is disabled
 		}
 		var replaceUrl = function (hash, newY) {
 			try {
@@ -273,7 +274,7 @@
 			while (anchor && anchor.tagName !== "A") {
 				anchor = anchor.parentNode
 			}
-			// Only handle links that were clicked with the primary button, without modifier keys:
+			// Let the browser handle the click if it wasn't with the primary button, or with some modifier keys:
 			if (!anchor || event.which !== 1 || event.shiftKey || event.metaKey || event.ctrlKey || event.altKey) {
 				return
 			}
