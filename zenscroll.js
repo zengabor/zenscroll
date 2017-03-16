@@ -219,15 +219,6 @@
 	}
 
 
-	// Create listeners for the documentElement only & exclude IE8-
-	if ("addEventListener" in window && !(isNativeSmoothScrollEnabledOn(document.body) || window.noZensmooth)) {
-		if ("scrollRestoration" in history) {
-			history.scrollRestoration = "manual"
-			window.addEventListener("popstate", function (event) {
-				if (event.state && "scrollY" in event.state) {
-					defaultScroller.toY(event.state.scrollY)
-				}
-			}, false)
 	var docElem = document.documentElement
 	var getBodyY = function () { return window.scrollY || docElem.scrollTop }
 
@@ -264,6 +255,14 @@
 
 	// Automatic link-smoothing on achors
 	// Exclude IE8- or when native is enabled or Zenscroll auto- is disabled
+	if ("addEventListener" in window && !window.noZensmooth && !isNativeSmoothScrollEnabledOn(document.body)) {
+
+
+		var isScrollRestorationSupported = "scrollRestoration" in history
+
+		// On first load & refresh make sure the browser restores the position first
+		if (isScrollRestorationSupported) {
+			history.scrollRestoration = "auto"
 		}
 		var replaceUrl = function (hash, newY) {
 			try {
@@ -271,8 +270,37 @@
 				history.pushState({scrollY:newY}, "", window.location.href.split("#")[0] + hash) // remember the new scroll position (which will be after scrolling)
 			} catch (e) {
 				// To avoid the Security exception in Chrome when the page was opened via the file protocol, e.g., file://index.html
+
+		window.addEventListener("load", function () {
+
+			if (isScrollRestorationSupported) {
+				// Now set it to manual
+				setTimeout(function () { history.scrollRestoration = "manual" }, 9)
+				window.addEventListener("popstate", function (event) {
+					if (event.state && "zenscrollY" in event.state) {
+						zenscroll.toY(event.state.zenscrollY)
+					}
+				}, false)
 			}
-		}
+
+			// Add edge offset on first load if necessary
+			if (window.location.hash) {
+				setTimeout(function () {
+					// Adjustment is only needed if there is an edge offset:
+					if (zenscroll.setup().edgeOffset) {
+						var hash = event.target.hash
+						// This is required for foreign characters in old Safari and old Firefox:
+						try { hash = decodeURIComponent(hash) } catch(e) {  }
+						var targetElem = document.getElementById(hash.substring(1))
+						// Only do the adjustment if the browser is very close to the element:
+						if (targetElem && Math.abs(zenscroll.getY() - zenscroll.getTopOf(targetElem)) < 9 ) {
+							zenscroll.intoView(targetElem, 0)
+						}
+					}
+				}, 9)
+			}
+
+		}, false)
 		window.addEventListener("click", function (event) {
 			var anchor = event.target
 			while (anchor && anchor.tagName !== "A") {
@@ -281,6 +309,14 @@
 			// Let the browser handle the click if it wasn't with the primary button, or with some modifier keys:
 			if (!anchor || event.which !== 1 || event.shiftKey || event.metaKey || event.ctrlKey || event.altKey) {
 				return
+			}
+			// Save the current scrolling position so it can be used for scroll restoration:
+			if (isScrollRestorationSupported) {
+				try {
+					history.replaceState({ zenscrollY: zenscroll.getY() }, "")
+				} catch (e) {
+					// Avoid the Chrome Security exception on file protocol, e.g., file://index.html
+				}
 			}
 			var href = anchor.getAttribute("href") || ""
 			if (href.indexOf("#") === 0) {
