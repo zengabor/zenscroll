@@ -1,5 +1,5 @@
 /**
- * Zenscroll 4.0.0-rc3
+ * Zenscroll 4.0.0
  * https://github.com/zengabor/zenscroll/
  *
  * Copyright 2015–2017 Gabor Lenard
