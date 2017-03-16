@@ -1,5 +1,5 @@
 /**
- * Zenscroll 4.0.0-alpha1
+ * Zenscroll 4.0.0
  * https://github.com/zengabor/zenscroll/
  *
  * Copyright 2015–2017 Gabor Lenard
@@ -282,7 +282,7 @@
 				setTimeout(function () {
 					// Adjustment is only needed if there is an edge offset:
 					if (zenscroll.setup().edgeOffset) {
-						var hash = event.target.hash
+						var hash = window.location.hash
 						// This is required for foreign characters in old Safari and old Firefox:
 						try { hash = decodeURIComponent(hash) } catch(e) {  }
 						var targetElem = document.getElementById(hash.substring(1))
@@ -291,7 +291,7 @@
 							zenscroll.intoView(targetElem, 0)
 						}
 					}
-				}, 9)
+				}, 99) // According to my tests IE (or older computer?) requires at least a timeout of 99 ms
 			}
 
 		}, false)
