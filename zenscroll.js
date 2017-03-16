@@ -198,6 +198,10 @@
 			if (newEdgeOffset === 0 || newEdgeOffset) {
 				edgeOffset = newEdgeOffset
 			}
+			return {
+				defaultDuration: defaultDuration,
+				edgeOffset: edgeOffset
+			}
 		}
 
 		return {
