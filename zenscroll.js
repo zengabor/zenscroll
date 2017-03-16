@@ -291,6 +291,8 @@
 							zenscroll.intoView(targetElem, 0)
 						} else {
 							console.warn("target element out of range", hash, zenscroll.getY(), zenscroll.getTopOf(targetElem))
+							setTimeout(function () { console.log(zenscroll.getY()) }, 9)
+							setTimeout(function () { console.log(zenscroll.getY()) }, 250)
 						}
 					}
 				}, 9)
