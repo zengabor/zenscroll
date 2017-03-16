@@ -91,6 +91,10 @@
 			setScrollTimeoutId(0)
 		}
 
+		var getTopWithEdgeOffset = function (elem) {
+			return Math.max(0, container.getTopOf(elem) - edgeOffset)
+		}
+
 		/**
 		 * Scrolls to a specific vertical position in the document.
 		 *
@@ -142,9 +146,7 @@
 		 * @returns {endY} The new vertical scoll position that will be valid once the scroll finishes.
 		 */
 		var scrollToElem = function (elem, duration, onDone) {
-			var endY = getRelativeTopOf(elem) - edgeOffset
-			scrollToY(endY, duration, onDone)
-			return endY
+			scrollToY(getTopWithEdgeOffset(elem), duration, onDone)
 		}
 
 		/**
@@ -157,11 +159,11 @@
 		 */
 		var scrollIntoView = function (elem, duration, onDone) {
 			var elemHeight = elem.getBoundingClientRect().height
-			if ((elemTop - edgeOffset) < containerTop || (elemHeight + edgeOffset) > containerHeight) {
 			var elemBottom = container.getTopOf(elem) + elemHeight
 			var containerHeight = container.getHeight()
 			var y = container.getY()
 			var containerBottom = y + containerHeight
+			if (getTopWithEdgeOffset(elem) < y || (elemHeight + edgeOffset) > containerHeight) {
 				// Element is clipped at top or is higher than screen.
 				scrollToElem(elem, duration, onDone)
 			} else if ((elemBottom + edgeOffset) > containerBottom) {
