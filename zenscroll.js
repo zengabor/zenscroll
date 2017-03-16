@@ -1,8 +1,8 @@
 /**
- * Zenscroll 3.3.0
+ * Zenscroll 4.0.0-alpha1
  * https://github.com/zengabor/zenscroll/
  *
- * Copyright 2015–2016 Gabor Lenard
+ * Copyright 2015–2017 Gabor Lenard
  *
  * This is free and unencumbered software released into the public domain.
  * 
@@ -28,7 +28,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  * 
  * For more information, please refer to <http://unlicense.org>
- *
+ * 
  */
 
 /*jshint devel:true, asi:true */
@@ -46,12 +46,14 @@
 	}
 }(this, function () {
 	"use strict"
-	
+
+
 	// Detect if the browser already supports native smooth scrolling (e.g., Firefox 36+ and Chrome 49+) and it is enabled:
 	var isNativeSmoothScrollEnabledOn = function (elem) {
 		return ("getComputedStyle" in window) &&
 			window.getComputedStyle(elem)["scroll-behavior"] === "smooth"
 	}
+
 
 	// Exit if it’s not a browser environment:
 	if (typeof window === "undefined" || !("document" in window)) {
