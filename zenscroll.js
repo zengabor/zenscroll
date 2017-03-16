@@ -68,42 +68,19 @@
 		return {}
 	}
 
-	var createScroller = function (scrollContainer, defaultDuration, edgeOffset) {
 
+	var makeScroller = function (container, defaultDuration, edgeOffset) {
+
+		// Use defaults if not provided
 		defaultDuration = defaultDuration || 999 //ms
 		if (!edgeOffset && edgeOffset !== 0) {
-			// When scrolling, this amount of distance is kept from the edges of the scrollContainer:
+			// When scrolling, this amount of distance is kept from the edges of the container:
 			edgeOffset = 9 //px
 		}
 
 		var scrollTimeoutId
 		var setScrollTimeoutId = function (newValue) {
 			scrollTimeoutId = newValue
-		}
-		var docElem = document.documentElement
-		
-		var getScrollTop = function () {
-			if (scrollContainer) {
-				return scrollContainer.scrollTop
-			} else {
-				return window.scrollY || docElem.scrollTop
-			}
-		}
-
-		var getViewHeight = function () {
-			if (scrollContainer) {
-				return Math.min(scrollContainer.offsetHeight, window.innerHeight)
-			} else {
-				return window.innerHeight || docElem.clientHeight
-			}
-		}
-
-		var getRelativeTopOf = function (elem) {
-			if (scrollContainer) {
-				return elem.offsetTop
-			} else {
-				return elem.getBoundingClientRect().top + getScrollTop() - docElem.offsetTop
-			}
 		}
 
 		/**
@@ -123,28 +100,26 @@
 		 *        distance and the default duration.
 		 * @param {onDone} Callback function to be invoken once the scroll finishes.
 		 */
-		var scrollToY = function (endY, duration, onDone) {
+		var scrollToY = function (targetY, duration, onDone) {
 			stopScroll()
-			if (isNativeSmoothScrollEnabledOn(scrollContainer ? scrollContainer : document.body)) {
-				(scrollContainer || window).scrollTo(0, endY)
+			if (duration === 0 || (duration && duration < 0) || isNativeSmoothScrollEnabledOn(container.body)) {
+				container.toY(targetY)
 				if (onDone) {
 					onDone()
 				}
 			} else {
-				var startY = getScrollTop()
-				var distance = Math.max(endY,0) - startY
-				duration = duration || Math.min(Math.abs(distance), defaultDuration)
-				var startTime = new Date().getTime();
+				var startY = container.getY()
+				var distance = Math.max(0, targetY) - startY
+				var startTime = new Date().getTime()
+				duration = duration || Math.min(Math.abs(distance), defaultDuration);
 				(function loopScroll() {
 					setScrollTimeoutId(setTimeout(function () {
-						var p = Math.min((new Date().getTime() - startTime) / duration, 1) // percentage
-						var y = Math.max(Math.floor(startY + distance*(p < 0.5 ? 2*p*p : p*(4 - p*2)-1)), 0)
-						if (scrollContainer) {
-							scrollContainer.scrollTop = y
-						} else {
-							window.scrollTo(0, y)
-						}
-						if (p < 1 && (getViewHeight() + y) < (scrollContainer || docElem).scrollHeight) {
+						// Calculate percentage:
+						var p = Math.min(1, (new Date().getTime() - startTime) / duration)
+						// Calculate the absolute vertical position:
+						var y = Math.max(0, Math.floor(startY + distance*(p < 0.5 ? 2*p*p : p*(4 - p*2)-1)))
+						container.toY(y)
+						if (p < 1 && (container.getHeight() + y) < container.body.scrollHeight) {
 							loopScroll()
 						} else {
 							setTimeout(stopScroll, 99) // with cooldown time
@@ -182,12 +157,11 @@
 		 */
 		var scrollIntoView = function (elem, duration, onDone) {
 			var elemHeight = elem.getBoundingClientRect().height
-			var elemTop = getRelativeTopOf(elem)
-			var elemBottom = elemTop + elemHeight
-			var containerHeight = getViewHeight()
-			var containerTop = getScrollTop()
-			var containerBottom = containerTop + containerHeight
 			if ((elemTop - edgeOffset) < containerTop || (elemHeight + edgeOffset) > containerHeight) {
+			var elemBottom = container.getTopOf(elem) + elemHeight
+			var containerHeight = container.getHeight()
+			var y = container.getY()
+			var containerBottom = y + containerHeight
 				// Element is clipped at top or is higher than screen.
 				scrollToElem(elem, duration, onDone)
 			} else if ((elemBottom + edgeOffset) > containerBottom) {
@@ -208,14 +182,7 @@
 		 * @param {onDone} Callback function to be invoken once the scroll finishes.
 		 */
 		var scrollToCenterOf = function (elem, duration, offset, onDone) {
-			scrollToY(
-				Math.max(
-					getRelativeTopOf(elem) - getViewHeight()/2 + (offset || elem.getBoundingClientRect().height/2), 
-					0
-				), 
-				duration,
-				onDone
-			)
+			scrollToY(Math.max(0, container.getTopOf(elem) - container.getHeight()/2 + (offset || elem.getBoundingClientRect().height/2)), duration, onDone)
 		}
 
 		/**
@@ -242,13 +209,12 @@
 			center: scrollToCenterOf,
 			stop: stopScroll,
 			moving: function () { return !!scrollTimeoutId },
-			getY: getScrollTop
+			getY: container.getY,
+			getTopOf: container.getTopOf
 		}
 
 	}
 
-	// Create a scroller for the browser window, omitting parameters:
-	var defaultScroller = createScroller()
 
 	// Create listeners for the documentElement only & exclude IE8-
 	if ("addEventListener" in window && !(isNativeSmoothScrollEnabledOn(document.body) || window.noZensmooth)) {
@@ -259,6 +225,38 @@
 					defaultScroller.toY(event.state.scrollY)
 				}
 			}, false)
+	var docElem = document.documentElement
+	var getBodyY = function () { return window.scrollY || docElem.scrollTop }
+
+	// Create a scroller for the page body:
+	var zenscroll = makeScroller({
+		body: document.body,
+		toY: function (y) { window.scrollTo(0, y) },
+		getY: getBodyY,
+		getHeight: function () { return window.innerHeight || docElem.clientHeight },
+		getTopOf: function (elem) { return elem.getBoundingClientRect().top + getBodyY() - docElem.offsetTop }
+	})
+
+
+	/**
+	 * Creates a scroller from the provided container element (e.g., a DIV)
+	 *
+	 * @param {scrollContainer} The vertical position within the document.
+	 * @param {defaultDuration} Optionally a value for default duration, used for each scroll method by default.
+	 *        Ignored if 0 or null or undefined.
+	 * @param {edgeOffset} Optionally a value for the edge offset, used by each scroll method by default. 
+	 *        Ignored if null or undefined.
+	 * @returns A scroller object, similar to `zenscroll` but controlling the provided element.
+	 */
+	zenscroll.createScroller = function (scrollContainer, defaultDuration, edgeOffset) {
+		return makeScroller({
+			body: scrollContainer,
+			toY: function (y) { scrollContainer.scrollTop = y },
+			getY: function () { return scrollContainer.scrollTop },
+			getHeight: function () { return Math.min(scrollContainer.offsetHeight, window.innerHeight) },
+			getTopOf: function (elem) { return elem.offsetTop }
+		}, defaultDuration, edgeOffset)
+	}
 		}
 		var replaceUrl = function (hash, newY) {
 			try {
@@ -295,17 +293,10 @@
 		}, false)
 	}
 
-	return {
-		// Expose the "constructor" that can create a new scroller:
-		createScroller: createScroller,
-		// Surface the methods of the default scroller:
-		setup: defaultScroller.setup,
-		to: defaultScroller.to,
-		toY: defaultScroller.toY,
-		intoView: defaultScroller.intoView,
-		center: defaultScroller.center,
-		stop: defaultScroller.stop,
-		moving: defaultScroller.moving
 	}
+
+
+	return zenscroll
+
 
 }));
