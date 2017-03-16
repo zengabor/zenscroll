@@ -192,7 +192,7 @@
 		 * @returns An object with the current values.
 		 */
 		var setup = function (newDefaultDuration, newEdgeOffset) {
-			if (newDefaultDuration) {
+			if (newDefaultDuration === 0 || newDefaultDuration) {
 				defaultDuration = newDefaultDuration
 			}
 			if (newEdgeOffset === 0 || newEdgeOffset) {
