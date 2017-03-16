@@ -1,5 +1,5 @@
 /**
- * Zenscroll 4.0.0-rc2-debug
+ * Zenscroll 4.0.0-rc3
  * https://github.com/zengabor/zenscroll/
  *
  * Copyright 2015–2017 Gabor Lenard
@@ -289,13 +289,9 @@
 						// Only do the adjustment if the browser is very close to the element:
 						if (targetElem && Math.abs(zenscroll.getY() - zenscroll.getTopOf(targetElem)) < 9 ) {
 							zenscroll.intoView(targetElem, 0)
-						} else {
-							console.warn("target element out of range", hash, zenscroll.getY(), zenscroll.getTopOf(targetElem))
-							setTimeout(function () { console.log(zenscroll.getY()) }, 9)
-							setTimeout(function () { console.log(zenscroll.getY()) }, 250)
 						}
 					}
-				}, 99) // looks like IE requires at least a timeout of 99 milliseconds
+				}, 99) // According to my tests IE (or older computer?) requires at least a timeout of 99 ms
 			}
 
 		}, false)
