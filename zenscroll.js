@@ -1,5 +1,5 @@
 /**
- * Zenscroll 4.0.0-rc2
+ * Zenscroll 4.0.0-rc2-debug
  * https://github.com/zengabor/zenscroll/
  *
  * Copyright 2015–2017 Gabor Lenard
@@ -289,6 +289,8 @@
 						// Only do the adjustment if the browser is very close to the element:
 						if (targetElem && Math.abs(zenscroll.getY() - zenscroll.getTopOf(targetElem)) < 9 ) {
 							zenscroll.intoView(targetElem, 0)
+						} else {
+							console.warn("target element out of range", hash, zenscroll.getY(), zenscroll.getTopOf(targetElem))
 						}
 					}
 				}, 9)
