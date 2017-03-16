@@ -268,7 +268,7 @@
 		window.addEventListener("load", function () {
 
 			if (isScrollRestorationSupported) {
-				// Now set it to manual
+				// Set it to manual
 				setTimeout(function () { history.scrollRestoration = "manual" }, 9)
 				window.addEventListener("popstate", function (event) {
 					if (event.state && "zenscrollY" in event.state) {
