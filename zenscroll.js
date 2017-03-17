@@ -1,5 +1,5 @@
 /**
- * Zenscroll 4.0.0-rc6
+ * Zenscroll 4.0.0
  * https://github.com/zengabor/zenscroll/
  *
  * Copyright 2015–2017 Gabor Lenard
@@ -224,7 +224,7 @@
 
 	// Create a scroller for the page body:
 	var zenscroll = makeScroller({
-		body: document.body,
+		body: document.scrollingElement || document.body,
 		toY: function (y) { window.scrollTo(0, y) },
 		getY: getBodyY,
 		getHeight: function () { return window.innerHeight || docElem.clientHeight },
