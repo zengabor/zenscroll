@@ -1,5 +1,5 @@
 /**
- * Zenscroll 4.0.0-rc5
+ * Zenscroll 4.0.0-rc6
  * https://github.com/zengabor/zenscroll/
  *
  * Copyright 2015–2017 Gabor Lenard
@@ -247,7 +247,7 @@
 			body: scrollContainer,
 			toY: function (y) { scrollContainer.scrollTop = y },
 			getY: function () { return scrollContainer.scrollTop },
-			getHeight: function () { return Math.min(scrollContainer.offsetHeight, window.innerHeight) },
+			getHeight: function () { return Math.min(scrollContainer.clientHeight, window.innerHeight || docElem.clientHeight) },
 			getTopOf: function (elem) { return elem.offsetTop }
 		}, defaultDuration, edgeOffset)
 	}
