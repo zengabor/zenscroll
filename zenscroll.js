@@ -1,5 +1,5 @@
 /**
- * Zenscroll 4.0.0
+ * Zenscroll 4.0.0-rc4
  * https://github.com/zengabor/zenscroll/
  *
  * Copyright 2015–2017 Gabor Lenard
@@ -278,20 +278,26 @@
 			}
 
 			// Add edge offset on first load if necessary
+			// This may not work on IE (or older computer?) as it requires more timeout, around 100 ms
 			if (window.location.hash) {
 				setTimeout(function () {
 					// Adjustment is only needed if there is an edge offset:
-					if (zenscroll.setup().edgeOffset) {
+					var edgeOffset = zenscroll.setup().edgeOffset
+					if (edgeOffset) {
 						var hash = window.location.hash
 						// This is required for foreign characters in old Safari and old Firefox:
 						try { hash = decodeURIComponent(hash) } catch(e) {  }
 						var targetElem = document.getElementById(hash.substring(1))
-						// Only do the adjustment if the browser is very close to the element:
-						if (targetElem && Math.abs(zenscroll.getY() - zenscroll.getTopOf(targetElem)) < 9 ) {
-							zenscroll.intoView(targetElem, 0)
+						if (targetElem) {
+							var targetY = Math.max(0, zenscroll.getTopOf(targetElem) - edgeOffset)
+							var diff = zenscroll.getY() - targetY
+							// Only do the adjustment if the browser is very close to the element:
+							if (0 <= diff && diff < 9 ) {
+								window.scrollTo(0, targetY)
+							}
 						}
 					}
-				}, 99) // According to my tests IE (or older computer?) requires at least a timeout of 99 ms
+				}, 9)
 			}
 
 		}, false)
