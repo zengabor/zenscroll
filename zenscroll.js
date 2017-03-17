@@ -1,5 +1,5 @@
 /**
- * Zenscroll 4.0.0-rc4
+ * Zenscroll 4.0.0-rc5
  * https://github.com/zengabor/zenscroll/
  *
  * Copyright 2015–2017 Gabor Lenard
@@ -284,10 +284,7 @@
 					// Adjustment is only needed if there is an edge offset:
 					var edgeOffset = zenscroll.setup().edgeOffset
 					if (edgeOffset) {
-						var hash = window.location.hash
-						// This is required for foreign characters in old Safari and old Firefox:
-						try { hash = decodeURIComponent(hash) } catch(e) {  }
-						var targetElem = document.getElementById(hash.substring(1))
+						var targetElem = document.getElementById(window.location.href.split("#")[1])
 						if (targetElem) {
 							var targetY = Math.max(0, zenscroll.getTopOf(targetElem) - edgeOffset)
 							var diff = zenscroll.getY() - targetY
