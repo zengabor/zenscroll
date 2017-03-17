@@ -139,7 +139,7 @@
 		zenscroll.intoView(container, 100, function () { getMyScroller().center(target) })
 	})
 	insertButtonBefore(next(next(next(code9))), null, function () {
-		zenscroll.intoView(container, 100, function () { getMyScroller().toY(35) })
+		zenscroll.intoView(container, 100, function () { getMyScroller().toY(500) })
 	})
 	insertButtonBefore(next(next(next(next(code9)))), null, function () {
 		zenscroll.intoView(container, 100, function () { getMyScroller().intoView(target) })
