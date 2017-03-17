@@ -3,7 +3,7 @@
 
 ### 1. Automatic smooth-scroll to links within the page
 
-If Zenscroll is included in your page it will automatically animate the vertical scrolling to anchors on the same page. No further setting is required.
+If Zenscroll is included in your page it will automatically animate the vertical scrolling to anchors on the same page. No further setting is required. (Note that it can be disabled, see [1.5](#1.5.disabletheautomaticsmooth-scrolling).)
 
 Automatic smooth-scrolling works also with content you dynamically load via AJAX, as Zenscroll uses a generic click handler. Since the automatic smooth-scrolling is implemented a progressive enhancement, internal links work in older browsers as well.
 
@@ -11,11 +11,14 @@ Automatic smooth-scrolling works also with content you dynamically load via AJAX
 
 Zenscroll automatically adds the configured edge offset when the page is loaded with a hash suffix. For example, if you navigate to `"http://yoursite.com/#about"` then the scroll position will be not cut sharply at the top edge of the element with `id="above"`. Instead, Zenscroll automatically adds the configured edge offset (which is 9 pixels by default, unless you [changed it](#9.changesettings)).
 
-Obviously, no automatic adjustment happens if you set the edge offset to zero.
+No automatic adjustment happens in the following cases:
+
+- If automatic smooth-scroll is disabled via `noZensmooth` or the native smooth-scrolling (see [1.5](#1.5.disabletheautomaticsmooth-scrolling))
+- If edge offset was set to zero (e.g., `zenscroll.setup(null, 0)`).
 
 #### 1.2. Limited support for smooth back & forward navigation
 
-The scroll is also animated when the browser’s Back and Forward buttons or the relevant key combinations are used (or even if the navigation is invoked from JavaScript). Note that although Zenscroll remembers the vertical scroll position, it cannot calculate changes caused by browser window resizing or collapsing/expanding elements, etc.
+The scroll is also animated when the browser’s back and forward buttons or the relevant key combinations are used (or even if the navigation is invoked from JavaScript). Note that although Zenscroll remembers the vertical scroll position, it cannot calculate changes caused by browser window resizing or collapsing/expanding elements, etc.
 
 This functionality requires browser support for `history.scrollRestoration` which is available for example in Chrome 46+, Firefox 46+, and Safari Technology Preview.
 
@@ -37,7 +40,7 @@ So, how to deal with a situation like this? Try one of the following methods:
 
 #### 1.5. Disable the automatic smooth-scrolling
 
-You can globally disable the automatic smooth-scrolling to links on the same page via one of the following methods:
+The automatic smooth-scrolling is completely disabled in the following cases:
 
 1. If you set `window.noZensmooth` to a non-falsy value (see [above](#disablingautomaticsmoothingonlocallinks)).
 2. In new browsers if the `scroll-behavior` CSS property is set to `smooth` on the `body` (see [above](#enablingnativesmooth-scrollinginthebrowser)). In this case Zenscroll will only enable automatic smooth-scrolling in browsers which don’t support this feature yet (e.g., Internet Explorer).
@@ -155,7 +158,7 @@ Anything you can do within the document you can also do inside a scrollable DIV 
 Obviously you can use all other scroll functions and parameters with the scrollable container. Two more examples:
 
 ````js
-myScroller.toY(35)
+myScroller.toY(500)
 ````
 
 ````js
