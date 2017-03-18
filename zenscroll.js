@@ -177,7 +177,6 @@
 		 * @param {elem} The element.
 		 * @param {duration} Optionally the duration of the scroll operation.
 		 * @param {offset} Optionally the offset of the top of the element from the center of the screen.
-		 *        A value of 0 is ignored.
 		 * @param {onDone} An optional callback function to be invoked once the scroll finished.
 		 */
 		var scrollToCenterOf = function (elem, duration, offset, onDone) {
