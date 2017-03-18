@@ -220,15 +220,15 @@
 
 
 	var docElem = document.documentElement
-	var getBodyY = function () { return window.scrollY || docElem.scrollTop }
+	var getDocY = function () { return window.scrollY || docElem.scrollTop }
 
-	// Create a scroller for the page body:
+	// Create a scroller for the document:
 	var zenscroll = makeScroller({
 		body: document.scrollingElement || document.body,
 		toY: function (y) { window.scrollTo(0, y) },
-		getY: getBodyY,
+		getY: getDocY,
 		getHeight: function () { return window.innerHeight || docElem.clientHeight },
-		getTopOf: function (elem) { return elem.getBoundingClientRect().top + getBodyY() - docElem.offsetTop }
+		getTopOf: function (elem) { return elem.getBoundingClientRect().top + getDocY() - docElem.offsetTop }
 	})
 
 
