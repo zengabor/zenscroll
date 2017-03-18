@@ -1,7 +1,7 @@
 {
 	"name": "zenscroll",
-	"version": "3.3.0",
-	"description": "A module to smooth-scroll web pages and containers (DIVs)",
+	"version": "4.0.0",
+	"description": "A module to smooth-scroll web pages and scrollable elements (like DIVs)",
 	"main": "zenscroll.js",
 	"files": ["zenscroll.js", "zenscroll-min.js"],
 	"homepage": "https://zengabor.github.io/zenscroll/",
