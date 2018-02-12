@@ -5,12 +5,12 @@
  * Copyright 2015–2017 Gabor Lenard
  *
  * This is free and unencumbered software released into the public domain.
- * 
+ *
  * Anyone is free to copy, modify, publish, use, compile, sell, or
  * distribute this software, either in source code form or as a compiled
  * binary, for any purpose, commercial or non-commercial, and by any
  * means.
- * 
+ *
  * In jurisdictions that recognize copyright laws, the author or authors
  * of this software dedicate any and all copyright interest in the
  * software to the public domain. We make this dedication for the benefit
@@ -18,7 +18,7 @@
  * successors. We intend this dedication to be an overt act of
  * relinquishment in perpetuity of all present and future rights to this
  * software under copyright law.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -26,9 +26,9 @@
  * OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- * 
+ *
  * For more information, please refer to <http://unlicense.org>
- * 
+ *
  */
 
 /*jshint devel:true, asi:true */
@@ -58,7 +58,7 @@
 
 	// Detect if the browser already supports native smooth scrolling (e.g., Firefox 36+ and Chrome 49+) and it is enabled:
 	var isNativeSmoothScrollEnabledOn = function (elem) {
-		return ("getComputedStyle" in window) &&
+		return elem && ("getComputedStyle" in window) &&
 			window.getComputedStyle(elem)["scroll-behavior"] === "smooth"
 	}
 
@@ -239,7 +239,7 @@
 	 * @param {scrollContainer} The vertical position within the document.
 	 * @param {defaultDuration} Optionally a value for default duration, used for each scroll method by default.
 	 *        Ignored if 0 or null or undefined.
-	 * @param {edgeOffset} Optionally a value for the edge offset, used by each scroll method by default. 
+	 * @param {edgeOffset} Optionally a value for the edge offset, used by each scroll method by default.
 	 *        Ignored if null or undefined.
 	 * @returns A scroller object, similar to `zenscroll` but controlling the provided element.
 	 */
