@@ -258,7 +258,7 @@
 	// Exclude IE8- or when native is enabled or Zenscroll auto- is disabled
 	if ("addEventListener" in window && !window.noZensmooth && !isNativeSmoothScrollEnabledOn(document.body)) {
 
-		var isHistorySupported = "history" in window
+		var isHistorySupported = "history" in window && "pushState" in history
 		var isScrollRestorationSupported = isHistorySupported && "scrollRestoration" in history
 
 		// On first load & refresh make sure the browser restores the position first
