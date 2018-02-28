@@ -314,7 +314,11 @@
 			// Save the current scrolling position so it can be used for scroll restoration:
 			if (isScrollRestorationSupported) {
 				try {
-					history.replaceState({ zenscrollY: zenscroll.getY() }, "")
+					var replaceState = { zenscrollY: zenscroll.getY() }
+					if (history.state && typeof history.state === 'object') {
+						replaceState = Object.assign(replaceState, history.state)
+					}
+					history.replaceState(replaceState, "")
 				} catch (e) {
 					// Avoid the Chrome Security exception on file protocol, e.g., file://index.html
 				}
