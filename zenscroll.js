@@ -272,12 +272,11 @@
 				// Set it to manual
 				setTimeout(function () { history.scrollRestoration = "manual" }, 9)
 				window.addEventListener("popstate", function (event) {
-					console && console.log("popstate event", event)
 					if (event.state && "zenscrollY" in event.state) {
 						zenscroll.toY(event.state.zenscrollY)
 					}
 				}, false)
-			} else console && console.warn("scrollRestoration is not supported")
+			}
 
 			// Add edge offset on first load if necessary
 			// This may not work on IE (or older computer?) as it requires more timeout, around 100 ms
