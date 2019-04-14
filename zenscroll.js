@@ -69,13 +69,16 @@
 	}
 
 
-	var makeScroller = function (container, defaultDuration, edgeOffset) {
+	var makeScroller = function (container, defaultDuration, edgeOffset, edgeOffsetBottom) {
 
 		// Use defaults if not provided
 		defaultDuration = defaultDuration || 999 //ms
 		if (!edgeOffset && edgeOffset !== 0) {
 			// When scrolling, this amount of distance is kept from the edges of the container:
 			edgeOffset = 9 //px
+		}
+		if (!edgeOffsetBottom && edgeOffsetBottom !== 0) {
+			edgeOffsetBottom = edgeOffset // same as top, if not specified
 		}
 
 		// Handling the life-cycle of the scroller
@@ -160,12 +163,12 @@
 			var containerHeight = container.getHeight()
 			var y = container.getY()
 			var containerBottom = y + containerHeight
-			if (getTopWithEdgeOffset(elem) < y || (elemHeight + edgeOffset) > containerHeight) {
+			if (getTopWithEdgeOffset(elem) < y || (elemHeight + edgeOffsetBottom) > containerHeight) {
 				// Element is clipped at top or is higher than screen.
 				scrollToElem(elem, duration, onDone)
-			} else if ((elemBottom + edgeOffset) > containerBottom) {
+			} else if ((elemBottom + edgeOffsetBottom) > containerBottom) {
 				// Element is clipped at the bottom.
-				scrollToY(elemBottom - containerHeight + edgeOffset, duration, onDone)
+				scrollToY(elemBottom - containerHeight + edgeOffsetBottom, duration, onDone)
 			} else if (onDone) {
 				onDone()
 			}
@@ -190,18 +193,25 @@
 		 * @param {newDefaultDuration} Optionally a new value for default duration, used for each scroll method by default.
 		 *        Ignored if null or undefined.
 		 * @param {newEdgeOffset} Optionally a new value for the edge offset, used by each scroll method by default. Ignored if null or undefined.
+		 * @param {newEdgeOffsetBottom} Optionally a new value for the bottom edge offset. Same as the top one if null or undefined.
 		 * @returns An object with the current values.
 		 */
-		var setup = function (newDefaultDuration, newEdgeOffset) {
+		var setup = function (newDefaultDuration, newEdgeOffset, newEdgeOffsetBottom) {
 			if (newDefaultDuration === 0 || newDefaultDuration) {
 				defaultDuration = newDefaultDuration
 			}
 			if (newEdgeOffset === 0 || newEdgeOffset) {
 				edgeOffset = newEdgeOffset
 			}
+			if (newEdgeOffsetBottom === 0 || newEdgeOffsetBottom) {
+				edgeOffsetBottom = newEdgeOffsetBottom
+			} else {
+				edgeOffsetBottom = edgeOffset;
+			}
 			return {
 				defaultDuration: defaultDuration,
-				edgeOffset: edgeOffset
+				edgeOffset: edgeOffset,
+				edgeOffsetBottom: edgeOffsetBottom
 			}
 		}
 
@@ -241,16 +251,18 @@
 	 *        Ignored if 0 or null or undefined.
 	 * @param {edgeOffset} Optionally a value for the edge offset, used by each scroll method by default. 
 	 *        Ignored if null or undefined.
+	 * @param {edgeOffsetBottom} Optionally a value for the edge offset, used by each scroll method by default. 
+	 *        Same as the top one if null or undefined.
 	 * @returns A scroller object, similar to `zenscroll` but controlling the provided element.
 	 */
-	zenscroll.createScroller = function (scrollContainer, defaultDuration, edgeOffset) {
+	zenscroll.createScroller = function (scrollContainer, defaultDuration, edgeOffset, edgeOffsetBottom) {
 		return makeScroller({
 			body: scrollContainer,
 			toY: function (y) { scrollContainer.scrollTop = y },
 			getY: function () { return scrollContainer.scrollTop },
 			getHeight: function () { return Math.min(scrollContainer.clientHeight, window.innerHeight || docElem.clientHeight) },
 			getTopOf: function (elem) { return elem.offsetTop }
-		}, defaultDuration, edgeOffset)
+		}, defaultDuration, edgeOffset, edgeOffsetBottom)
 	}
 
 
