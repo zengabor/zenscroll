@@ -4,6 +4,7 @@
 	</a>
 </p>
 
+[![CDNJS version](https://img.shields.io/cdnjs/v/zenscroll.svg)](https://cdnjs.com/libraries/zenscroll)
 
 #### [**Demo**](https://zengabor.github.io/zenscroll/) &nbsp; &nbsp; &nbsp; &nbsp; [**Download**](https://github.com/zengabor/zenscroll/archive/latest.zip) &nbsp; &nbsp; &nbsp; &nbsp; [**About**](#about) &nbsp; &nbsp; &nbsp; &nbsp; [**Install**](#install) &nbsp; &nbsp; &nbsp; &nbsp; [**How to use**](#how-to-use) &nbsp; &nbsp; &nbsp; &nbsp; [**License**](#license)
 
