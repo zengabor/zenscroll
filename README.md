@@ -15,6 +15,9 @@ Smooth animated scrolling. Move&nbsp;elements&nbsp;into&nbsp;view, or&nbsp;scrol
 1.4&nbsp;kilobyte of vanilla&nbsp;JavaScript. No&nbsp;dependencies.
 
 
+# IMPORTANT!
+
+This repo is in active use in TeTo, and has a modified getTopOf function (inside createScroller) that calculates the top position of the element by summing all the offsets up the tree.
 
 ## About
 

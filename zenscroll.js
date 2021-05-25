@@ -249,10 +249,21 @@
 			toY: function (y) { scrollContainer.scrollTop = y },
 			getY: function () { return scrollContainer.scrollTop },
 			getHeight: function () { return Math.min(scrollContainer.clientHeight, window.innerHeight || docElem.clientHeight) },
-			getTopOf: function (elem) { return elem.offsetTop }
+			getTopOf: function (elem) {
+				const getOffsetFromAllAncestors = (el) => {
+					if (el) {
+						return (
+						el.offsetTop + getOffsetFromAllAncestors(el.offsetParent)
+						);
+					} else {
+						return 0;
+					}
+				};
+	
+				return getOffsetFromAllAncestors(elem);
+			}
 		}, defaultDuration, edgeOffset)
 	}
-
 
 	// Automatic link-smoothing on achors
 	// Exclude IE8- or when native is enabled or Zenscroll auto- is disabled
