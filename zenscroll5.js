@@ -1,5 +1,5 @@
 /**
- * Zenscroll 5.0.0
+ * Zenscroll 5.0.1
  * https://github.com/zengabor/zenscroll/
  *
  * Copyright 2015–2022 Gabor Lenard
@@ -22,7 +22,7 @@ const isNativeSmoothScrollEnabledOn = function(elem) {
 	return elem && window.getComputedStyle(elem)["scroll-behavior"] === "smooth"
 }
 
-export const makeScroller = function(containerdefaultDuration, edgeOffset) {
+export const makeScroller = function(container, defaultDuration, edgeOffset) {
 	// Use defaults if not provided
 	defaultDuration = defaultDuration || 999 // ms
 	if (!edgeOffset && edgeOffset !== 0) {
